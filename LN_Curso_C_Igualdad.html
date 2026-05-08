@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso C · Igualdad, Diversidad e Inclusión LGTBI+ · Live Nation España</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#7b2d8b;--purple2:#5e1f6e;--purple-bg:#f9f0fc;
+  --red:#CC0000;--red2:#a80000;--ink:#111;--ink2:#2d2d2d;--ink3:#666;
+  --bg:#f5f4f0;--white:#fff;--rule:#e0ddd6;--rule2:#c8c4bb;
+  --green:#1a6b3c;--green-bg:#edf7f2;
+  --blue:#1a4a7a;--blue-bg:#eef4fb;
+  --amber:#8a5f00;--amber-bg:#fdf8ec;
+  --rainbow-1:#e40303;--rainbow-2:#ff8c00;--rainbow-3:#ffed00;--rainbow-4:#008026;--rainbow-5:#004dff;--rainbow-6:#750787;
+  --sans:'DM Sans',sans-serif;--serif:'Bebas Neue',sans-serif;--mono:'DM Mono',monospace;
+  --r:10px;--sh:0 2px 12px rgba(0,0,0,.07);--sh2:0 8px 32px rgba(0,0,0,.13);
+  --rail:260px;--topbar:56px;--bottom:60px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;height:100vh;overflow:hidden}
+#app{display:flex;flex-direction:column;height:100vh}
+#topbar{height:var(--topbar);background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;flex-shrink:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.08)}
+.tb-left{display:flex;align-items:center;gap:1rem}
+.tb-logo img{height:24px;filter:brightness(10)}
+.tb-sep{width:1px;height:20px;background:rgba(255,255,255,.15)}
+.tb-course{font-family:var(--serif);font-size:1rem;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.tb-right{display:flex;align-items:center;gap:1rem}
+.tb-pct{font-family:var(--mono);font-size:.62rem;color:rgba(255,255,255,.4)}
+.tb-bar{width:100px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.tb-bar-fill{height:100%;background:var(--purple);transition:width .4s ease}
+.tb-back{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);background:transparent;border:1px solid rgba(255,255,255,.14);padding:5px 12px;border-radius:6px;cursor:pointer;transition:all .2s}
+.tb-back:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+#main{display:flex;flex:1;overflow:hidden}
+#rail{width:var(--rail);flex-shrink:0;background:var(--white);border-right:1px solid var(--rule);overflow-y:auto;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+.rail-head{padding:16px 16px 12px;border-bottom:1px solid var(--rule)}
+.rail-title{font-family:var(--serif);font-size:1.3rem;letter-spacing:.03em;line-height:1.1;margin-bottom:4px}
+.rail-sub{font-size:.75rem;color:var(--ink2);font-weight:300}
+.rail-prog{padding:10px 16px;border-bottom:1px solid var(--rule)}
+.rail-prog-bar{height:4px;background:var(--rule);border-radius:2px;overflow:hidden;margin-bottom:4px}
+.rail-prog-fill{height:100%;background:var(--purple);transition:width .4s}
+.rail-prog-lbl{font-family:var(--mono);font-size:.6rem;color:var(--ink3)}
+.rail-sec{padding:12px 16px 4px;font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3)}
+.rail-item{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:.8rem;color:var(--ink3);line-height:1.3;border-left:3px solid transparent;transition:all .15s}
+.rail-item:hover{background:#faf9f7;color:var(--ink2)}
+.rail-item.active{color:var(--purple);border-left-color:var(--purple);background:var(--purple-bg);font-weight:500}
+.rail-item.done .rdot{background:var(--green);border-color:var(--green);color:#fff}
+.rail-item.active .rdot{background:var(--purple);border-color:var(--purple);color:#fff}
+.rdot{min-width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule2);display:flex;align-items:center;justify-content:center;font-size:.58rem;color:transparent;flex-shrink:0;transition:all .2s}
+#content{flex:1;overflow-y:auto;padding:2.5rem 4rem 2rem;scrollbar-width:thin;scrollbar-color:var(--rule) transparent}
+.page{display:none;animation:fadeIn .3s ease;max-width:960px}
+.page.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#bottombar{height:var(--bottom);background:var(--white);border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;flex-shrink:0}
+.bb-info{font-size:.78rem;color:var(--ink3)}
+.bb-info span{color:var(--ink);font-weight:500}
+.bb-nav{display:flex;gap:.75rem}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 20px;border-radius:var(--r);font-family:var(--sans);font-size:.82rem;font-weight:500;cursor:pointer;border:none;transition:all .18s}
+.btn-purple{background:var(--purple);color:#fff}.btn-purple:hover{background:var(--purple2)}
+.btn-out{background:transparent;color:var(--ink2);border:1px solid var(--rule2)}.btn-out:hover{background:var(--bg)}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#155533}
+.btn-sm{padding:6px 14px;font-size:.77rem}
+/* CONTENT ELEMENTS */
+.lh{padding-bottom:1.5rem;border-bottom:3px solid var(--ink);margin-bottom:2rem}
+.lh-eye{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem;display:flex;align-items:center;gap:8px}
+.lh-eye::before{content:'';width:20px;height:1px;background:var(--ink3)}
+.lh-title{font-family:var(--serif);font-size:clamp(2rem,3.5vw,2.8rem);color:var(--ink);line-height:.95;margin-bottom:.75rem;letter-spacing:.02em}
+.lh-lead{font-size:.97rem;color:var(--ink2);font-weight:300;max-width:560px;line-height:1.75;margin-bottom:.75rem}
+.lh-norm{display:flex;flex-wrap:wrap;gap:.4rem}
+.norm{font-family:var(--mono);font-size:.6rem;padding:2px 7px;background:var(--ink);color:#fff;border-radius:4px}
+h3.sh{font-size:.95rem;font-weight:600;margin:1.75rem 0 .75rem;color:var(--ink)}
+.sec-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.sec-lbl::before{content:'';width:20px;height:1px;background:var(--ink3)}
+.box{border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem}
+.box-lbl{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;font-weight:500}
+.box-txt{font-size:.88rem;line-height:1.7;font-weight:300}
+.box-blue{background:var(--blue-bg);border:1px solid #c5d6ec}.box-blue .box-lbl{color:var(--blue)}
+.box-green{background:var(--green-bg);border:1px solid #b5d9c8}.box-green .box-lbl{color:var(--green)}
+.box-amber{background:var(--amber-bg);border:1px solid #e8d5a3}.box-amber .box-lbl{color:var(--amber)}
+.box-purple{background:var(--purple-bg);border:1px solid #d8b8e8}.box-purple .box-lbl{color:var(--purple)}
+.box-ink{background:var(--ink);border:1px solid var(--ink)}.box-ink .box-lbl{color:rgba(255,255,255,.5)}.box-ink .box-txt{color:#fff}
+/* TABLE */
+.tw{overflow-x:auto;margin-bottom:1.25rem;border-radius:var(--r);border:1px solid var(--rule)}
+table{width:100%;border-collapse:collapse;font-size:.84rem}
+th{background:var(--ink);color:#fff;text-align:left;padding:10px 14px;font-size:.72rem;letter-spacing:.06em;font-family:var(--mono);text-transform:uppercase;font-weight:500}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);line-height:1.55;font-weight:300;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#faf9f7}
+/* MINI-QUIZ */
+.mq{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin:1.5rem 0}
+.mq-badge{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.5rem;display:flex;align-items:center;gap:7px}
+.mq-badge::before{content:'◆';font-size:.5rem}
+.mq-q{font-size:.92rem;font-weight:500;margin-bottom:1rem;line-height:1.55}
+.mq-opts{display:flex;flex-direction:column;gap:.5rem}
+.mq-opt{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;background:var(--bg);border:1px solid var(--rule);border-radius:8px;cursor:pointer;font-size:.85rem;color:var(--ink2);line-height:1.5;transition:all .18s;text-align:left;font-weight:300}
+.mq-opt:hover{background:#f0eee8;border-color:var(--rule2)}
+.mq-opt.correct{background:var(--green-bg);border-color:var(--green);cursor:default}
+.mq-opt.wrong{background:#fff0f0;border-color:#e0b4b4;cursor:default;opacity:.7}
+.mq-radio{min-width:14px;height:14px;border-radius:50%;border:1.5px solid var(--rule2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;transition:all .15s}
+.mq-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;opacity:0;transition:opacity .15s}
+.mq-fb{margin-top:.75rem;padding:.75rem 1rem;border-radius:8px;font-size:.84rem;line-height:1.6;display:none}
+.mq-fb.show{display:block}
+.mq-fb.ok{background:var(--green-bg);color:var(--green);border:1px solid #b5d9c8}
+.mq-fb.bad{background:#fff0f0;color:#8a2020;border:1px solid #e0b4b4}
+/* ENCUESTA SATISFACCION */
+/* ══ ENCUESTA CLIMA ══ */
+.clima-section{background:var(--white);border:2px solid var(--purple);border-radius:var(--r);padding:1.75rem;margin:1.5rem 0}
+.clima-header{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--rule)}
+.clima-icon{width:38px;height:38px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0}
+.clima-title{font-family:var(--serif);font-size:1.5rem;letter-spacing:.03em;color:var(--purple);line-height:1.1}
+.clima-sub{font-size:.78rem;color:var(--ink2);font-weight:300;margin-top:.2rem;line-height:1.5}
+.clima-q{margin-bottom:1.5rem}
+.clima-q-text{font-size:.92rem;font-weight:500;color:var(--ink);margin-bottom:.5rem;line-height:1.5}
+.likert-row{display:flex;gap:.4rem;flex-wrap:wrap}
+.likert-btn{flex:1;min-width:80px;padding:8px 6px;border:1.5px solid var(--rule2);border-radius:7px;cursor:pointer;text-align:center;font-size:.75rem;color:var(--ink3);transition:all .18s;font-weight:400;line-height:1.4;background:var(--bg)}
+.likert-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-bg)}
+.likert-btn.sel{border-color:var(--purple)!important;background:var(--purple)!important;color:#fff!important;cursor:default}
+.open-field{width:100%;padding:.75rem 1rem;border:1.5px solid var(--rule2);border-radius:8px;font-family:var(--sans);font-size:.85rem;color:var(--ink);background:var(--bg);resize:vertical;min-height:80px;transition:border-color .15s;line-height:1.6}
+.open-field:focus{outline:none;border-color:var(--purple);background:#fff}
+.open-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem}
+.clima-saved{display:none;background:var(--green-bg);color:var(--green);border:1px solid #b5d9c8;border-radius:8px;padding:.75rem 1rem;font-size:.84rem;margin-top:.75rem;align-items:center;gap:.5rem}
+.clima-saved.show{display:flex}
+/* FINAL QUIZ */
+#quiz-locked{background:var(--rule);border-radius:var(--r);padding:1.5rem;text-align:center;color:var(--ink3);font-size:.88rem;margin-bottom:1rem}
+/* CERT */
+.cert-wrap{border:3px solid var(--ink);border-radius:12px;padding:3rem;text-align:center;background:var(--white);margin:1.5rem 0}
+.cert-logo{height:32px;filter:grayscale(1);margin-bottom:1.5rem}
+.cert-title{font-family:var(--serif);font-size:2.2rem;letter-spacing:.05em;margin-bottom:.75rem}
+.cert-name-wrap{margin:1.25rem 0;padding:1rem;border:1px solid var(--rule);border-radius:8px;background:var(--bg)}
+.cert-name-input{width:100%;text-align:center;font-family:var(--serif);font-size:1.5rem;border:none;background:transparent;color:var(--ink);outline:none}
+.cert-body{font-size:.9rem;font-weight:300;color:var(--ink3);line-height:1.7;max-width:440px;margin:0 auto 1.5rem}
+.cert-norm{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-bottom:1.5rem}
+.cert-date{font-family:var(--mono);font-size:.7rem;color:var(--ink3);margin-bottom:1.5rem}
+/* RAINBOW STRIPE */
+.rainbow-bar{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--rainbow-1),var(--rainbow-2),var(--rainbow-3),var(--rainbow-4),var(--rainbow-5),var(--rainbow-6));margin:1rem 0}
+/* LGTBI CARD */
+.lgtbi-card{border-left:4px solid;border-radius:0 var(--r) var(--r) 0;padding:1rem 1.25rem;margin-bottom:.75rem;background:var(--white)}
+.lgtbi-term{font-weight:600;font-size:.9rem;margin-bottom:.2rem}
+.lgtbi-def{font-size:.84rem;color:var(--ink2);font-weight:300;line-height:1.6}
+.lgtbi-norm{font-family:var(--mono);font-size:.6rem;color:var(--ink3);margin-top:.3rem}
+/* PROTOCOL STEPS */
+.proto-step{display:flex;gap:1rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid var(--rule)}
+.proto-step:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.proto-num{min-width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1rem;flex-shrink:0;margin-top:2px}
+.proto-num.purple{background:var(--purple)}
+.proto-content h4{font-size:.88rem;font-weight:600;margin-bottom:.3rem}
+.proto-content p{font-size:.84rem;color:var(--ink2);font-weight:300;line-height:1.6}
+/* TIMELINE */
+.timeline{border-left:3px solid var(--purple);padding-left:1.5rem;margin:1.5rem 0}
+.tl-item{position:relative;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px dashed var(--rule)}
+.tl-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.tl-item::before{content:'';position:absolute;left:-1.9rem;top:4px;width:12px;height:12px;border-radius:50%;background:var(--purple);border:2px solid var(--white)}
+.tl-date{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.25rem}
+.tl-title{font-weight:600;font-size:.88rem;margin-bottom:.2rem}
+.tl-body{font-size:.83rem;color:var(--ink2);font-weight:300;line-height:1.6}
+/* ══ TIMER LOCK ══ */
+.timer-lock{
+  display:none;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:6px;
+  background:rgba(138,95,0,.12);
+  border:1px solid rgba(138,95,0,.25);
+  font-family:var(--mono);font-size:.65rem;
+  color:var(--amber);white-space:nowrap;
+}
+.timer-lock.visible{display:flex}
+.timer-count{font-weight:700;min-width:18px;text-align:center}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="tb-left">
+      <div class="tb-logo"><img id="logo-img" alt="Live Nation"></div>
+      <div class="tb-sep"></div>
+      <div class="tb-course">IGUALDAD, DIVERSIDAD E INCLUSIÓN LGTBI+ · CURSO C</div>
+    </div>
+    <div class="tb-right">
+      <div class="tb-pct" id="tb-pct">0%</div>
+      <div class="tb-bar"><div class="tb-bar-fill" id="tb-fill" style="width:0%"></div></div>
+      <button class="tb-back" onclick="goPortal()">← Portal</button>
+    </div>
+  </div>
+
+  <div id="main">
+    <nav id="rail"></nav>
+    <div id="content">
+
+<!-- ══ PAGE 0: PORTADA ══ -->
+<div class="page" id="pg-0">
+  <div style="padding:1rem 0">
+    <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:1.25rem;display:flex;align-items:center;gap:10px">
+      <span style="width:24px;height:2px;background:var(--purple);display:block"></span>
+      Formación obligatoria · Live Nation España, S.A.U · 2026
+    </div>
+    <div class="rainbow-bar" style="height:5px;margin-bottom:1.5rem"></div>
+    <h1 style="font-family:var(--serif);font-size:clamp(2.8rem,5vw,4rem);line-height:.92;letter-spacing:.02em;margin-bottom:1rem">
+      IGUALDAD,<br>DIVERSIDAD<br><span style="color:var(--purple)">E INCLUSIÓN LGTBI+</span>
+    </h1>
+    <p style="font-size:1rem;color:var(--ink2);font-weight:300;max-width:520px;line-height:1.75;margin-bottom:1.5rem">Formación obligatoria basada en el <strong>Plan de Igualdad de LN España (febrero 2026)</strong> y el <strong>Plan de Igualdad y No Discriminación LGTBI+ (2026-2030)</strong>, en cumplimiento de la <strong>Ley 4/2023</strong> y el <strong>RD 1026/2024</strong>.</p>
+
+    <div class="box box-purple" style="margin-bottom:1rem">
+      <div class="box-lbl">Base normativa y documental</div>
+      <div class="box-txt">
+        <span class="norm">LO 3/2007</span> <span class="norm">RDL 6/2019</span> <span class="norm">RD 901/2020</span> <span class="norm">RD 902/2020</span> <span class="norm">Ley 15/2022</span> <span class="norm">Ley 4/2023</span> <span class="norm">RD 1026/2024</span> <span class="norm">ET Art. 4.2.c</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--white);border:1px solid var(--rule);border-radius:100px;font-size:.78rem;color:var(--ink2)">📚 12 unidades + mini-tests</div>
+      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--white);border:1px solid var(--rule);border-radius:100px;font-size:.78rem;color:var(--ink2)">⏱️ ~75 minutos</div>
+      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--white);border:1px solid var(--rule);border-radius:100px;font-size:.78rem;color:var(--ink2)">✅ 15 preguntas · Mín. 70%</div>
+      <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--white);border:1px solid var(--rule);border-radius:100px;font-size:.78rem;color:var(--ink2)">🎓 Certificado personalizado</div>
+    </div>
+
+    <div class="box box-amber">
+      <div class="box-lbl">⚠️ Límite de intentos</div>
+      <div class="box-txt">Dispones de <strong>3 intentos</strong> para superar el quiz final. Si los agotás, contacta con RRHH para formación adicional.</div>
+    </div>
+
+    <div style="margin-top:1rem;padding:1rem 1.25rem;background:var(--blue-bg);border:1px solid #c5d6ec;border-radius:var(--r);font-size:.78rem;color:var(--ink3);line-height:1.65">
+      <strong style="color:var(--blue)">Aviso RGPD</strong> · Los datos identificativos que introdujiste se almacenan exclusivamente para el registro formativo conforme al <strong>RGPD (UE) 2016/679</strong> y la <strong>LOPDGDD</strong>. Responsable: Live Nation España, S.A.U · rrhh@livenation.es
+    </div>
+    <div style="margin-top:1.5rem">
+      <button class="btn btn-purple" style="padding:12px 30px;font-size:.95rem" onclick="goTo(1)">Comenzar el curso →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 1: PLAN IGUALDAD DATOS REALES ══ -->
+<div class="page" id="pg-1">
+  <div style="background:var(--ink);margin:-2.5rem -3rem 2rem;padding:3rem 3rem 2.5rem;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(123,45,139,.06) 30px,rgba(123,45,139,.06) 60px)"></div>
+    <div style="position:relative;z-index:1">
+      <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#c77dff;margin-bottom:1rem;display:flex;align-items:center;gap:8px">
+        <span style="width:20px;height:2px;background:#c77dff;display:block"></span>Bloque I · Unidad 1 de 12
+      </div>
+      <h1 style="font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.5rem);color:#fff;line-height:.95;letter-spacing:.02em;margin-bottom:1rem">NUESTRO PLAN<br>DE IGUALDAD<br><span style="color:#c77dff">NUESTRO COMPROMISO</span></h1>
+      <p style="font-size:.95rem;color:rgba(255,255,255,.55);font-weight:300;max-width:500px;line-height:1.75">Live Nation España firmó su primer Plan de Igualdad en febrero de 2026, negociado con CCOO. No porque la ley lo exija, sino porque construir una empresa más igualitaria es algo que hacemos entre todas las personas que formamos Live Nation España.</p>
+    </div>
+  </div>
+
+  <div class="sec-lbl">De dónde venimos y hacia dónde vamos — LN España 2026</div>
+
+  <svg viewBox="0 0 680 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:var(--r);margin-bottom:1.25rem;display:block">
+    <rect width="680" height="340" fill="#1a0a24" rx="12"/>
+    <defs><pattern id="dotgp2" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r=".8" fill="rgba(199,125,255,.08)"/></pattern></defs>
+    <rect width="680" height="340" fill="url(#dotgp2)" rx="12"/>
+    <text x="24" y="22" font-family="monospace" font-size="8" fill="rgba(255,255,255,.3)" letter-spacing="1.5">LIVE NATION ESPAÑA · PLAN DE IGUALDAD FEBRERO 2026 · NUESTRO PUNTO DE PARTIDA Y COMPROMISO</text>
+
+    <!-- BLOQUE 1: Plantilla equilibrada -->
+    <rect x="20" y="36" width="196" height="115" rx="8" fill="rgba(123,45,139,.35)" stroke="#7b2d8b" stroke-width="1.5"/>
+    <text x="40" y="74" font-family="'Bebas Neue',sans-serif" font-size="42" fill="#c77dff" letter-spacing="1">+50%</text>
+    <text x="40" y="91" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">de la plantilla son mujeres.</text>
+    <text x="40" y="105" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">Una base sólida sobre la que</text>
+    <text x="40" y="119" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">seguir construyendo igualdad</text>
+    <text x="40" y="133" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">en todos los niveles.</text>
+    <text x="40" y="143" font-family="monospace" font-size="7" fill="rgba(255,255,255,.25)">72 personas trabajadoras · Enero 2026</text>
+
+    <!-- BLOQUE 2: Retribución transparente -->
+    <rect x="228" y="36" width="196" height="115" rx="8" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+    <text x="248" y="74" font-family="'Bebas Neue',sans-serif" font-size="42" fill="#fff" letter-spacing="1">47</text>
+    <text x="248" y="91" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">puestos valorados con</text>
+    <text x="248" y="105" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">perspectiva de género para</text>
+    <text x="248" y="119" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">garantizar la transparencia</text>
+    <text x="248" y="133" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">retributiva. Dato auditado.</text>
+    <text x="248" y="143" font-family="monospace" font-size="7" fill="rgba(255,255,255,.25)">Herramienta Ministerio Igualdad · RD 902/2020</text>
+
+    <!-- BLOQUE 3: Participación -->
+    <rect x="436" y="36" width="224" height="115" rx="8" fill="rgba(255,255,255,.03)" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+    <text x="456" y="74" font-family="'Bebas Neue',sans-serif" font-size="42" fill="#fff" letter-spacing="1">45%</text>
+    <text x="456" y="91" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">de la plantilla respondió la</text>
+    <text x="456" y="105" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">encuesta de diagnóstico.</text>
+    <text x="456" y="119" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">Vuestras opiniones están</text>
+    <text x="456" y="133" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.65)" font-weight="300">en este Plan. Gracias.</text>
+    <text x="456" y="143" font-family="monospace" font-size="7" fill="rgba(255,255,255,.25)">Encuesta interna PI 2025 · RD 901/2020</text>
+
+    <!-- BLOQUE 4: Áreas de mejora -->
+    <rect x="20" y="165" width="300" height="75" rx="8" fill="rgba(123,45,139,.2)" stroke="rgba(123,45,139,.5)" stroke-width="1"/>
+    <text x="40" y="186" font-family="monospace" font-size="7.5" fill="#c77dff" letter-spacing="1">ÁREAS EN LAS QUE NOS COMPROMETEMOS A AVANZAR</text>
+    <text x="40" y="201" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="300">Mayor presencia femenina en cargos de mayor responsabilidad.</text>
+    <text x="40" y="216" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="300">Corresponsabilidad real: los cuidados no son solo cosa de mujeres.</text>
+    <text x="40" y="230" font-family="monospace" font-size="7" fill="rgba(255,255,255,.25)">Plan de Acción 2026-2030 · Medidas 1-12</text>
+
+    <!-- BLOQUE 5: Women Circles -->
+    <rect x="334" y="165" width="326" height="75" rx="8" fill="rgba(26,107,60,.2)" stroke="#1a6b3c" stroke-width="1"/>
+    <text x="354" y="186" font-family="monospace" font-size="7.5" fill="#4db87a" letter-spacing="1">LIVE NATION WOMEN CIRCLES — WOMAN NATION</text>
+    <text x="354" y="201" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="300">Red global de LN para visibilizar y potenciar el talento femenino.</text>
+    <text x="354" y="216" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.7)" font-weight="300">Liderazgo, mentoring y redes de apoyo. Activa en LN España.</text>
+    <text x="354" y="230" font-family="monospace" font-size="7" fill="rgba(255,255,255,.25)">ERG global · Plan de Igualdad LN España 2026</text>
+
+    <!-- BLOQUE 6: Compromiso institucional -->
+    <rect x="20" y="255" width="640" height="65" rx="8" fill="rgba(123,45,139,.3)" stroke="#7b2d8b" stroke-width="1.5"/>
+    <text x="40" y="275" font-family="monospace" font-size="7.5" fill="#c77dff" letter-spacing="1">NUESTRO COMPROMISO — PLAN DE IGUALDAD 27 FEB 2026 — VIGENCIA 2026-2030</text>
+    <text x="40" y="291" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">Este Plan no es un documento de archivo. Es un compromiso vivo, negociado con CCOO, con objetivos concretos, plazos y una Comisión de Seguimiento.</text>
+    <text x="40" y="309" font-family="sans-serif" font-size="9" fill="rgba(255,255,255,.75)" font-weight="300">Cada persona de LN España tiene un papel activo en que avancemos. La igualdad no se hace sola: se hace juntas y juntos.</text>
+  </svg>
+
+  <!-- Datos clave como texto HTML accesible -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem;border-top:3px solid var(--purple)">
+      <div style="font-family:var(--serif);font-size:2rem;color:var(--purple);line-height:1;margin-bottom:.3rem">45%</div>
+      <div style="font-size:.8rem;color:var(--ink2);font-weight:300;line-height:1.6">de la plantilla participó en la encuesta de diagnóstico. <strong>Este plan se construyó con vuestras opiniones.</strong> <span class="norm">RD 901/2020</span></div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem;border-top:3px solid var(--purple)">
+      <div style="font-family:var(--serif);font-size:1.6rem;color:var(--purple);line-height:1;margin-bottom:.3rem">Women Circles</div>
+      <div style="font-size:.8rem;color:var(--ink2);font-weight:300;line-height:1.6">Live Nation Women Circles (Woman Nation) — red global de liderazgo, mentoring y empoderamiento femenino. Activa en LN España.</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem;border-top:3px solid var(--green)">
+      <div style="font-family:var(--serif);font-size:2rem;color:var(--green);line-height:1;margin-bottom:.3rem">47</div>
+      <div style="font-size:.8rem;color:var(--ink2);font-weight:300;line-height:1.6">puestos valorados con perspectiva de género para garantizar que la retribución es transparente y equitativa. <span class="norm">RD 902/2020</span></div>
+    </div>
+  </div>
+
+  <div style="background:var(--ink);border-radius:var(--r);padding:2rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-10px;top:-10px;font-size:8rem;opacity:.04;font-family:'Bebas Neue',sans-serif;line-height:1">LNE</div>
+    <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#c77dff;margin-bottom:.75rem">Nuestro enfoque</div>
+    <p style="font-size:1.05rem;color:#fff;font-weight:300;line-height:1.8;font-style:italic;max-width:560px">La igualdad real no se decreta con un documento. Reconocer dónde estamos — con honestidad y sin dramatismo — es el primer paso para ir a donde queremos llegar. Este Plan es nuestra hoja de ruta compartida.</p>
+    <div style="margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.4)">Comisión Negociadora del Plan de Igualdad · Live Nation España, S.A.U · Febrero 2026</div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">Vigencia y seguimiento</div>
+    <div class="box-txt">El Plan de Igualdad es válido <strong>del 27 de febrero de 2026 al 27 de febrero de 2030</strong>. La Comisión de Seguimiento (empresa + CCOO) se reúne semestralmente y elabora un informe anual de evaluación. <span class="norm">RD 901/2020</span></div>
+  </div>
+
+  <div class="mq" id="mq-1">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">El Plan de Igualdad de LN España identifica que hay menor presencia de mujeres en los cargos de mayor responsabilidad. ¿Cómo se llama este tipo de desigualdad, que el Plan se compromete a reducir?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-1',0,false,'La brecha salarial es la diferencia en retribución entre hombres y mujeres. No describe la concentración en distintos niveles jerárquicos.')"><div class="mq-radio"></div><span>Brecha salarial</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-1',1,true,'Correcto. La segregación vertical (también llamada techo de cristal) es la menor presencia de mujeres en los niveles más altos de la jerarquía, a pesar de estar bien representadas en la plantilla general. El Plan de LN España incluye medidas concretas para avanzar en este aspecto.')"><div class="mq-radio"></div><span>Segregación vertical o techo de cristal</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-1',2,false,'La segregación horizontal describe la concentración de cada sexo en diferentes categorías o departamentos, no en distintos niveles jerárquicos.')"><div class="mq-radio"></div><span>Segregación horizontal</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-1"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2: CONCEPTOS IGUALDAD ══ -->
+<div class="page" id="pg-2">
+  <div class="lh">
+    <div class="lh-eye">Bloque I · Unidad 2 de 12 · Conceptos clave</div>
+    <h1 class="lh-title">CONCEPTOS<br>QUE DEBES<br>CONOCER</h1>
+    <p class="lh-lead">La igualdad tiene un vocabulario preciso con definición legal exacta. Usarlo bien es la diferencia entre identificar un problema y normalizarlo.</p>
+    <div class="lh-norm"><span class="norm">LO 3/2007 Arts. 3-8</span> <span class="norm">Ley 15/2022</span> <span class="norm">RD 901/2020</span></div>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>Concepto</th><th>Definición legal</th><th>Ejemplo real en LN España</th></tr>
+    <tr><td><strong>Igualdad de trato</strong></td><td>Ausencia de toda discriminación directa o indirecta por razón de sexo <span class="norm">Art. 3 LO 3/2007</span></td><td>Mismas condiciones de contratación, promoción y despido para hombres y mujeres con igual cualificación</td></tr>
+    <tr><td><strong>Discriminación directa</strong></td><td>Trato menos favorable a una persona por su sexo en situación comparable <span class="norm">Art. 6.1 LO 3/2007</span></td><td>No contratar a una mujer porque "puede quedarse embarazada" o pagarle menos por el mismo trabajo</td></tr>
+    <tr><td><strong>Discriminación indirecta</strong></td><td>Disposición aparentemente neutra que pone a personas de un sexo en desventaja <span class="norm">Art. 6.2 LO 3/2007</span></td><td>Exigir disponibilidad total para promocionar — penaliza a quien asume cuidados (mayoritariamente mujeres)</td></tr>
+    <tr><td><strong>Brecha salarial</strong></td><td>Diferencia promedio entre salarios de hombres y mujeres <span class="norm">RD 902/2020</span></td><td>LN España: 16% en mediana, justificada por concentración de hombres en puestos de mayor valoración</td></tr>
+    <tr><td><strong>Acción positiva</strong></td><td>Medida que favorece al sexo infrarrepresentado a igual mérito para corregir desigualdades <span class="norm">Art. 11 LO 3/2007</span></td><td>El Plan de LN propone preferencia del sexo menos representado en selección cuando los méritos sean iguales</td></tr>
+    <tr><td><strong>Corresponsabilidad</strong></td><td>Distribución equitativa de responsabilidades domésticas y de cuidado entre hombres y mujeres</td><td>LN España: solo mujeres usan reducción de jornada por guarda legal. Los hombres no la ejercen.</td></tr>
+  </table></div>
+
+  <div class="mq" id="mq-2">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">LN España requiere "disponibilidad total" para acceder a puestos de mayor responsabilidad. Estadísticamente esto afecta más a las mujeres porque asumen más cuidados. ¿Qué tipo de discriminación puede ser?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-2',0,false,'La discriminación directa requiere mención explícita del sexo. Aquí el criterio parece neutro pero tiene impacto desproporcionado.')"><div class="mq-radio"></div><span>Discriminación directa</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-2',1,true,'Correcto. La discriminación indirecta es exactamente esto: un criterio aparentemente neutro que pone en desventaja a un sexo de forma estadísticamente significativa. Art. 6.2 LO 3/2007.')"><div class="mq-radio"></div><span>Discriminación indirecta — criterio neutro con impacto desproporcionado sobre las mujeres</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-2',2,false,'Si el efecto estadístico perjudica desproporcionadamente a las mujeres, puede constituir discriminación indirecta que debe justificarse objetivamente.')"><div class="mq-radio"></div><span>No es discriminación: es un requisito objetivo del puesto</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-2"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 3: SESGOS INCONSCIENTES ══ -->
+<div class="page" id="pg-3">
+  <div class="lh">
+    <div class="lh-eye">Bloque I · Unidad 3 de 12 · Sesgos inconscientes</div>
+    <h1 class="lh-title">SESGOS<br>INCONSCIENTES</h1>
+    <p class="lh-lead">Son la causa principal de la discriminación que no se ve. No requieren mala intención. Funcionan automáticamente y afectan decisiones de selección, promoción y evaluación.</p>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">¿Qué es un sesgo inconsciente?</div>
+    <div class="box-txt">Asociaciones mentales automáticas que nuestra mente construye a partir de estereotipos culturales. No son conscientes ni intencionales, pero influyen directamente en cómo evaluamos a las personas. <strong>Todos los tenemos. La primera defensa es reconocerlos.</strong></div>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>Sesgo</th><th>Cómo funciona</th><th>Impacto en selección/promoción</th></tr>
+    <tr><td><strong>Sesgo de afinidad</strong></td><td>Valoramos más a quien se parece a nosotros (origen, estilo, intereses)</td><td>Equipos directivos masculinos tienden a promover más a hombres, sin darse cuenta</td></tr>
+    <tr><td><strong>Sesgo de confirmación</strong></td><td>Buscamos información que confirme lo que ya creemos</td><td>"Sabía que no aguantaría la presión" — aplicamos el estereotipo antes de que ocurra</td></tr>
+    <tr><td><strong>Sesgo de atribución</strong></td><td>Los éxitos femeninos se atribuyen a factores externos; los masculinos, a mérito</td><td>"Tuvo suerte" vs. "Es bueno en su trabajo" para el mismo resultado</td></tr>
+    <tr><td><strong>Sesgo del "hombre normativo"</strong></td><td>El estereotipo de "liderazgo" se asocia inconscientemente con atributos masculinos</td><td>Mujeres directivas percibidas como "demasiado agresivas" por comportamientos que en hombres se llaman "liderazgo"</td></tr>
+    <tr><td><strong>Sesgo maternal</strong></td><td>Dar por sentado que una mujer reducirá su compromiso laboral si tiene hijos</td><td>Descartarla de una promoción antes de que ocurra. Ilegal: <span class="norm">Art. 8 LO 3/2007</span></td></tr>
+  </table></div>
+
+  <div class="box box-purple">
+    <div class="box-lbl">Cómo actuar contra los sesgos en LN España</div>
+    <div class="box-txt">El Plan de Igualdad de LN España establece criterios de selección y promoción documentados, transparentes y basados solo en méritos. Si en un proceso ves que un criterio parece neutro pero excluye sistemáticamente a un sexo, es señal de alerta. Puedes comunicarlo a <strong>rrhh@livenation.es</strong> o a través del canal ético <strong>canal.uneon.es/livenation/</strong></div>
+  </div>
+
+  <div class="mq" id="mq-3">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">Un manager asume automáticamente que una trabajadora que acaba de anunciar que está embarazada ya no querrá viajar a conciertos. Sin preguntarle, no la incluye en la planificación de la gira de verano. ¿Qué sesgo opera aquí?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-3',0,false,'El sesgo de afinidad tiene que ver con valorar más a quien se parece a ti, no con estereotipos sobre maternidad.')"><div class="mq-radio"></div><span>Sesgo de afinidad</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-3',1,true,'Correcto. El sesgo maternal lleva al manager a asumir que el embarazo cambiará la disponibilidad de la trabajadora antes de que ocurra y sin preguntarle. Además de un sesgo, puede constituir discriminación por embarazo, que es ilegal (Art. 8 LO 3/2007).')"><div class="mq-radio"></div><span>Sesgo maternal — asume consecuencias del embarazo sin preguntar a la trabajadora</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-3',2,false,'El sesgo de confirmación implica buscar información que confirme una creencia previa. Aquí el problema es una suposición automática sobre el embarazo.')"><div class="mq-radio"></div><span>Sesgo de confirmación</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-3"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 4: GLOSARIO LGTBI+ ══ -->
+<div class="page" id="pg-4">
+  <div style="background:var(--ink);margin:-2.5rem -3rem 2rem;padding:3rem 3rem 2.5rem;position:relative;overflow:hidden">
+    <div class="rainbow-bar" style="position:absolute;bottom:0;left:0;right:0;border-radius:0;height:5px"></div>
+    <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#c77dff;margin-bottom:1rem;display:flex;align-items:center;gap:8px">
+      <span style="width:20px;height:2px;background:#c77dff;display:block"></span>Bloque II · Unidad 4 de 12
+    </div>
+    <h1 style="font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.5rem);color:#fff;line-height:.95;letter-spacing:.02em;margin-bottom:1rem">DIVERSIDAD<br>LGTBI+<br><span style="color:#c77dff">GLOSARIO ESENCIAL</span></h1>
+    <p style="font-size:.95rem;color:rgba(255,255,255,.55);font-weight:300;max-width:500px;line-height:1.75">Desde el 1 de enero de 2025, LN España tiene la obligación legal de contar con un Plan LGTBI+ negociado. Conocer el vocabulario correcto es el primer paso para una inclusión real.</p>
+    <div style="margin-top:.75rem;display:flex;gap:.4rem;flex-wrap:wrap">
+      <span class="norm">Ley 4/2023</span><span class="norm">RD 1026/2024</span><span class="norm">ET Art. 4.2.c</span>
+    </div>
+  </div>
+
+  <div class="sec-lbl">Definiciones conforme a la Ley 4/2023 y el RD 1026/2024</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem">
+    <div class="lgtbi-card" style="border-color:var(--rainbow-1)">
+      <div class="lgtbi-term">LGTBI+</div>
+      <div class="lgtbi-def">Acrónimo que engloba a Lesbianas, Gays, Trans, Bisexuales e Intersexuales. El símbolo <strong>+</strong> representa todas las identidades no recogidas explícitamente: queer, no binarias, pansexuales, asexuales, etc.</div>
+      <div class="lgtbi-norm">Art. 3 Ley 4/2023</div>
+    </div>
+    <div class="lgtbi-card" style="border-color:var(--rainbow-2)">
+      <div class="lgtbi-term">Orientación sexual</div>
+      <div class="lgtbi-def">Atracción emocional, afectiva y/o sexual hacia otras personas, con independencia de su sexo o género. Incluye la orientación heterosexual, homosexual, bisexual, pansexual, asexual, entre otras.</div>
+      <div class="lgtbi-norm">Art. 3 Ley 4/2023</div>
+    </div>
+    <div class="lgtbi-card" style="border-color:var(--rainbow-3)">
+      <div class="lgtbi-term">Identidad de género</div>
+      <div class="lgtbi-def">Vivencia interna e individual del género tal y como cada persona lo siente y autodefine, pudiendo o no corresponder con el sexo asignado al nacer. Protegida por ley frente a cualquier discriminación.</div>
+      <div class="lgtbi-norm">Art. 3 Ley 4/2023 · ET Art. 4.2.c</div>
+    </div>
+    <div class="lgtbi-card" style="border-color:var(--rainbow-4)">
+      <div class="lgtbi-term">Expresión de género</div>
+      <div class="lgtbi-def">Manifestación externa de la identidad de género a través de la apariencia, vestimenta, comportamiento, nombre o pronombres elegidos por la persona. No tiene que coincidir con los estereotipos de género binarios.</div>
+      <div class="lgtbi-norm">Art. 3 Ley 4/2023</div>
+    </div>
+    <div class="lgtbi-card" style="border-color:var(--rainbow-5)">
+      <div class="lgtbi-term">Persona trans</div>
+      <div class="lgtbi-def">Persona cuya identidad de género no se corresponde con el sexo asignado al nacer. Incluye personas transexuales, transgénero y no binarias. La Ley 4/2023 reconoce el derecho a la autodeterminación de género.</div>
+      <div class="lgtbi-norm">Ley 4/2023 · RD 1026/2024</div>
+    </div>
+    <div class="lgtbi-card" style="border-color:var(--rainbow-6)">
+      <div class="lgtbi-term">LGTBIfobia</div>
+      <div class="lgtbi-def">Toda actitud, conducta o discurso de rechazo, repudio, prejuicio, discriminación o intolerancia hacia las personas LGTBI+ por el hecho de serlo o ser percibidas como tales. En el entorno laboral puede constituir una infracción grave o muy grave.</div>
+      <div class="lgtbi-norm">Art. 15.1 Ley 4/2023 · Plan LGTBI+ LN España</div>
+    </div>
+  </div>
+
+  <div class="box box-ink">
+    <div class="box-lbl">Intersexualidad</div>
+    <div class="box-txt">Condición de personas nacidas con características biológicas, anatómicas o fisiológicas que no se ajustan a las nociones socialmente establecidas de cuerpos masculinos o femeninos. La intersexualidad no es una identidad de género ni una orientación sexual — es una realidad biológica que forma parte de la diversidad humana.</div>
+  </div>
+
+  <div class="mq" id="mq-4">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">Un compañero de trabajo utiliza consistentemente el nombre "antiguo" de una trabajadora trans después de que ella ha comunicado su nombre elegido y pronombres. ¿Cómo se clasifica esto?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-4',0,false,'No es un simple malentendido si ocurre de forma consistente después de que la persona ha comunicado su nombre elegido.')"><div class="mq-radio"></div><span>Es un error involuntario sin importancia</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-4',1,true,'Correcto. Usar el nombre y pronombres equivocados de forma sistemática después de ser informado constituye una microagresión LGTBIfóbica que atenta contra la dignidad de la persona. Puede escalar a acoso discriminatorio. El Plan LGTBI+ de LN España garantiza el uso del nombre elegido en todos los sistemas internos.')"><div class="mq-radio"></div><span>Una microagresión y posible acoso discriminatorio por razón de identidad de género</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-4',2,false,'La libertad de expresión no incluye el derecho a ignorar la identidad de género de una persona en el entorno laboral. El ET Art. 4.2.c prohíbe expresamente la discriminación por identidad de género.')"><div class="mq-radio"></div><span>Es libertad de expresión, no hay problema legal</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-4"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 5: PLAN LGTBI+ MEDIDAS ══ -->
+<div class="page" id="pg-5">
+  <div class="lh">
+    <div class="lh-eye">Bloque II · Unidad 5 de 12 · Plan LGTBI+ LN España</div>
+    <h1 class="lh-title">PLAN LGTBI+<br>LN ESPAÑA<br><span style="color:var(--purple)">2026-2030</span></h1>
+    <p class="lh-lead">Live Nation España tiene un Plan de Igualdad y No Discriminación LGTBI+ obligatorio desde el 1 de enero de 2025, negociado con la RLT, con 7 áreas de actuación y vigencia 2026-2030.</p>
+    <div class="lh-norm"><span class="norm">Ley 4/2023 Art. 15.1</span><span class="norm">RD 1026/2024</span><span class="norm">Expediente 90/11/0499/2026</span></div>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-lbl">¿Por qué es obligatorio?</div>
+    <div class="box-txt">El <strong>Art. 15.1 de la Ley 4/2023</strong> obliga a empresas de más de 50 personas trabajadoras a contar con un conjunto planificado de medidas LGTBI+, incluyendo un protocolo de acoso. Live Nation España tiene <strong>72 trabajadoras y trabajadores</strong>, por lo que la obligación es de plena aplicación.</div>
+  </div>
+
+  <h3 class="sh">Las 7 áreas del Plan LGTBI+ de LN España</h3>
+  <div class="tw"><table>
+    <tr><th>Área</th><th>Medidas clave</th><th>Plazo</th></tr>
+    <tr><td><strong>1. Igualdad de trato</strong></td><td>Declaración institucional de compromiso LGTBI+ · Revisión de normativa interna con perspectiva LGTBI+</td><td>1er semestre 2026</td></tr>
+    <tr><td><strong>2. Acceso al empleo</strong></td><td>Procesos de selección libres de sesgo LGTBI+ · Lenguaje neutro en todas las ofertas · Cláusula LGTBI+ en contratos con ETT</td><td>Inmediato / 2026</td></tr>
+    <tr><td><strong>3. Clasificación y promoción</strong></td><td>Criterios de promoción documentados y libres de sesgo LGTBI+ · Coordinado con el PI de género</td><td>2º sem. 2026</td></tr>
+    <tr><td><strong>4. Formación y sensibilización</strong></td><td>Formación obligatoria en diversidad LGTBI+ para toda la plantilla (este curso) · Sensibilización en fechas clave (17/5, 28/6, 31/3) · Guía de lenguaje inclusivo</td><td>1er semestre 2026</td></tr>
+    <tr><td><strong>5. Entorno seguro e inclusivo</strong></td><td>Persona de referencia: <strong>Belén Montesino</strong> (belen@livenation.es · 93 459 23 62) · Protocolo trans · Onboarding LGTBI+</td><td>1er sem. 2026</td></tr>
+    <tr><td><strong>6. Permisos y beneficios</strong></td><td>Igualdad de permisos para todas las configuraciones familiares LGTBI+ (homoparentales, trans, etc.)</td><td>Inmediato</td></tr>
+    <tr><td><strong>7. Régimen disciplinario</strong></td><td>Falta leve: expresiones ofensivas · Falta grave: trato desfavorable reiterado · Falta muy grave: acoso, represalias — hasta despido</td><td>Vigente</td></tr>
+  </table></div>
+
+  <div class="box box-purple">
+    <div class="box-lbl">Pride Nation — Red global LGTBI+ de Live Nation</div>
+    <div class="box-txt">A nivel global, Live Nation cuenta con <strong>Pride Nation</strong> — Employee Resource Group LGBTQ+. En el Learning Hub (plataforma Backstage) están disponibles cursos on-demand: <em>Creating a Trans-Inclusive Workplace</em>, <em>Respect and Gender Identity</em>, <em>Using Proper Pronouns</em>, <em>Uplifting LGBTQIA+ Voices</em> y <em>Coming Out at Work</em>. Estos cursos se computan como formación acreditada.</div>
+  </div>
+
+  <div class="mq" id="mq-5">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">¿A partir de qué número de personas trabajadoras es obligatorio el Plan LGTBI+ según la Ley 4/2023?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-5',0,false,'Los 100 trabajadores es el umbral de otras obligaciones. El Plan LGTBI+ aplica desde los 50.')"><div class="mq-radio"></div><span>100 personas trabajadoras</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-5',1,true,'Correcto. El Art. 15.1 de la Ley 4/2023 fija en 50 el umbral. Live Nation España tiene 72 trabajadoras y trabajadores, por lo que la obligación es plenamente aplicable.')"><div class="mq-radio"></div><span>50 personas trabajadoras</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-5',2,false,'Las empresas de 250 o más tienen otras obligaciones adicionales. El Plan LGTBI+ aplica desde los 50.')"><div class="mq-radio"></div><span>250 personas trabajadoras</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-5"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 6: PROTOCOLO ACOSO LGTBI+ ══ -->
+<div class="page" id="pg-6">
+  <div class="lh">
+    <div class="lh-eye">Bloque II · Unidad 6 de 12 · Protocolo acoso LGTBI+</div>
+    <h1 class="lh-title">PROTOCOLO DE<br>ACTUACIÓN<br><span style="color:var(--purple)">FRENTE AL ACOSO LGTBI+</span></h1>
+    <p class="lh-lead">El Plan LGTBI+ de LN España incluye un protocolo obligatorio de actuación frente al acoso y la violencia contra personas LGTBI+, complementario al Protocolo de Acoso Sexual vigente.</p>
+    <div class="lh-norm"><span class="norm">Art. 15.1 Ley 4/2023</span><span class="norm">Ley 2/2023 canal informante</span></div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">¿Qué es el acoso discriminatorio LGTBI+?</div>
+    <div class="box-txt">Comportamiento que, por razones de orientación sexual, identidad o expresión de género, <strong>atenta contra la dignidad de una persona creando un entorno intimidatorio, hostil, degradante u ofensivo</strong>. Un único incidente grave puede ser suficiente.</div>
+  </div>
+
+  <h3 class="sh">Principios del protocolo</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem">
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.3rem">🔒 Confidencialidad</div>
+      <div style="font-size:.82rem;color:var(--ink2);font-weight:300">Todas las personas que intervengan guardarán estricta confidencialidad sobre los datos del caso</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.3rem">⚡ Diligencia</div>
+      <div style="font-size:.82rem;color:var(--ink2);font-weight:300">Investigación sin demoras indebidas, respetando los plazos establecidos en el protocolo</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.3rem">⚖️ Imparcialidad</div>
+      <div style="font-size:.82rem;color:var(--ink2);font-weight:300">Tratamiento justo para todas las partes. La persona denunciada tiene derecho a conocer los hechos y ser escuchada</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1rem">
+      <div style="font-weight:600;font-size:.85rem;margin-bottom:.3rem">🛡️ Sin represalias</div>
+      <div style="font-size:.82rem;color:var(--ink2);font-weight:300">Las represalias contra quien denuncia, testifica o colabora están expresamente prohibidas. Son falta muy grave.</div>
+    </div>
+  </div>
+
+  <h3 class="sh">Fases del procedimiento</h3>
+  <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem">
+    <div class="proto-step">
+      <div class="proto-num purple">1</div>
+      <div class="proto-content">
+        <h4>Comunicación y asesoramiento (máximo 10 días laborables)</h4>
+        <p>Contactar con <strong>Belén Montesino</strong> (rrhh@livenation.es / belen@livenation.es / 93 459 23 62). La persona de referencia escucha de forma confidencial, informa sobre opciones disponibles y propone medidas cautelares si es necesario.</p>
+      </div>
+    </div>
+    <div class="proto-step">
+      <div class="proto-num purple">2</div>
+      <div class="proto-content">
+        <h4>Denuncia formal e investigación (máximo 30 días laborables)</h4>
+        <p>Si se decide denunciar formalmente, la Comisión de Investigación se activa en máximo 3 días hábiles. Entrevistas separadas a denunciante, denunciado/a y testigos. Valoración de medidas cautelares (separación de partes, cambio temporal de puesto).</p>
+      </div>
+    </div>
+    <div class="proto-step">
+      <div class="proto-num purple">3</div>
+      <div class="proto-content">
+        <h4>Resolución (máximo 15 días tras el informe)</h4>
+        <p>Si hay evidencias: expediente disciplinario + medidas correctoras. Si no hay evidencias: archivo de la denuncia. Seguimiento a los 30 días del cierre para verificar el cumplimiento de las medidas.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="sh">Canales de denuncia</h3>
+  <div class="tw"><table>
+    <tr><th>Canal</th><th>Contacto</th><th>Para qué</th></tr>
+    <tr><td><strong>Persona de referencia RRHH</strong></td><td>Belén Montesino · belen@livenation.es · 93 459 23 62</td><td>Consultas, asesoramiento, denuncia no anónima</td></tr>
+    <tr><td><strong>Canal RRHH general</strong></td><td>rrhh@livenation.es</td><td>Canal oficial del PI y Plan LGTBI+</td></tr>
+    <tr><td><strong>Canal ético anónimo</strong></td><td>canal.uneon.es/livenation/</td><td>Denuncia anónima protegida (Ley 2/2023)</td></tr>
+    <tr><td><strong>Inspección de Trabajo</strong></td><td>Vía administrativa externa</td><td>Si se prefiere una vía externa a la empresa</td></tr>
+    <tr><td><strong>Pride Nation global</strong></td><td>PrideNationNA@LiveNation.com</td><td>Implicación con la comunidad LGTBI+ a nivel global</td></tr>
+  </table></div>
+
+  <div class="box box-amber">
+    <div class="box-lbl">⚠️ Régimen disciplinario para conductas LGTBIfóbicas</div>
+    <div class="box-txt"><strong>Falta leve:</strong> expresiones ofensivas puntuales. <strong>Falta grave:</strong> trato desfavorable reiterado, entorno intimidatorio u hostil. <strong>Falta muy grave:</strong> acoso discriminatorio, represalias, violación de confidencialidad de personas trans en transición, reiteración — hasta despido disciplinario.</div>
+  </div>
+
+  <div class="mq" id="mq-6">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">¿Cuál de estas conductas constituye una falta MUY GRAVE según el régimen disciplinario del Plan LGTBI+ de LN España?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-6',0,false,'Una expresión ofensiva puntual es una falta leve, no muy grave. Aunque debe corregirse, el régimen disciplinario escala según la gravedad y reiteración.')"><div class="mq-radio"></div><span>Usar una expresión ofensiva de forma puntual</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-6',1,false,'El trato desfavorable reiterado es una falta GRAVE. Pero si se repite o constituye acoso, puede escalar a muy grave.')"><div class="mq-radio"></div><span>Trato desfavorable reiterado hacia una persona LGTBI+</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-6',2,true,'Correcto. Las represalias contra quien presenta una denuncia son una falta MUY GRAVE, que puede conllevar el despido disciplinario. El Plan LGTBI+ de LN España lo recoge expresamente para proteger a las personas que denuncian.')"><div class="mq-radio"></div><span>Tomar represalias contra quien ha presentado una denuncia por acoso LGTBI+</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-6"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 7: PROTOCOLO TRANS ══ -->
+<div class="page" id="pg-7">
+  <div class="lh">
+    <div class="lh-eye">Bloque II · Unidad 7 de 12 · Acompañamiento trans</div>
+    <h1 class="lh-title">PROTOCOLO<br>DE ACOMPAÑAMIENTO<br><span style="color:var(--purple)">A PERSONAS TRANS</span></h1>
+    <p class="lh-lead">LN España está elaborando un protocolo específico para personas trans en proceso de transición. Aquí están las garantías que la empresa asume en el Plan LGTBI+ 2026-2030.</p>
+    <div class="lh-norm"><span class="norm">Ley 4/2023</span><span class="norm">RD 1026/2024</span><span class="norm">RGPD datos sensibles</span></div>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-lbl">Garantías del protocolo trans de LN España</div>
+    <div class="box-txt">
+      <div style="margin-bottom:.5rem">✅ <strong>Nombre elegido:</strong> uso del nombre y pronombres correctos en todos los sistemas internos desde el momento en que la persona lo comunica</div>
+      <div style="margin-bottom:.5rem">✅ <strong>Actualización de documentos:</strong> firma de email, tarjeta de acceso, sistemas RRHH — en los plazos acordados con la persona</div>
+      <div style="margin-bottom:.5rem">✅ <strong>Apoyo de RRHH:</strong> seguimiento discreto y confidencial a cargo de Belén Montesino durante el proceso</div>
+      <div style="margin-bottom:.5rem">✅ <strong>Formación del equipo:</strong> sensibilización al equipo directo cuando la persona lo solicite y autorice</div>
+      <div>✅ <strong>Confidencialidad estricta:</strong> la violación de la confidencialidad de una persona trans en transición es una falta MUY GRAVE</div>
+    </div>
+  </div>
+
+  <div class="box box-purple">
+    <div class="box-lbl">Protección de datos especialmente sensibles</div>
+    <div class="box-txt">La identidad de género y la orientación sexual son <strong>categorías especiales de datos</strong> según el <strong>RGPD (Art. 9)</strong>. Nadie en la empresa puede preguntar, registrar ni compartir si alguien es LGTBI+. El derecho a la privacidad de estas personas es absoluto, salvo que ellas mismas decidan compartirlo.</div>
+  </div>
+
+  <div class="box box-ink">
+    <div class="box-lbl">¿Qué hacer si un compañero o compañera te cuenta que está en proceso de transición?</div>
+    <div class="box-txt">
+      <div style="margin-bottom:.4rem">→ Escucha y apoya como lo harías con cualquier otra persona</div>
+      <div style="margin-bottom:.4rem">→ Usa siempre su nombre y pronombres elegidos</div>
+      <div style="margin-bottom:.4rem">→ No compartas esa información con terceros sin su consentimiento explícito</div>
+      <div style="margin-bottom:.4rem">→ Si tienes dudas, pregúntale directamente a ella/él/elle — no a terceros</div>
+      <div>→ Si alguien incumple su confidencialidad, es una falta muy grave que debes comunicar a RRHH</div>
+    </div>
+  </div>
+
+  <div class="mq" id="mq-7">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">Una trabajadora trans ha comunicado a RRHH su nombre elegido y pronombres. Su manager comenta en la comida con el equipo "ya sabéis que María es ahora Marco". ¿Qué ha hecho el manager?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-7',0,false,'No es una actitud de apoyo. Compartir el proceso de transición de una persona sin su consentimiento es una violación de confidencialidad y constituye una falta muy grave.')"><div class="mq-radio"></div><span>Ha apoyado a la trabajadora informando al equipo</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-7',1,true,'Correcto. Ha violado la confidencialidad de la trabajadora al compartir su proceso de transición sin su consentimiento explícito. Es una falta MUY GRAVE según el régimen disciplinario del Plan LGTBI+ de LN España, que puede conllevar el despido disciplinario.')"><div class="mq-radio"></div><span>Ha violado su confidencialidad sin su consentimiento — falta muy grave</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-7',2,false,'No es un asunto interno del equipo. La información sobre el proceso de transición de una persona pertenece exclusivamente a esa persona.')"><div class="mq-radio"></div><span>Ha hecho bien, el equipo debe saberlo para respetar a la compañera</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-7"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 8: LENGUAJE INCLUSIVO ══ -->
+<div class="page" id="pg-8">
+  <div class="lh">
+    <div class="lh-eye">Bloque III · Unidad 8 de 12 · Lenguaje inclusivo</div>
+    <h1 class="lh-title">LENGUAJE<br>INCLUSIVO<br><span style="color:var(--purple)">EN PRÁCTICA</span></h1>
+    <p class="lh-lead">El lenguaje no es neutro. Reproduce o cuestiona desigualdades. Live Nation España tiene la obligación de usar lenguaje inclusivo tanto en comunicaciones de género como en referencias LGTBI+.</p>
+    <div class="lh-norm"><span class="norm">Plan de Igualdad LN 2026 Medida 8.1</span><span class="norm">Plan LGTBI+ LN Medida 4.3</span></div>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>En lugar de…</th><th>Usar…</th><th>Por qué</th></tr>
+    <tr><td>"Los trabajadores"</td><td>"Las personas trabajadoras" o "la plantilla"</td><td>El genérico masculino excluye a las mujeres y personas no binarias</td></tr>
+    <tr><td>"El candidato ideal"</td><td>"La persona candidata ideal"</td><td>Masculino no neutro en ofertas puede desalentar candidaturas de mujeres</td></tr>
+    <tr><td>"Chicos" para un equipo mixto</td><td>"Equipo", "compañerxs", nombre del grupo</td><td>Invisibiliza a las mujeres del equipo</td></tr>
+    <tr><td>"¿Tienes novia/novio?"</td><td>"¿Tienes pareja?"</td><td>Asume heterosexualidad del interlocutor</td></tr>
+    <tr><td>"Los homosexuales"</td><td>"Las personas LGTBI+" o "las personas homosexuales"</td><td>Usar el sustantivo sin artículo cosifica; mejor con "personas"</td></tr>
+    <tr><td>Pronombres equivocados</td><td>Los pronombres que la persona usa (él/ella/elle)</td><td>Usar pronombres incorrectos de forma sistemática puede ser acoso discriminatorio</td></tr>
+    <tr><td>"Sufre de transexualismo"</td><td>"Es una persona trans" o "está en proceso de transición"</td><td>"Transexualismo" es un término patologizante ya descartado</td></tr>
+    <tr><td>"Normal" vs. LGTBI+</td><td>"Heterosexual/cisgénero" vs. "LGTBI+"</td><td>Usar "normal" implica que las personas LGTBI+ son "anormales"</td></tr>
+  </table></div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">Pronombres — una acción concreta</div>
+    <div class="box-txt">Una práctica inclusiva sencilla: <strong>presentarte con tus pronombres</strong> cuando te presentas ("Hola, soy Ana, uso ella/ellas"). Esto normaliza que las personas trans y no binarias no tengan que "salir del armario" constantemente. No es obligatorio, pero es una señal de inclusión activa.</div>
+  </div>
+</div>
+
+<!-- ══ PAGE 9: CORRESPONSABILIDAD ══ -->
+
+<!-- ══ PAGE 8b: IGUALDAD RETRIBUTIVA EN PROFUNDIDAD ══ -->
+<div class="page" id="pg-8b">
+  <div class="lh">
+    <div class="lh-eye">Bloque III · Unidad 8b de 14 · Igualdad retributiva</div>
+    <h1 class="lh-title">IGUALDAD<br>RETRIBUTIVA<br><span style="color:var(--purple)">EN PROFUNDIDAD</span></h1>
+    <p class="lh-lead">La brecha salarial no es un número — es el resultado de decisiones acumuladas. Entender cómo funciona el sistema retributivo de LN España y qué derechos tienes es parte de esta formación.</p>
+    <div class="lh-norm"><span class="norm">RD 902/2020</span><span class="norm">ET Art. 28</span><span class="norm">LO 3/2007 Art. 46</span></div>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">El principio: igual salario por trabajo de igual valor</div>
+    <div class="box-txt">El <strong>art. 28 del Estatuto de los Trabajadores</strong> establece que el empresario está obligado a pagar la misma retribución por trabajo de igual valor, con independencia del sexo. "Trabajo de igual valor" no significa el mismo puesto — significa puestos equivalentes en formación, esfuerzo, responsabilidad y condiciones. Este principio es el fundamento de la auditoría retributiva que LN España ha realizado con 47 puestos valorados.</div>
+  </div>
+
+  <h3 class="sh">¿Cómo funciona la auditoría retributiva de LN España?</h3>
+  <div class="tw"><table>
+    <tr><th>Fase</th><th>Qué se hace</th><th>Resultado en LN España</th></tr>
+    <tr><td><strong>1. Valoración de puestos</strong></td><td>Se analiza cada puesto según factores: formación, complejidad, responsabilidad, condiciones laborales — con perspectiva de género para no invisibilizar habilidades consideradas "femeninas"</td><td>47 puestos valorados, agrupados en 10 escalas. Herramienta del Ministerio de Igualdad. <span class="norm">RD 902/2020 Arts. 4-8</span></td></tr>
+    <tr><td><strong>2. Registro retributivo</strong></td><td>Datos de salario (media y mediana) desagregados por sexo, por concepto salarial y por grupo profesional</td><td>Brecha mediana: 16% — explicada por concentración de hombres en escalas altas, no por diferencias injustificadas en puestos de igual valor</td></tr>
+    <tr><td><strong>3. Análisis por agrupación</strong></td><td>Se comparan salarios entre hombres y mujeres en puestos de igual valor (misma escala)</td><td>6 agrupaciones con diferencias: 1 significativa, resto mínimas. La auditoría concluye ausencia de discriminación salarial directa</td></tr>
+    <tr><td><strong>4. Plan de acción</strong></td><td>Medidas para corregir desequilibrios detectados</td><td>Medida 7.1 (seguimiento anual) y 7.2 (objetividad en complementos). Vigencia coincide con el PI 2026-2030</td></tr>
+  </table></div>
+
+  <div class="box box-purple">
+    <div class="box-lbl">Tu derecho a la información retributiva</div>
+    <div class="box-txt">Cualquier persona trabajadora tiene derecho a solicitar información sobre el nivel retributivo medio de su grupo profesional desagregado por sexo. Si sospechas una diferencia salarial injustificada basada en tu sexo, puedes dirigirte a <strong>rrhh@livenation.es</strong> o al canal ético anónimo <strong>canal.uneon.es/livenation/</strong>. La empresa no puede tomar represalias por ejercer este derecho. <span class="norm">ET Art. 28.2</span> <span class="norm">RD 902/2020 Art. 6</span></div>
+  </div>
+
+  <h3 class="sh">El impacto real de los complementos salariales</h3>
+  <p style="font-size:.9rem;color:var(--ink2);font-weight:300;line-height:1.75;margin-bottom:1rem">La brecha salarial no siempre está en el salario base — muchas veces se esconde en los complementos. Algunos ejemplos de complementos que pueden generar brechas indirectas si no se aplican con criterios objetivos:</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem">
+    <div class="box box-amber" style="margin:0">
+      <div class="box-lbl">⚠️ Complementos de disponibilidad</div>
+      <div class="box-txt" style="font-size:.82rem">Si penalizan a quienes tienen responsabilidades de cuidado (mayoritariamente mujeres), pueden ser discriminación indirecta aunque el criterio parezca neutro.</div>
+    </div>
+    <div class="box box-amber" style="margin:0">
+      <div class="box-lbl">⚠️ Complementos de nocturnidad y eventos</div>
+      <div class="box-txt" style="font-size:.82rem">En el sector de eventos en vivo, el trabajo nocturno genera complementos. Si sistemáticamente solo los acceden hombres por asignación discrecional, puede generar brecha.</div>
+    </div>
+    <div class="box box-green" style="margin:0">
+      <div class="box-lbl">✅ Criterios objetivos</div>
+      <div class="box-txt" style="font-size:.82rem">El Plan de LN España (Medida 7.2) establece criterios documentados y objetivos para la asignación de complementos, evitando la discrecionalidad que genera brecha.</div>
+    </div>
+    <div class="box box-green" style="margin:0">
+      <div class="box-lbl">✅ Transparencia anual</div>
+      <div class="box-txt" style="font-size:.82rem">La Medida 7.1 del PI garantiza un informe anual de seguimiento de la equidad retributiva, revisado por la Comisión de Seguimiento PI + CCOO.</div>
+    </div>
+  </div>
+
+  <div class="mq" id="mq-8b">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">Una trabajadora de LN España sospecha que cobra menos que un compañero con un puesto de igual valor. ¿Cuál es el primer paso correcto?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-8b',0,false,'Esperar no resuelve el problema y puede dificultar la acreditación posterior. El derecho a la información retributiva existe y puede ejercerse de forma confidencial.')"><div class="mq-radio"></div><span>Esperar a la próxima revisión salarial anual y no decir nada</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-8b',1,true,'Correcto. El ET Art. 28.2 y el RD 902/2020 reconocen el derecho a solicitar información sobre retribuciones del grupo profesional desagregadas por sexo. RRHH debe responder. Si no se resuelve, el canal ético anónimo y la Inspección de Trabajo son vías adicionales.')"><div class="mq-radio"></div><span>Solicitar a RRHH información sobre el nivel retributivo medio de su grupo profesional desagregado por sexo, ejerciendo su derecho legal</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-8b',2,false,'Comentarlo con compañeros puede crear conflictos innecesarios antes de verificar los hechos. El cauce correcto es RRHH o el canal ético.')"><div class="mq-radio"></div><span>Comentarlo con compañeros/as para comparar salarios directamente</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-8b"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 8c: CASOS REALES Y APLICACIÓN PRÁCTICA ══ -->
+<div class="page" id="pg-8c">
+  <div class="lh">
+    <div class="lh-eye">Bloque III · Unidad 8c de 14 · Casos prácticos</div>
+    <h1 class="lh-title">CASOS<br>PRÁCTICOS<br><span style="color:var(--purple)">EN LN ESPAÑA</span></h1>
+    <p class="lh-lead">La teoría es el punto de partida. Lo que convierte la formación en cambio real es saber reconocer estas situaciones en el día a día del sector de eventos en vivo.</p>
+  </div>
+
+  <div class="sec-lbl">Situaciones reales — ¿Qué harías?</div>
+
+  <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem;border-left:4px solid var(--purple)">
+    <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin-bottom:.6rem">Caso 1 · Selección</div>
+    <p style="font-size:.9rem;font-weight:500;margin-bottom:.75rem;line-height:1.55">Estás en el proceso de selección para un puesto de Head Promoter. Hay dos candidatos finales con currículum equivalente: una mujer y un hombre. Tu responsable dice: "el hombre tiene más disponibilidad para viajar — eso lo hace mejor candidato". Nadie le ha preguntado a la mujer si puede viajar.</p>
+    <div style="font-size:.85rem;color:var(--ink2);font-weight:300;line-height:1.65;background:var(--purple-bg);padding:.75rem 1rem;border-radius:8px">
+      <strong style="color:var(--purple)">Análisis:</strong> Asumir menor disponibilidad de la candidata por su sexo — sin preguntarle — es sesgo maternal y potencial discriminación indirecta. El criterio de "disponibilidad para viajar" es legítimo si se verifica de la misma forma para ambos candidatos. La solución: preguntar a los dos por igual y documentar la respuesta. Si se aplica solo a la mujer, la decisión puede ser impugnable. <span class="norm">Art. 6.2 LO 3/2007</span>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem;border-left:4px solid var(--rainbow-5)">
+    <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:.6rem">Caso 2 · Protocolo trans en un evento</div>
+    <p style="font-size:.9rem;font-weight:500;margin-bottom:.75rem;line-height:1.55">Durante la producción de un festival, un compañero del equipo de seguridad le dice a gritos delante de todo el equipo a una colega trans: "tú, el que era antes María". Varios miembros del equipo ríen. La persona afectada no dice nada en ese momento.</p>
+    <div style="font-size:.85rem;color:var(--ink2);font-weight:300;line-height:1.65;background:var(--blue-bg);padding:.75rem 1rem;border-radius:8px">
+      <strong style="color:var(--blue)">Análisis:</strong> Es acoso discriminatorio por identidad de género — falta MUY GRAVE. El hecho de que la víctima no reaccione en el momento no elimina la conducta. Como testigo, tienes la opción (y la responsabilidad moral) de comunicarlo a RRHH o al canal ético. La víctima no está obligada a denunciar — tú sí puedes hacerlo. Quienes rieron están participando en un entorno intimidatorio. <span class="norm">Plan LGTBI+ LN España · Ley 4/2023</span>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem;border-left:4px solid var(--green)">
+    <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:.6rem">Caso 3 · Corresponsabilidad en temporada alta</div>
+    <p style="font-size:.9rem;font-weight:500;margin-bottom:.75rem;line-height:1.55">En plena temporada de conciertos, un manager asigna sistemáticamente los turnos de fin de semana (con complemento económico) a los hombres del equipo, argumentando que "ellas tienen familia". Tres trabajadoras con hijos han expresado que sí pueden trabajar los fines de semana.</p>
+    <div style="font-size:.85rem;color:var(--ink2);font-weight:300;line-height:1.65;background:var(--green-bg);padding:.75rem 1rem;border-radius:8px">
+      <strong style="color:var(--green)">Análisis:</strong> Doble infracción. Primero, discriminación indirecta: aplicar criterios de cuidado familiar solo a las mujeres. Segundo, brecha salarial generada por asignación discrecional de complementos — exactamente lo que la Medida 7.2 del PI pretende corregir. Las trabajadoras afectadas pueden solicitar a RRHH una revisión de la asignación de turnos y la diferencia retributiva generada. <span class="norm">ET Art. 28 · RD 902/2020 · PI LN Medida 7.2</span>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem;border-left:4px solid var(--amber)">
+    <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.6rem">Caso 4 · Promoción interna</div>
+    <p style="font-size:.9rem;font-weight:500;margin-bottom:.75rem;line-height:1.55">Se abre una vacante para un cargo de responsabilidad en el equipo de producción. No se comunica internamente. La posición se cubre directamente con un candidato externo. Dos personas del equipo (una mujer y un hombre) tenían el perfil y la antigüedad adecuados y no lo supieron hasta después.</p>
+    <div style="font-size:.85rem;color:var(--ink2);font-weight:300;line-height:1.65;background:var(--amber-bg);padding:.75rem 1rem;border-radius:8px">
+      <strong style="color:var(--amber)">Análisis:</strong> Incumplimiento directo de la Medida 4.2 del PI de LN España, que establece la publicación interna de vacantes. Sin visibilidad de las oportunidades, la igualdad de acceso a la promoción es imposible. Este tipo de situaciones afecta desproporcionadamente a las mujeres (ya infrarrepresentadas en niveles altos). Si ocurre, puede comunicarse a la Comisión de Seguimiento del PI. <span class="norm">PI LN España Medida 4.2 · LO 3/2007 Art. 24</span>
+    </div>
+  </div>
+
+  <div class="mq" id="mq-8c">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">En el Caso 3, el manager asigna sistemáticamente los turnos de fin de semana (con complemento) solo a los hombres, aunque las trabajadoras han dicho que pueden hacerlos. ¿Qué tipo de infracción comete principalmente?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-8c',0,false,'El acoso laboral requiere un patrón de hostigamiento personal. Aquí el problema es la aplicación de un criterio discriminatorio en la asignación de trabajo — es discriminación, no acoso laboral.')"><div class="mq-radio"></div><span>Acoso laboral — porque el manager presiona repetidamente a las trabajadoras</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-8c',1,true,'Correcto. Es discriminación indirecta: un criterio aparentemente neutro (disponibilidad familiar) se aplica solo a las mujeres, generando además una brecha salarial vía complementos. Ambas son infracciones: una del ET Art. 28 y otra del Art. 6.2 LO 3/2007. El PI de LN España (Medida 7.2) existe precisamente para evitar esto.')"><div class="mq-radio"></div><span>Discriminación indirecta con impacto retributivo — criterio familiar aplicado solo a las mujeres</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-8c',2,false,'La gestión discrecional de turnos que genera diferencias retributivas por sexo no es una decisión organizativa legítima — es discriminación. El ET art. 28 obliga a igualdad retributiva por trabajo de igual valor.')"><div class="mq-radio"></div><span>Una decisión organizativa legítima — el manager tiene autoridad para asignar turnos</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-8c"></div>
+  </div>
+</div>
+
+<div class="page" id="pg-9">
+  <div class="lh">
+    <div class="lh-eye">Bloque III · Unidad 9 de 12 · Corresponsabilidad</div>
+    <h1 class="lh-title">CONCILIACIÓN<br>Y CORRESPON-<br><span style="color:var(--purple)">SABILIDAD</span></h1>
+    <p class="lh-lead">Conciliar no es cosa de mujeres. La corresponsabilidad entre hombres y mujeres es una de las medidas del Plan de Igualdad de LN España. Los datos reales de 2024 muestran que queda trabajo por hacer.</p>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-lbl">⚠️ Dato real de LN España 2024</div>
+    <div class="box-txt">Solo mujeres usan la reducción de jornada por guarda legal en LN España (2 personas en 2024). <strong>Ningún hombre ha ejercido este derecho</strong>. Esto no es porque los hombres no tengan hijos o familiares dependientes — es una consecuencia de los roles de género internalizados y de la brecha en la corresponsabilidad.</div>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>Medida de conciliación</th><th>Quién puede usarla</th><th>Situación real en LN España</th></tr>
+    <tr><td>Reducción de jornada por guarda legal</td><td>Cualquier persona trabajadora con hijos/as menores de 12 años o familiares dependientes</td><td>Solo la usan mujeres (2024). Los hombres no la ejercen.</td></tr>
+    <tr><td>Permiso de paternidad (16 semanas)</td><td>Cualquier padre o segundo progenitor</td><td>En 2024 solo 1 hombre lo ejerció por cuidados de hijos/as.</td></tr>
+    <tr><td>Teletrabajo</td><td>Toda la plantilla, según disponibilidad del puesto</td><td>Lo usan ambos sexos sin diferencias significativas.</td></tr>
+    <tr><td>Flexibilidad horaria (30 min entrada/salida)</td><td>Toda la plantilla</td><td>Lo usan ambos sexos sin diferencias significativas.</td></tr>
+    <tr><td>Igualdad en permisos familias LGTBI+</td><td>Todas las configuraciones familiares</td><td>El Plan LGTBI+ garantiza explícitamente la igualdad de acceso para familias homoparentales y trans.</td></tr>
+  </table></div>
+
+  <div class="box box-blue">
+    <div class="box-lbl">Qué puedes hacer tú</div>
+    <div class="box-txt">Si eres hombre y tienes responsabilidades de cuidado, <strong>ejercer tus derechos de conciliación no es una debilidad</strong> — es corresponsabilidad. Si eres manager, asegúrate de que hombres y mujeres de tu equipo saben que pueden usar estas medidas sin consecuencias para su carrera. Eso también forma parte de la igualdad.</div>
+  </div>
+
+  <div class="mq" id="mq-9">
+    <div class="mq-badge">Mini-test</div>
+    <div class="mq-q">El Plan de Igualdad de LN España garantiza que los permisos de conciliación aplican igual a familias LGTBI+. ¿Qué situación describe esto?</div>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-9',0,false,'No. El Plan LGTBI+ de LN España garantiza expresamente que todos los permisos aplican igual a todas las configuraciones familiares, sin distinción.')"><div class="mq-radio"></div><span>Una pareja del mismo sexo necesita documentación adicional para pedir permiso de nacimiento</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-9',1,true,'Correcto. El Plan LGTBI+ de LN España garantiza que todos los permisos, beneficios y derechos de conciliación aplican por igual a parejas del mismo sexo, familias homoparentales, personas trans y sus familias. No hay diferencia de trato por orientación sexual o tipo de familia.')"><div class="mq-radio"></div><span>Una pareja del mismo sexo puede pedir el permiso de nacimiento exactamente en las mismas condiciones que cualquier otra familia</span></button>
+      <button class="mq-opt" onclick="answerMQ('mq-9',2,false,'Los permisos sí aplican a familias LGTBI+. El Plan LGTBI+ de LN España lo garantiza explícitamente.')"><div class="mq-radio"></div><span>Los permisos de nacimiento no aplican a familias homoparentales</span></button>
+    </div>
+    <div class="mq-fb" id="mq-fb-9"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 10: CANALES Y ACTUACIÓN ══ -->
+<div class="page" id="pg-10">
+  <div class="lh">
+    <div class="lh-eye">Bloque IV · Unidad 10 de 12 · Canales y actuación</div>
+    <h1 class="lh-title">QUÉ HACER<br>Y A QUIÉN<br><span style="color:var(--purple)">ACUDIR</span></h1>
+    <p class="lh-lead">Conocer los canales es tan importante como conocer los derechos. Aquí está todo lo que necesitas saber para actuar — tanto si eres víctima, como si eres testigo.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1.5rem">
+    <div style="background:var(--purple-bg);border:2px solid var(--purple);border-radius:var(--r);padding:1.25rem">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--purple);margin-bottom:.5rem">Persona de referencia</div>
+      <div style="font-weight:600;font-size:.95rem;margin-bottom:.25rem">Belén Montesino</div>
+      <div style="font-size:.82rem;color:var(--ink2);font-weight:300">HR Manager · Live Nation España</div>
+      <div style="margin-top:.75rem;font-size:.82rem">📧 belen@livenation.es</div>
+      <div style="font-size:.82rem">📧 rrhh@livenation.es</div>
+      <div style="font-size:.82rem">📞 93 459 23 62</div>
+    </div>
+    <div style="background:var(--ink);border-radius:var(--r);padding:1.25rem">
+      <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#c77dff;margin-bottom:.5rem">Canal ético anónimo</div>
+      <div style="font-weight:600;font-size:.88rem;color:#fff;margin-bottom:.25rem">canal.uneon.es/livenation/</div>
+      <div style="font-size:.82rem;color:rgba(255,255,255,.55);font-weight:300">Denuncias anónimas protegidas por la Ley 2/2023 del informante. Puedes denunciar sin identificarte.</div>
+      <div style="margin-top:.75rem;font-family:var(--mono);font-size:.6rem;color:rgba(255,255,255,.3)">Ley 2/2023 · Autoridad Independiente del Informante</div>
+    </div>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-lbl">Si eres testigo de una situación de acoso — qué hacer</div>
+    <div class="box-txt">
+      <div style="margin-bottom:.4rem">→ <strong>No ignores lo que ves.</strong> Ignorar un comportamiento discriminatorio implica tolerarlo.</div>
+      <div style="margin-bottom:.4rem">→ Si es seguro, puedes <strong>interrumpir la situación</strong> en el momento ("¿Estás bien?" a la persona afectada).</div>
+      <div style="margin-bottom:.4rem">→ Habla con la persona afectada para <strong>ofrecerle apoyo</strong> y preguntarle cómo quiere proceder.</div>
+      <div style="margin-bottom:.4rem">→ Puedes informar a RRHH o usar el canal ético, con o sin el consentimiento de la víctima (si el caso lo requiere por su gravedad).</div>
+      <div>→ Documenta lo que has visto (fecha, lugar, personas, descripción de los hechos).</div>
+    </div>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-lbl">⚠️ Qué NO hacer</div>
+    <div class="box-txt">
+      <div style="margin-bottom:.3rem">✗ No hacer comentarios que minimicen ("tampoco es para tanto", "seguro que no lo decía en serio")</div>
+      <div style="margin-bottom:.3rem">✗ No presionar a la víctima para que denuncie si no quiere</div>
+      <div style="margin-bottom:.3rem">✗ No compartir los hechos con personas que no están implicadas en la resolución</div>
+      <div>✗ No tomar represalias contra la persona que denuncia — es falta muy grave</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PAGE 11: ENCUESTA SATISFACCIÓN ══ -->
+<div class="page" id="pg-11">
+  <div class="lh" style="border-color:var(--purple)">
+    <div class="lh-eye">Bloque V · Encuesta de clima</div>
+    <h1 class="lh-title" style="color:var(--purple)">ENCUESTA<br>DE CLIMA<br>LABORAL</h1>
+    <p class="lh-lead">Antes del quiz, comparte tu percepción sobre el clima de igualdad e inclusión en Live Nation España. Tus respuestas nutren directamente el diagnóstico del Plan de Igualdad y del Plan LGTBI+ 2026-2030.</p>
+  </div>
+
+  <div class="clima-section">
+    <div class="clima-header">
+      <div class="clima-icon">🌡️</div>
+      <div>
+        <div class="clima-title">IGUALDAD E INCLUSIÓN LGTBI+</div>
+        <div class="clima-sub">Percepción del clima en LN España · Respuestas escala identificadas · Respuestas abiertas anónimas y opcionales</div>
+      </div>
+    </div>
+
+    <div class="clima-q">
+      <div class="clima-q-text">1. En LN España se promueve activamente la igualdad de oportunidades entre mujeres y hombres en el acceso a puestos de mayor responsabilidad.</div>
+      <div class="likert-row">
+        <div class="likert-btn" onclick="selClima(this,'c1','Muy de acuerdo')">Muy de acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c1','De acuerdo')">De acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c1','Neutral')">Neutral</div>
+        <div class="likert-btn" onclick="selClima(this,'c1','En desacuerdo')">En desacuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c1','Muy en desacuerdo')">Muy en desacuerdo</div>
+      </div>
+      <input type="hidden" id="c1" value="">
+    </div>
+
+    <div class="clima-q">
+      <div class="clima-q-text">2. Me siento libre de ser yo mismo/a/e en el trabajo con independencia de mi orientación sexual o identidad de género.</div>
+      <div style="font-size:.78rem;color:var(--ink2);font-weight:300;margin-bottom:.6rem;line-height:1.6">Esta pregunta es de percepción del entorno laboral. No necesitas declarar ni revelar tu orientación sexual o identidad de género.</div>
+      <div class="likert-row">
+        <div class="likert-btn" onclick="selClima(this,'c2','Muy de acuerdo')">Muy de acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c2','De acuerdo')">De acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c2','Neutral')">Neutral</div>
+        <div class="likert-btn" onclick="selClima(this,'c2','En desacuerdo')">En desacuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c2','Muy en desacuerdo')">Muy en desacuerdo</div>
+      </div>
+      <input type="hidden" id="c2" value="">
+    </div>
+
+    <div class="clima-q">
+      <div class="clima-q-text">3. Conozco los canales disponibles en LN España (RRHH, canal ético anónimo) si experimento o presencio una conducta discriminatoria.</div>
+      <div class="likert-row">
+        <div class="likert-btn" onclick="selClima(this,'c3','Muy de acuerdo')">Muy de acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c3','De acuerdo')">De acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c3','Neutral')">Neutral</div>
+        <div class="likert-btn" onclick="selClima(this,'c3','En desacuerdo')">En desacuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c3','Muy en desacuerdo')">Muy en desacuerdo</div>
+      </div>
+      <input type="hidden" id="c3" value="">
+    </div>
+
+    <div class="clima-q">
+      <div class="clima-q-text">4. Considero que el entorno de trabajo en LN España es inclusivo y respetuoso con la diversidad (orientación sexual, identidad de género, origen, expresión de género).</div>
+      <div class="likert-row">
+        <div class="likert-btn" onclick="selClima(this,'c4','Muy de acuerdo')">Muy de acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c4','De acuerdo')">De acuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c4','Neutral')">Neutral</div>
+        <div class="likert-btn" onclick="selClima(this,'c4','En desacuerdo')">En desacuerdo</div>
+        <div class="likert-btn" onclick="selClima(this,'c4','Muy en desacuerdo')">Muy en desacuerdo</div>
+      </div>
+      <input type="hidden" id="c4" value="">
+    </div>
+
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--rule)">
+      <div style="font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:.75rem;display:flex;align-items:center;gap:8px">
+        <span style="width:16px;height:1px;background:var(--ink3);display:block"></span>
+        Preguntas abiertas · Anónimas y opcionales
+      </div>
+      <p style="font-size:.82rem;color:var(--ink2);font-weight:300;margin-bottom:1.25rem;line-height:1.6">Las respuestas abiertas <strong>no se asocian a tu nombre</strong>. Son completamente voluntarias. Son las más valiosas para detectar señales débiles que los datos cerrados no capturan.</p>
+
+      <div class="clima-q">
+        <div class="open-lbl">Pregunta abierta 1 (opcional)</div>
+        <div class="clima-q-text" style="font-weight:400;font-size:.88rem">¿Hay algo relacionado con la igualdad, la diversidad o el clima de inclusión en LN España que quieras compartir?</div>
+        <textarea class="open-field" id="c-open1" placeholder="Puedes escribir cualquier observación, situación o preocupación..."></textarea>
+      </div>
+
+      <div class="clima-q" style="margin-bottom:.5rem">
+        <div class="open-lbl">Pregunta abierta 2 (opcional)</div>
+        <div class="clima-q-text" style="font-weight:400;font-size:.88rem">¿Qué mejorarías en la forma en que LN España promueve la igualdad y la inclusión LGTBI+ en el día a día?</div>
+        <textarea class="open-field" id="c-open2" placeholder="Cualquier sugerencia o idea es bienvenida..."></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+      <button class="btn btn-purple" onclick="saveClima('C')">Guardar respuestas y continuar →</button>
+      <button class="btn btn-out btn-sm" onclick="skipClima()">Omitir encuesta</button>
+    </div>
+    <div class="clima-saved" id="clima-saved-C">✅ Respuestas guardadas. Puedes continuar al quiz final.</div>
+  </div>
+</div>
+
+<!-- ══ PAGE 12: QUIZ FINAL ══ -->
+<div class="page" id="pg-12">
+  <div class="lh">
+    <div class="lh-eye">Evaluación final</div>
+    <h1 class="lh-title">QUIZ FINAL</h1>
+    <p class="lh-lead">15 preguntas de aplicación real. Mínimo <strong>70% (11/15)</strong> para obtener el certificado. 3 intentos disponibles.</p>
+  </div>
+
+  <!-- Declaración de lectura -->
+  <div style="background:var(--purple-bg);border:1.5px solid var(--purple);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:.75rem">
+    <input type="checkbox" id="accept-check" style="margin-top:3px;width:16px;height:16px;accent-color:var(--purple);cursor:pointer;flex-shrink:0" onchange="toggleAccept()">
+    <label for="accept-check" style="font-size:.85rem;line-height:1.65;color:var(--ink2);cursor:pointer">
+      Declaro que he leído y comprendido el contenido de este curso, incluyendo el Plan de Igualdad de LN España, el glosario LGTBI+, el protocolo de actuación frente al acoso y la discriminación, y mis derechos y obligaciones como parte de la plantilla de Live Nation España.
+    </label>
+  </div>
+  <div id="accept-err" style="color:var(--red);font-size:.82rem;margin-bottom:.75rem;display:none">Marca la declaración anterior para desbloquear el quiz final.</div>
+
+  <div id="quiz-locked" style="display:none"></div>
+  <div id="quiz-attempts-info" style="margin-bottom:1rem;display:none"></div>
+  <div id="quiz-container"></div>
+  <button id="quiz-submit-btn" onclick="submitQuiz()" style="display:none" class="btn btn-purple" style="margin-top:1rem">Ver resultados →</button>
+</div>
+
+<!-- ══ PAGE 13: RESULTADO ══ -->
+<div class="page" id="pg-13">
+  <div id="result-area"></div>
+</div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+  <!-- BOTTOMBAR -->
+  <div id="bottombar">
+    <div class="bb-info" id="bb-info">Unidad 1 de 14</div>
+    <div class="bb-nav">
+      <div class="timer-lock" id="timer-lock">
+        <span>⏱</span>
+        <span>Disponible en <span class="timer-count" id="timer-count">60</span>s</span>
+      </div>
+      <button class="btn btn-out btn-sm" id="btn-prev" onclick="navigate(-1)">← Anterior</button>
+      <button class="btn btn-purple btn-sm" id="btn-next" onclick="navigate(1)">Siguiente →</button>
+    </div>
+  </div>
+</div><!-- /app -->
+
+<script>
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQOAlqFSpO1YyJD6tMxldow9D5LRsSyvyelJPZjt4Xb81S-rJmOIZT0Rf7dJjXmnVK/exec';
+
+function syncToGoogle(record) {
+  // Guardar siempre en localStorage primero (funciona offline y desde file://)
+  try {
+    const _k = 'ln_p_' + (record.email||'').toLowerCase().replace(/[^a-z0-9@._-]/g,'_');
+    const _existing = JSON.parse(localStorage.getItem(_k) || '{}');
+    // Merge: no sobreescribir cursos ya completados
+    if (record.courses) {
+      _existing.courses = _existing.courses || {};
+      Object.keys(record.courses).forEach(function(c) {
+        if (record.courses[c]) _existing.courses[c] = record.courses[c];
+      });
+    }
+    Object.assign(_existing, record);
+    _existing.courses = Object.assign((_existing.courses||{}), (record.courses||{}));
+    _existing.lastActivity = new Date().toLocaleDateString('es-ES');
+    localStorage.setItem(_k, JSON.stringify(_existing));
+  } catch(_le) {}
+
+  // Intentar Google Sheets (puede fallar desde file://, no es crítico)
+  try {
+    const _body = JSON.stringify(record);
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain'},
+      body: _body,
+      mode: 'no-cors'
+    }).catch(function(){});
+  } catch(_fe) {}
+}
+
+async function loadFromGoogle() {
+  try {
+    const _r = await fetch(GOOGLE_SCRIPT_URL + '?secret=LNAdmin2026');
+    if (!_r.ok) return [];
+    const _j = await _r.json();
+    return _j.ok ? (_j.data || []) : [];
+  } catch(_e) { return []; }
+}
+
+
+
+// ── TIEMPO MÍNIMO POR PÁGINA (segundos) — AUDITORÍA ──
+// Portada (0), encuesta (11), quiz (12), certificado (13): sin límite
+// Páginas de contenido (1-10): 90s mínimo; primera unidad 60s
+const MIN_TIME_PER_PAGE = {
+  1:90, 2:120, 3:120, 4:120, 5:120, 6:120, 7:120, 8:120, 9:120, 10:120, 11:120, 12:120, 13:0
+};
+const PASS_PCT = 70;
+
+const pageStartTime = {};
+const pageTimes = {};
+let timerInterval = null;
+let timerRemaining = 0;
+
+function startPageTimer(pageIndex) {
+  if (timerInterval) clearInterval(timerInterval);
+  timerRemaining = 0;
+  const lock = document.getElementById('timer-lock');
+  const count = document.getElementById('timer-count');
+  const nextBtn = document.getElementById('btn-next');
+  const minSecs = MIN_TIME_PER_PAGE[pageIndex];
+  if (!minSecs || pageIndex === 0 || pageIndex >= TOTAL_PAGES - 2) {
+    if (lock) lock.classList.remove('visible');
+    if (nextBtn) nextBtn.style.opacity = '1';
+    return;
+  }
+  const already = pageTimes[pageIndex] || 0;
+  const needed = Math.max(0, minSecs - already);
+  if (needed <= 0) {
+    if (lock) lock.classList.remove('visible');
+    if (nextBtn) nextBtn.style.opacity = '1';
+    return;
+  }
+  timerRemaining = needed;
+  if (lock) lock.classList.add('visible');
+  if (count) count.textContent = timerRemaining;
+  if (nextBtn) nextBtn.style.opacity = '.45';
+  timerInterval = setInterval(() => {
+    timerRemaining--;
+    if (count) count.textContent = timerRemaining;
+    if (timerRemaining <= 0) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerRemaining = 0;
+      if (lock) lock.classList.remove('visible');
+      if (nextBtn) nextBtn.style.opacity = '1';
+    }
+  }, 1000);
+}
+
+// ── LOGO ──
+(function(){
+  const logo=document.getElementById('logo-img');
+  fetch('LN_Portal_v4.html').then(r=>r.text()).then(t=>{
+    const m=t.match(/data:image\/jpeg;base64,[^"]+/);
+    if(m)logo.src=m[0];
+  }).catch(()=>{});
+})();
+
+// ── PAGES CONFIG ──
+const TOTAL_PAGES = 16;
+const PAGES = [
+  { id:'pg-0',  label:'Portada',                       sec:'Inicio' },
+  { id:'pg-1',  label:'Nuestro Plan de Igualdad',      sec:'Bloque I · Igualdad de género' },
+  { id:'pg-2',  label:'Conceptos clave',               sec:'Bloque I · Igualdad de género' },
+  { id:'pg-3',  label:'Sesgos inconscientes',          sec:'Bloque I · Igualdad de género' },
+  { id:'pg-4',  label:'Glosario LGTBI+',               sec:'Bloque II · Diversidad LGTBI+' },
+  { id:'pg-5',  label:'Plan LGTBI+ LN España',         sec:'Bloque II · Diversidad LGTBI+' },
+  { id:'pg-6',  label:'Protocolo acoso LGTBI+',        sec:'Bloque II · Diversidad LGTBI+' },
+  { id:'pg-7',  label:'Protocolo trans',               sec:'Bloque II · Diversidad LGTBI+' },
+  { id:'pg-8',  label:'Lenguaje inclusivo',            sec:'Bloque III · En la práctica' },
+  { id:'pg-8b', label:'Igualdad retributiva en profundidad', sec:'Bloque III · En la práctica' },
+  { id:'pg-8c', label:'Casos prácticos en LN España',    sec:'Bloque III · En la práctica' },
+  { id:'pg-9',  label:'Conciliación y corresponsabilidad', sec:'Bloque III · En la práctica' },
+  { id:'pg-10', label:'Canales y actuación',           sec:'Bloque IV · Actuación' },
+  { id:'pg-11', label:'Encuesta de clima laboral',     sec:'Bloque V · Evaluación' },
+  { id:'pg-12', label:'Quiz final (15 preguntas complejas)',      sec:'Bloque V · Evaluación' },
+  { id:'pg-13', label:'Certificado',                   sec:'Bloque V · Evaluación' },
+];
+
+const QUIZ = [
+  // ── BLOQUE I: IGUALDAD DE GÉNERO ──
+  { q:'Elena gestiona un equipo mixto en LN España y nota que históricamente las promociones las han obtenido sus compañeros hombres, aunque hay mujeres con igual o mejor desempeño. El Plan de Igualdad establece que ante igualdad de méritos se dará preferencia al sexo infrarrepresentado. ¿Qué nombre técnico tiene esta medida?', opts:['Discriminación positiva ilegal','Acción positiva — medida legal expresamente prevista en el art. 11 LO 3/2007','Cuota de género obligatoria en todos los sectores','Sesgo de confirmación institucionalizado'], ok:1, fb:{y:'Correcto. El art. 11 de la LO 3/2007 permite y ampara las acciones positivas como esta: medidas que, ante igualdad de méritos, dan preferencia al sexo infrarrepresentado para corregir desigualdades estructurales. Es legal, proporcional y está en el PI de LN España (Medidas 2.2 y 4.3).',n:'Incorrecto. Esta es una acción positiva, amparada en el art. 11 LO 3/2007. No es una cuota, no es ilegal y no es discriminación — es una medida proporcional y temporal para corregir una desigualdad estructural documentada.'} },
+  { q:'Marta lleva 3 años como Account Manager en LN España. Al anunciar su embarazo, su responsable la excluye de un proyecto de gira importante "para no sobrecargarla". Marta no pidió ser excluida. ¿Qué ha ocurrido?', opts:['Una decisión protectora y legítima del manager','Discriminación directa por razón de sexo vinculada al embarazo — art. 8 LO 3/2007 y sesgo maternal','Acción positiva hacia la trabajadora embarazada','Un malentendido sin consecuencias legales'], ok:1, fb:{y:'Correcto. Excluir a una trabajadora de oportunidades laborales por su embarazo — sin que ella lo pida — es discriminación directa por razón de sexo (art. 8 LO 3/2007). El manager actúa sobre suposiciones (no puede con la carga) en vez de preguntar. Puede tener consecuencias disciplinarias y jurídicas.',n:'Incorrecto. No es una medida protectora — es discriminación directa por embarazo (art. 8 LO 3/2007). La intención benévola no cambia el efecto discriminatorio. Marta debería ser quien decida si puede asumir el proyecto.'} },
+  { q:'LN España exige "disponibilidad total para desplazamientos" como requisito para acceder a puestos de dirección. El 80% de quienes no pueden cumplirlo son mujeres con cargas de cuidado. ¿Qué tipo de discriminación puede suponer esto?', opts:['Ninguna — es un requisito objetivo del puesto directivo','Discriminación indirecta: criterio neutro con impacto desproporcionado en mujeres (art. 6.2 LO 3/2007)','Discriminación directa por razón de sexo','Segregación horizontal en el acceso a cargos'], ok:1, fb:{y:'Correcto. La discriminación indirecta (art. 6.2 LO 3/2007) se produce cuando un requisito aparentemente neutro impacta desproporcionadamente en un sexo. Para ser legítimo, el requisito debe ser necesario, proporcional y justificable objetivamente. Si puede modificarse sin perjuicio real para la empresa, puede ser discriminatorio.',n:'Incorrecto. Este es el ejemplo clásico de discriminación indirecta: un criterio neutro (disponibilidad) que estadísticamente penaliza más a las mujeres por la distribución desigual de responsabilidades de cuidado. Art. 6.2 LO 3/2007.'} },
+  { q:'La auditoría retributiva de LN España 2024 detecta una brecha salarial mediana del 16%. La auditoría concluye que está justificada. ¿Qué significa exactamente "justificada" en este contexto legal?', opts:['Que no hay ninguna acción que tomar porque todo está bien','Que la brecha es explicable por la composición de los puestos (concentración de hombres en escalas altas), no por diferencias salariales directas por sexo — pero el PI sí debe abordarla con medidas','Que la empresa ha incumplido el RD 902/2020','Que la brecha es inferior al umbral legal máximo permitido del 20%'], ok:1, fb:{y:'Correcto. "Justificada" significa que la auditoría no detecta discriminación salarial directa entre personas en puestos de igual valor — pero la brecha existe porque los hombres están concentrados en los puestos de mayor valoración. El Plan de Igualdad debe actuar sobre esa concentración (medidas de promoción y selección). No es un cheque en blanco.',n:'Incorrecto. "Justificada" no equivale a "aceptable" ni a "sin acción". Significa que la brecha se explica por la composición de los puestos, no por discriminación salarial directa. Pero el PI debe abordar la segregación vertical que la genera. No existe un "umbral legal del 20%".'} },
+  // ── BLOQUE II: LGTBI+ ──
+  { q:'Un compañero de trabajo publica en el grupo de WhatsApp del equipo un meme que ridiculiza a las personas trans. Lo ve toda la plantilla. ¿Cómo se clasifica esta conducta según el régimen disciplinario del Plan LGTBI+ de LN España?', opts:['No es un problema laboral — es un canal personal de mensajería','Falta leve si es puntual, con posible escalada a grave si se repite o genera entorno hostil','Falta muy grave — constituye acoso discriminatorio','No está regulado porque ocurre fuera del horario de trabajo'], ok:1, fb:{y:'Correcto. El Plan LGTBI+ de LN España cubre las comunicaciones digitales del equipo, independientemente del canal. Una expresión ofensiva puntual es falta leve. Si genera un entorno intimidatorio u hostil para personas trans, puede escalar a grave. El Plan LGTBI+ y el Protocolo de Acoso cubren expresamente las comunicaciones digitales de trabajo.',n:'Incorrecto. Los chats de equipo son un entorno laboral digital y están cubiertos por el Plan LGTBI+ y el Protocolo de Acoso. Una expresión ofensiva puntual es falta leve; si crea entorno hostil, puede ser falta grave. No importa que sea fuera del horario oficial.'} },
+  { q:'Rafa lleva meses usando el nombre "Rafa" en el trabajo pero su contrato dice "Rafael María". Sus compañeros siguen usando el nombre completo que aparece en los documentos. ¿Qué garantiza el Plan LGTBI+ de LN España en esta situación?', opts:['Nada hasta que no haya un cambio oficial en el DNI','El uso del nombre elegido en todos los sistemas internos desde que la persona lo comunica a RRHH, sin necesidad de esperar documentación oficial','El uso del nombre del contrato en todos los documentos por razones legales','Solo el uso del nombre elegido en comunicaciones informales'], ok:1, fb:{y:'Correcto. El Plan LGTBI+ de LN España garantiza el uso del nombre elegido en todos los sistemas internos — correo, firma, acceso, etc. — desde el momento en que la persona lo comunica a RRHH. No es necesario esperar a ningún cambio en el DNI ni en el contrato. El incumplimiento puede constituir falta.',n:'Incorrecto. El Plan LGTBI+ de LN España garantiza el nombre elegido en sistemas internos desde que se comunica a RRHH. No hay que esperar al DNI ni a ningún documento oficial. La empresa gestiona el nombre elegido en todos los sistemas que controla.'} },
+  { q:'Sol Ferrés, persona de referencia del Protocolo de Acoso, recibe una comunicación de una persona que dice sentirse incómoda por comentarios persistentes de un compañero sobre su orientación sexual. La persona no quiere denunciar formalmente. ¿Qué ocurre en la Fase 1 del protocolo?', opts:['Sin denuncia formal no puede hacerse nada — el expediente se archiva inmediatamente','Sol escucha de forma confidencial, informa sobre las opciones disponibles, propone medidas cautelares si es necesario y elabora un informe de fase — sin abrir expediente formal','Sol debe abrir inmediatamente un expediente disciplinario contra el compañero','La persona debe acudir directamente a la Inspección de Trabajo porque el protocolo exige denuncia formal'], ok:1, fb:{y:'Correcto. La Fase 1 del protocolo (máximo 10 días laborables) es de escucha y asesoramiento confidencial. La persona de referencia no obliga a denunciar formalmente — informa sobre opciones y solo pasa a Fase 2 si la persona afectada decide presentar denuncia formal. Las medidas cautelares pueden adoptarse ya en esta fase.',n:'Incorrecto. La Fase 1 no requiere denuncia formal. Es una fase de escucha, asesoramiento y, si procede, medidas cautelares. La persona afectada tiene el control sobre si pasa a Fase 2 (denuncia formal). El protocolo protege a quien no quiere denunciar formalmente pero sí necesita apoyo.'} },
+  { q:'¿Qué diferencia existe entre la orientación sexual y la identidad de género según la Ley 4/2023?', opts:['Son sinónimos — ambos términos describen lo mismo','La orientación sexual es la atracción hacia otras personas; la identidad de género es la vivencia interna del propio género — son conceptos independientes que pueden o no estar relacionados','La orientación sexual solo aplica a personas LGTBI+; la identidad de género es universal','La identidad de género solo existe para personas trans; la orientación sexual aplica a todo el mundo'], ok:1, fb:{y:'Correcto. Son conceptos distintos e independientes. Una persona puede ser cisgénero (identidad de género que corresponde con el sexo asignado al nacer) y homosexual; o trans y heterosexual. La confusión entre ambos conceptos es una de las fuentes más comunes de malentendidos sobre la diversidad LGTBI+. Art. 3 Ley 4/2023.',n:'Incorrecto. Son conceptos distintos. La orientación sexual describe hacia quién sientes atracción. La identidad de género describe cómo experimentas tu propio género. Una persona trans puede tener cualquier orientación sexual. Art. 3 Ley 4/2023.'} },
+  // ── BLOQUE III: APLICACIÓN Y HERRAMIENTAS ──
+  { q:'En un proceso de selección para un puesto de coordinación de eventos, hay 3 finalistas: dos mujeres y un hombre. El entrevistador pregunta a las dos mujeres si tienen o planean tener hijos, pero no se lo pregunta al hombre. ¿Cuántas infracciones hay?', opts:['Ninguna — es una pregunta legítima sobre disponibilidad','Al menos dos: discriminación directa por razón de sexo (art. 6.1 LO 3/2007) en el proceso de selección + posible sesgo maternal documentado','Una sola: sesgo inconsciente sin consecuencias legales','Una infracción grave al Protocolo de Acoso'], ok:1, fb:{y:'Correcto. Hay dos problemas. Primero, preguntar sobre planes de maternidad solo a las candidatas mujeres es discriminación directa en el proceso de selección (art. 6.1 LO 3/2007 + art. 22.4 ET). Segundo, es sesgo maternal documentado que puede invalida el proceso. El PI de LN España (Medida 2.1) prohíbe expresamente este tipo de preguntas en la selección.',n:'Incorrecto. Preguntar sobre maternidad solo a las candidatas mujeres es discriminación directa en la selección (art. 6.1 LO 3/2007). No es una pregunta legítima sobre disponibilidad cuando solo se hace a las mujeres. El PI de LN España prohíbe expresamente este tipo de preguntas.'} },
+  { q:'LN España organiza una gira de verano con equipos de producción trabajando en distintas ciudades. Un trabajador del equipo de una empresa externa hace comentarios LGTBIfóbicos sistemáticos a un trabajador de LN España. ¿Aplica el Protocolo de LN España?', opts:['No — el trabajador externo no forma parte de la plantilla de LN España','Sí — el Plan LGTBI+ de LN España cubre a proveedores y personal externo que desarrolla su actividad en el ámbito organizativo de la empresa','Solo si el acoso ocurre en las oficinas, no en un evento externo','No — debería acudir al protocolo de su propia empresa'], ok:1, fb:{y:'Correcto. El ámbito de aplicación del Plan LGTBI+ de LN España incluye expresamente a proveedores, clientes y personal externo que desarrolle su actividad en el entorno organizativo de la empresa — incluyendo eventos, giras y desplazamientos. LN España puede aplicar medidas respecto a ese proveedor (resolución de contrato, separación inmediata, etc.).',n:'Incorrecto. El Plan LGTBI+ de LN España aplica a proveedores y personal externo en el ámbito organizativo de la empresa, incluyendo eventos y giras. La empresa puede actuar respecto al proveedor externo cuyo personal acosa a la plantilla de LN España.'} },
+  { q:'El equipo de marketing de LN España publica una convocatoria interna para un festival con el texto: "Buscamos chicos con energía para el equipo de producción". ¿Cuál es el problema?', opts:['Ninguno — es un término coloquial que todo el mundo entiende como inclusivo','El lenguaje masculino en ofertas internas puede ser discriminación indirecta y viola la Medida 4.3 del PI de LN España sobre lenguaje inclusivo','Es una preferencia de género legítima para el puesto de producción de eventos','Solo es un problema si la oferta es externa, no interna'], ok:1, fb:{y:'Correcto. Usar lenguaje masculino en las convocatorias — internas o externas — puede desalentar candidaturas de mujeres y personas no binarias, lo que constituye discriminación indirecta. El Plan de Igualdad de LN España (Medida 8.1) y el Plan LGTBI+ (Medida 4.3) exigen lenguaje inclusivo en todas las comunicaciones. Lo correcto: "Buscamos personas con energía para el equipo de producción".',n:'Incorrecto. El lenguaje masculino en ofertas de trabajo no es neutro — puede ser discriminación indirecta al desalentar candidaturas de mujeres. El PI de LN España (Medida 8.1) y el Plan LGTBI+ (Medida 4.3) exigen lenguaje inclusivo tanto en comunicaciones internas como externas.'} },
+  { q:'¿Cuál de estas afirmaciones sobre la Comisión de Seguimiento del Plan de Igualdad de LN España es CORRECTA?', opts:['La forman solo representantes de la empresa, que deciden unilateralmente','La forman representantes de la empresa y de CCOO; se reúne como mínimo semestralmente y elabora un informe anual de evaluación','Se reúne solo cuando hay una denuncia o incidencia grave','La forman representantes de la empresa, CCOO y la Inspección de Trabajo'], ok:1, fb:{y:'Correcto. La Comisión de Seguimiento del PI de LN España está formada paritariamente por la empresa (dirección financiera/RRHH) y CCOO (Nuria Beltrí Vázquez). Se reúne al menos semestralmente con carácter ordinario y elabora un informe anual de evaluación. Al final del 2º año y al finalizar el Plan se hace una evaluación completa. RD 901/2020.',n:'Incorrecto. La Comisión es paritaria (empresa + CCOO) y tiene carácter permanente, no reactivo. Se reúne semestralmente de forma ordinaria y elabora informes anuales. La Inspección de Trabajo no forma parte de la Comisión.'} },
+  { q:'Una trabajadora de LN España solicita una reducción de jornada por guarda legal para cuidar a su hijo de 3 años. Su manager le dice que esto afectará negativamente a su evaluación de desempeño. ¿Qué ha ocurrido?', opts:['Una advertencia legítima sobre el impacto real en su carrera','Una amenaza de represalia por el ejercicio de un derecho de conciliación — ilegal según el ET y el PI de LN España','Un consejo bienintencionado sin consecuencias legales','Una política de empresa que puede aplicarse siempre que esté documentada'], ok:1, fb:{y:'Correcto. Vincular negativamente la evaluación de desempeño al ejercicio de derechos de conciliación es una represalia ilegal (ET Art. 37 y concordantes). El PI de LN España garantiza expresamente que "solicitar una reducción de jornada no afecta a la situación profesional dentro de la compañía". La trabajadora puede denunciarlo a RRHH o al canal ético.',n:'Incorrecto. Es una represalia ilegal. El ET protege el ejercicio de derechos de conciliación — un manager no puede amenazar con consecuencias en la carrera por ejercer este derecho. El PI de LN España lo recoge expresamente. La trabajadora puede acudir a RRHH o al canal ético.'} },
+  { q:'¿Cuál de estas situaciones describe mejor el concepto de "interseccionalidad" en el contexto de la igualdad laboral?', opts:['Cuando dos personas del mismo sexo tienen una disputa laboral','Cuando una persona experimenta discriminación por la combinación de varias características protegidas simultáneamente — por ejemplo, ser mujer y LGTBI+ y tener una discapacidad','Cuando los departamentos de RRHH y Legal trabajan conjuntamente en un caso de igualdad','Cuando el Plan de Igualdad y el Plan LGTBI+ se aplican al mismo tiempo a un caso'], ok:1, fb:{y:'Correcto. La interseccionalidad describe cómo la combinación de varias características protegidas (sexo, origen, orientación sexual, discapacidad, edad…) puede generar formas de discriminación específicas y más complejas. Una mujer trans racializada puede enfrentar discriminaciones que no experimenta ninguno de esos colectivos por separado. La Ley 15/2022 reconoce la discriminación múltiple e interseccional.',n:'Incorrecto. La interseccionalidad es el concepto que describe cómo la combinación de múltiples características protegidas (sexo, orientación sexual, origen, discapacidad…) genera formas de discriminación específicas que no pueden entenderse analizando cada característica por separado. Ley 15/2022.'} },
+  { q:'El Plan de Igualdad de LN España tiene vigencia 2026-2030. A finales de 2027, la Inspección de Trabajo realiza una visita y comprueba que varias medidas del PI aún no están implementadas. ¿Qué puede ocurrir?', opts:['Nada — el PI tiene 4 años de vigencia y las medidas pueden implementarse en cualquier momento','La Inspección puede requerir la implementación inmediata de medidas incumplidas y, si hay reiteración o perjuicio a trabajadoras, puede sancionar a la empresa','La Inspección solo puede actuar si hay una denuncia formal de una trabajadora','El PI solo es revisable por la Comisión de Seguimiento, no por la Inspección'], ok:1, fb:{y:'Correcto. La Inspección de Trabajo tiene competencia para verificar el cumplimiento del PI y requerir correcciones. El incumplimiento reiterado puede derivar en sanciones. Además, el PI puede ser objeto de revisión anticipada si la Inspección detecta falta de adecuación. Esto convierte el seguimiento semestral de la Comisión en una obligación real, no simbólica. RD 901/2020 Art. 11.',n:'Incorrecto. La Inspección de Trabajo puede actuar de oficio — no solo ante denuncias. Puede requerir la implementación de medidas y sancionar el incumplimiento del PI. El plazo de vigencia de 4 años no es un período de gracia sin consecuencias.'} },
+  { q:'¿Cuál de estos recursos globales de Live Nation está disponible para toda la plantilla de LN España a través de la plataforma Backstage y puede computarse como formación acreditada?', opts:['Solo los cursos impartidos presencialmente en España','Los cursos on-demand de la Pride Education Series: Creating a Trans-Inclusive Workplace, Respect and Gender Identity, Using Proper Pronouns, Uplifting LGBTQIA+ Voices y Coming Out at Work','El programa Futuros Headliners — solo para personas con alto potencial','Solo los cursos en inglés de Live Nation University'], ok:1, fb:{y:'Correcto. La Pride Education Series disponible en el Learning Hub (Backstage) incluye estos 5 cursos on-demand accesibles para toda la plantilla global, incluyendo LN España. El Plan LGTBI+ de LN España los reconoce expresamente como formación acreditada a efectos del indicador de completitud (Medida 4.1).',n:'Incorrecto. Los 5 cursos de la Pride Education Series (Creating a Trans-Inclusive Workplace, Respect and Gender Identity, Using Proper Pronouns, Uplifting LGBTQIA+ Voices, Coming Out at Work) están disponibles on-demand en Backstage para toda la plantilla y se computan como formación acreditada en el Plan LGTBI+ de LN España.'} },
+];
+
+// ── STATE ──
+let currentPage = 0;
+let visited = new Set([0]);
+let timeOnPage = {};
+let pageEnterTime = Date.now();
+let quizBuilt = false;
+let quizAnswers = Array(QUIZ.length).fill(null);
+let quizAnswered = Array(QUIZ.length).fill(false);
+let quizAttempts = 0;
+const MAX_ATTEMPTS = 3;
+// surveySaved moved to climaSaved
+// surveyData removed — using climaData
+
+// ── STORAGE KEY ──
+// ═══════════════════════════════════════════════════════════
+// GOOGLE SHEETS SYNC
+// ═══════════════════════════════════════════════════════════
+
+
+function storageKey(){
+  try{
+    const d=JSON.parse(localStorage.getItem('ln_user')||'{}');
+    return 'ln_c_prog_'+(d.name||'anon');
+  }catch(e){return 'ln_c_prog_anon';}
+}
+
+// ── INIT ──
+function init(){
+  buildRail();
+  loadState();
+  pageStartTime[currentPage] = Date.now();
+  goTo(currentPage);
+}
+
+function buildRail(){
+  const rail=document.getElementById('rail');
+  let html='<div class="rail-head"><div class="rail-title">CURSO C</div><div class="rail-sub">Igualdad, Diversidad e Inclusión LGTBI+</div></div>';
+  html+='<div class="rail-prog"><div class="rail-prog-bar"><div class="rail-prog-fill" id="rail-fill" style="width:0%"></div></div><div class="rail-prog-lbl" id="rail-lbl">0% completado</div></div>';
+  let lastSec='';
+  PAGES.forEach((p,i)=>{
+    if(p.sec!==lastSec){html+=`<div class="rail-sec">${p.sec}</div>`;lastSec=p.sec;}
+    html+=`<div class="rail-item" id="ri-${i}" onclick="railGoTo(${i})"><div class="rdot" id="rd-${i}">✓</div>${p.label}</div>`;
+  });
+  rail.innerHTML=html;
+}
+
+function updateRail(){
+  const pct=Math.round((visited.size/TOTAL_PAGES)*100);
+  document.getElementById('rail-fill').style.width=pct+'%';
+  document.getElementById('rail-lbl').textContent=pct+'% completado';
+  document.getElementById('tb-fill').style.width=pct+'%';
+  document.getElementById('tb-pct').textContent=pct+'%';
+  PAGES.forEach((_,i)=>{
+    const ri=document.getElementById('ri-'+i);
+    const rd=document.getElementById('rd-'+i);
+    if(!ri)return;
+    ri.className='rail-item'+(i===currentPage?' active':'')+(visited.has(i)&&i!==currentPage?' done':'');
+    if(visited.has(i))rd.style.color='#fff';
+  });
+  const bbInfo=document.getElementById('bb-info');
+  if(bbInfo) bbInfo.innerHTML=`Unidad <span>${currentPage+1}</span> de ${TOTAL_PAGES}`;
+  document.getElementById('btn-prev').disabled=currentPage===0;
+  document.getElementById('btn-next').style.display=currentPage===TOTAL_PAGES-1?'none':'';
+}
+
+function railGoTo(i) {
+  // El rail solo puede saltar a páginas ya visitadas O si el timer ha terminado
+  // Excepción: encuesta de clima (siempre accesible) y portada/resultado
+  const climaIds = ['pg-clima-a','pg-clima-b','pg-clima-c','pg-clima-d','pg-11'];
+  const targetId = PAGES[i] ? PAGES[i].id : '';
+  const isClima = climaIds.some(id => targetId.includes('clima') || targetId === 'pg-11');
+  const isPortada = i === 0;
+  const isResult = i >= TOTAL_PAGES - 1;
+  
+  // Si hay timer activo y quiere ir a una página de contenido aún no visitada → bloquear
+  if (timerRemaining > 0 && !isPortada && !isResult && !isClima) {
+    const lock = document.getElementById('timer-lock');
+    if (lock) { lock.style.animation='none'; void lock.offsetWidth; lock.style.animation='shake .3s'; }
+    return;
+  }
+  goTo(i);
+}
+
+function goTo(i) {
+  if(i<0||i>=TOTAL_PAGES) return;
+  // Registrar tiempo en página anterior
+  if(pageStartTime[currentPage]) {
+    const spent = Math.round((Date.now()-pageStartTime[currentPage])/1000);
+    pageTimes[currentPage] = (pageTimes[currentPage]||0) + spent;
+    timeOnPage[currentPage] = pageTimes[currentPage];
+  }
+  pageStartTime[i] = Date.now();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById(PAGES[i].id)?.classList.add('on');
+  currentPage=i;
+  visited.add(i);
+  if(i===12&&!quizBuilt){buildFinalQuiz();quizBuilt=true;}
+  updateRail();
+  document.getElementById('content').scrollTop=0;
+  saveState();
+  startPageTimer(i);
+}
+
+function navigate(dir) {
+  // dir puede ser un entero relativo (+1/-1) o llamarse con índice absoluto desde rail
+  const target = (typeof dir === 'number' && Math.abs(dir) <= 1) ? currentPage + dir : dir;
+  if(dir > 0 && timerRemaining > 0) {
+    const lock = document.getElementById('timer-lock');
+    if(lock){lock.style.animation='none';void lock.offsetWidth;lock.style.animation='shake .3s';}
+    return;
+  }
+  goTo(target);
+}
+
+// ── MINI QUIZ ──
+function answerMQ(id,oi,correct,fb){
+  const btns=document.querySelectorAll('#'+id+' .mq-opt');
+  btns.forEach((b,j)=>{
+    b.disabled=true;
+    if(j===oi)b.classList.add(correct?'correct':'wrong');
+  });
+  const fbEl=document.getElementById('mq-fb-'+id.split('-')[1]);
+  if(fbEl){fbEl.textContent=(correct?'✅ ':'❌ ')+fb;fbEl.className='mq-fb show '+(correct?'ok':'bad');}
+}
+
+// ── SURVEY ──
+// ── ENCUESTA CLIMA ──
+const climaData={};
+let climaSaved=false;
+
+function selClima(el,id,val){
+  const row=el.closest('.likert-row');
+  row.querySelectorAll('.likert-btn').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById(id).value=val;
+  climaData[id]=val;
+}
+
+function saveClima(curso){
+  const reqMap={'C':['c1','c2','c3','c4']};
+  const ids=reqMap[curso]||[];
+  const answered=ids.filter(k=>{const e=document.getElementById(k);return e&&e.value;});
+  if(answered.length<ids.length){alert('Por favor responde todas las preguntas de escala antes de continuar.');return;}
+  ['c-open1','c-open2'].forEach(id=>{const e=document.getElementById(id);if(e)climaData[id]=e.value;});
+  climaData.curso=curso;climaData.timestamp=new Date().toISOString();
+  climaSaved=true;
+  try{
+    const key=storageKey()+'_clima';
+    const existing=JSON.parse(localStorage.getItem(key)||'{}');
+    existing[curso]=Object.assign({},climaData);
+    localStorage.setItem(key,JSON.stringify(existing));
+    window.storage?.set('ln_clima_'+curso+'_'+Date.now(),JSON.stringify(climaData),true).catch(()=>{});
+  }catch(e){}
+  const saved=document.getElementById('clima-saved-'+curso);
+  if(saved)saved.classList.add('show');
+  setTimeout(()=>goTo(currentPage+1),1000);
+}
+
+function skipClima(){climaSaved=true;goTo(currentPage+1);}
+
+// ── TOGGLE ACCEPT ──
+function toggleAccept(){
+  const errEl=document.getElementById('accept-err');
+  if(errEl)errEl.style.display='none';
+}
+
+// ── FINAL QUIZ ──
+function buildFinalQuiz(){
+  const container=document.getElementById('quiz-container');
+  // Verificar declaración de lectura
+  const checked=document.getElementById('accept-check')?.checked;
+  const errEl=document.getElementById('accept-err');
+  if(!checked){
+    if(errEl)errEl.style.display='block';
+    document.getElementById('accept-check')?.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  if(errEl)errEl.style.display='none';
+  const locked=document.getElementById('quiz-locked');
+  locked.style.display='none';
+  quizAnswers=Array(QUIZ.length).fill(null);
+  quizAnswered=Array(QUIZ.length).fill(false);
+  let html='';
+  QUIZ.forEach((q,qi)=>{
+    html+=`<div style="background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem">
+      <div style="font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem">Pregunta ${qi+1} de ${QUIZ.length}</div>
+      <div style="font-size:.9rem;font-weight:500;margin-bottom:.75rem;line-height:1.55">${q.q}</div>
+      <div style="display:flex;flex-direction:column;gap:.4rem" id="qopts-${qi}">`;
+    q.opts.forEach((opt,oi)=>{
+      html+=`<button class="mq-opt" onclick="answerQ(${qi},${oi})" id="qo-${qi}-${oi}"><div class="mq-radio"></div><span>${opt}</span></button>`;
+    });
+    html+=`</div><div class="mq-fb" id="qfb-${qi}"></div></div>`;
+  });
+  container.innerHTML=html;
+  document.getElementById('quiz-submit-btn').style.display='none';
+  updateAttemptsInfo();
+}
+
+function answerQ(qi,oi){
+  if(quizAnswered[qi])return;
+  quizAnswers[qi]=oi;
+  quizAnswered[qi]=true;
+  const btns=document.querySelectorAll(`#qopts-${qi} .mq-opt`);
+  const isOk=oi===QUIZ[qi].ok;
+  btns.forEach((b,j)=>{
+    b.disabled=true;
+    if(j===oi)b.classList.add(isOk?'correct':'wrong');
+    if(!isOk&&j===QUIZ[qi].ok)b.classList.add('correct');
+  });
+  const fb=document.getElementById('qfb-'+qi);
+  fb.textContent=(isOk?'✅ ':'❌ ')+(isOk?QUIZ[qi].fb.y:QUIZ[qi].fb.n);
+  fb.className='mq-fb show '+(isOk?'ok':'bad');
+  const done=quizAnswered.filter(Boolean).length;
+  if(done===QUIZ.length)document.getElementById('quiz-submit-btn').style.display='block';
+}
+
+function updateAttemptsInfo(){
+  const info=document.getElementById('quiz-attempts-info');
+  if(quizAttempts>0){
+    info.style.display='block';
+    const rem=MAX_ATTEMPTS-quizAttempts;
+    info.innerHTML=`<div class="box box-amber"><div class="box-lbl">Intentos</div><div class="box-txt">Has usado ${quizAttempts} de ${MAX_ATTEMPTS} intentos. Te quedan <strong>${rem}</strong>.</div></div>`;
+  }
+}
+
+function submitQuiz(){
+  const score=quizAnswers.reduce((acc,a,i)=>acc+(a===QUIZ[i].ok?1:0),0);
+  const pct=Math.round((score/QUIZ.length)*100);
+  const pass=pct>=70;
+  quizAttempts++;
+  // Save result
+  try{
+    const key=storageKey();
+    const existing=JSON.parse(localStorage.getItem(key)||'{}');
+    if(!existing.quizResults)existing.quizResults={};
+    existing.quizResults['C']={score,total:QUIZ.length,pct,pass,attempt:quizAttempts,date:new Date().toISOString()};
+    if(pass)existing.completedC=true;
+    localStorage.setItem(key,JSON.stringify(existing));
+    window.storage?.set(storageKey()+'_C',JSON.stringify({score,pct,pass,date:new Date().toISOString()}),true).catch(()=>{});
+    // Sync a Google Sheets
+    if(pass){
+      const user=JSON.parse(localStorage.getItem('ln_user')||'{}');
+      syncToGoogle({
+        email: user.email||'', name: user.name||'', dni: user.dni||'',
+        courses:{ c:{ certified:true, pct, score, total:QUIZ.length, certDate:new Date().toLocaleDateString('es-ES') } }
+      });
+    }
+  }catch(e){}
+  navigate(13);
+  renderResult(score,pct,pass);
+}
+
+function renderResult(score,pct,pass){
+  const user=JSON.parse(localStorage.getItem('ln_user')||'{}');
+  const area=document.getElementById('result-area');
+  if(pass){
+    area.innerHTML=`
+      <div style="text-align:center;padding:1.5rem 0">
+        <div style="font-size:3rem;margin-bottom:.5rem">🎓</div>
+        <div style="font-family:var(--serif);font-size:2rem;color:var(--green);letter-spacing:.05em;margin-bottom:.25rem">APROBADO</div>
+        <div style="font-family:var(--mono);font-size:.8rem;color:var(--ink3);margin-bottom:1.5rem">${score}/${QUIZ.length} correctas · ${pct}%</div>
+      </div>
+      <div class="cert-wrap">
+        <img id="cert-logo" style="height:28px;filter:grayscale(1);margin-bottom:1.5rem">
+        <div class="cert-title">CERTIFICADO DE FORMACIÓN</div>
+        <div style="font-size:.85rem;color:var(--ink3);margin-bottom:.75rem;font-family:var(--mono)">CERTIFICA QUE</div>
+        <div class="cert-name-wrap">
+          <input class="cert-name-input" id="cert-name-input" placeholder="Escribe tu nombre completo" value="${user.name||''}">
+        </div>
+        <div class="cert-body">ha completado satisfactoriamente el curso <strong>Igualdad, Diversidad e Inclusión LGTBI+</strong> (Curso C) de Live Nation España, S.A.U. con una puntuación de <strong>${pct}%</strong>.</div>
+        <div class="cert-norm">
+          <span class="norm">LO 3/2007</span><span class="norm">RDL 6/2019</span><span class="norm">RD 901/2020</span><span class="norm">RD 902/2020</span><span class="norm">Ley 4/2023</span><span class="norm">RD 1026/2024</span>
+        </div>
+        <div class="cert-date">Fecha de realización: ${new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'})}</div>
+        <div style="display:flex;gap:2rem;justify-content:center;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--rule)">
+          <div style="text-align:center">
+            <div style="font-family:var(--serif);font-size:1rem;letter-spacing:.05em">VALEN&Iacute; TUGUES ALEMANY</div>
+            <div style="font-size:.72rem;color:var(--ink3);margin-top:.2rem">Director Financiero · Live Nation España, S.A.U.</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-family:var(--serif);font-size:1rem;letter-spacing:.05em">BEL&Eacute;N MONTESINO</div>
+            <div style="font-size:.72rem;color:var(--ink3);margin-top:.2rem">HR Manager · Live Nation España, S.A.U.</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <button class="btn btn-purple" onclick="window.print()">🖨️ Imprimir certificado</button>
+        </div>
+      </div>`;
+    const logo=document.getElementById('cert-logo');
+    if(user.photo)logo.src=user.photo;
+  } else {
+    const rem=MAX_ATTEMPTS-quizAttempts;
+    if(rem>0){
+      area.innerHTML=`
+        <div style="text-align:center;padding:2rem 0">
+          <div style="font-size:3rem;margin-bottom:.5rem">❌</div>
+          <div style="font-family:var(--serif);font-size:2rem;color:var(--red);letter-spacing:.05em;margin-bottom:.5rem">NO SUPERADO</div>
+          <div style="font-size:.9rem;color:var(--ink3);margin-bottom:1.5rem">${score}/${QUIZ.length} correctas · ${pct}% · Mínimo requerido: 70%</div>
+          <div class="box box-amber" style="text-align:left;max-width:500px;margin:0 auto 1.5rem">
+            <div class="box-lbl">Intentos restantes: ${rem}</div>
+            <div class="box-txt">Te recomendamos repasar las unidades antes de intentarlo de nuevo. Puedes volver a cualquier unidad usando el menú lateral.</div>
+          </div>
+          <button class="btn btn-purple" onclick="retryQuiz()">Intentar de nuevo (${rem} restantes)</button>
+        </div>`;
+    } else {
+      area.innerHTML=`
+        <div style="text-align:center;padding:2rem 0">
+          <div style="font-size:3rem;margin-bottom:.5rem">📞</div>
+          <div style="font-family:var(--serif);font-size:1.8rem;color:var(--red);margin-bottom:.5rem">INTENTOS AGOTADOS</div>
+          <div style="font-size:.9rem;color:var(--ink3);margin-bottom:1.5rem">Has agotado los 3 intentos disponibles. Por favor contacta con RRHH para formación adicional.</div>
+          <div class="box box-blue" style="text-align:left;max-width:500px;margin:0 auto">
+            <div class="box-lbl">Contacto RRHH</div>
+            <div class="box-txt">Belén Montesino · <strong>rrhh@livenation.es</strong> · belen@livenation.es · 93 459 23 62</div>
+          </div>
+        </div>`;
+    }
+  }
+}
+
+function retryQuiz(){
+  quizBuilt=false;
+  goTo(12);
+  buildFinalQuiz();
+  quizBuilt=true;
+}
+
+// ── PERSISTENCE ──
+function saveState(){
+  try{
+    const key=storageKey();
+    const d={currentPage,visited:Array.from(visited),quizAttempts,surveySaved,timeOnPage};
+    localStorage.setItem(key,JSON.stringify(d));
+  }catch(e){}
+}
+
+function loadState(){
+  try{
+    const key=storageKey();
+    const d=JSON.parse(localStorage.getItem(key)||'{}');
+    if(d.visited)visited=new Set(d.visited);
+    if(d.quizAttempts)quizAttempts=d.quizAttempts;
+    if(d.surveySaved)surveySaved=d.surveySaved;
+    if(d.timeOnPage)Object.assign(timeOnPage,d.timeOnPage);
+    currentPage=d.currentPage||0;
+  }catch(e){}
+}
+
+function goPortal(){window.location.href='LN_Portal_v4.html';}
+
+// ── START ──
+init();
+
+// ══════════════════════════════════════
+// GOOGLE SHEETS — sincronización central
+// ══════════════════════════════════════
+
+
+
+</script>
+</body>
+</html>
