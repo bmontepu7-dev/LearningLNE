@@ -389,6 +389,10 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
   .cert-outer{box-shadow:none!important;border:2px solid #111!important}
 }
 
+/* ══ LIKERT BUTTONS ENCUESTA CLIMA ══ */
+.likert-btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border:1.5px solid var(--rule2);border-radius:7px;cursor:pointer;font-size:.78rem;color:var(--ink3);transition:all .18s;font-weight:400;background:var(--bg);margin:3px 2px;white-space:nowrap}
+.likert-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-bg)}
+.likert-btn.sel{border-color:var(--blue)!important;background:var(--blue)!important;color:#fff!important}
 </style>
 </head>
 <body>
@@ -1933,7 +1937,7 @@ function toast(msg, type) {
 const climaData = {};
 let climaSaved = false;
 function selClima(el, id, val) {
-  const row = el.parentElement;
+  const row = el.closest('div') || el.parentElement;
   row.querySelectorAll('.likert-btn').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
   const inp = document.getElementById(id);

@@ -1187,8 +1187,8 @@ const MAX_ATTEMPTS = 3;
 
 function storageKey(){
   try{
-    const d=JSON.parse(localStorage.getItem('ln_user')||'{}');
-    return 'ln_c_prog_'+(d.name||'anon');
+    const d=JSON.parse(localStorage.getItem('ln_session')||'{}');
+    return 'ln_c_prog_'+(d.email||d.name||'anon').toLowerCase().replace(/[^a-z0-9@._-]/g,'_');
   }catch(e){return 'ln_c_prog_anon';}
 }
 
@@ -1407,7 +1407,7 @@ function submitQuiz(){
     window.storage?.set(storageKey()+'_C',JSON.stringify({score,pct,pass,date:new Date().toISOString()}),true).catch(()=>{});
     // Sync a Google Sheets
     if(pass){
-      const user=JSON.parse(localStorage.getItem('ln_user')||'{}');
+      const user=JSON.parse(localStorage.getItem('ln_session')||'{}');
       syncToGoogle({
         email: user.email||'', name: user.name||'', dni: user.dni||'',
         courses:{ c:{ certified:true, pct, score, total:QUIZ.length, certDate:new Date().toLocaleDateString('es-ES') } }
@@ -1419,7 +1419,7 @@ function submitQuiz(){
 }
 
 function renderResult(score,pct,pass){
-  const user=JSON.parse(localStorage.getItem('ln_user')||'{}');
+  const user=JSON.parse(localStorage.getItem('ln_session')||'{}');
   const area=document.getElementById('result-area');
   if(pass){
     area.innerHTML=`
