@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>People · Live Nation España</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0f0f0f;--ink2:#3a3a3a;--ink3:#888;--ink4:#bbb;
+  --bg:#f8f7f4;--white:#ffffff;--off:#f1f0ec;
+  --rule:#e8e6e1;--rule2:#d4d1cb;
+  --red:#c41e1e;--red-pale:#fdf0f0;
+  --green:#1f5c3a;--green-pale:#edf5f0;
+  --blue:#1a3a5c;--blue-pale:#eef2f7;
+  --amber:#7a4f00;--amber-pale:#faf4e8;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+  --r:6px;--ease:.22s cubic-bezier(.4,0,.2,1);
+}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* TOPBAR */
+.topbar{background:var(--ink);height:52px;display:flex;align-items:center;padding:0 2.5rem;gap:1.25rem;position:sticky;top:0;z-index:200}
+.tb-logo{height:22px;filter:brightness(0) invert(1);opacity:.9}
+.tb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0}
+.tb-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);flex:1}
+.tb-user{font-size:.8rem;color:rgba(255,255,255,.4);font-weight:300;display:none}
+.tb-user strong{color:rgba(255,255,255,.82);font-weight:500}
+.tb-out{font-size:.65rem;color:rgba(255,255,255,.3);background:none;border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:5px 11px;cursor:pointer;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;transition:all var(--ease);display:none}
+.tb-out:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+
+/* NAV */
+.nav{background:var(--white);border-bottom:1px solid var(--rule);padding:0 2.5rem;display:none;overflow-x:auto}
+.nav::-webkit-scrollbar{display:none}
+.nav-btn{padding:.85rem 1rem;font-size:.65rem;font-family:var(--mono);font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all var(--ease)}
+.nav-btn:hover{color:var(--ink)}
+.nav-btn.active{color:var(--ink);border-bottom-color:var(--ink)}
+.nav-dot{display:inline-block;width:5px;height:5px;background:var(--red);border-radius:50%;margin-left:4px;vertical-align:middle;display:none}
+
+/* MAIN */
+.main{max-width:1120px;margin:0 auto;padding:3rem 2.5rem}
+.section{display:none}.section.active{display:block}
+
+/* TABLON */
+.tablon{margin-bottom:3rem}
+.t-head{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:1.25rem}
+.t-head h2{font-family:var(--serif);font-size:1.7rem;font-weight:400}
+.t-head span{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4)}
+.t-scroll{display:flex;gap:.85rem;overflow-x:auto;padding-bottom:.75rem}
+.t-scroll::-webkit-scrollbar{height:2px}
+.t-scroll::-webkit-scrollbar-thumb{background:var(--rule2);border-radius:2px}
+.pin{flex:0 0 270px;border-radius:4px;padding:1.25rem 1.25rem 1rem;cursor:pointer;transition:transform var(--ease),box-shadow var(--ease);position:relative;overflow:hidden}
+.pin:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.pin-bar{position:absolute;top:0;left:0;right:0;height:2px}
+.pin-u{background:#fff5f5;border:1px solid #f0c8c8}.pin-u .pin-bar{background:var(--red)}
+.pin-g{background:var(--green-pale);border:1px solid #c0ddd0}.pin-g .pin-bar{background:var(--green)}
+.pin-b{background:var(--blue-pale);border:1px solid #c5d8ed}.pin-b .pin-bar{background:var(--blue)}
+.pin-a{background:var(--amber-pale);border:1px solid #e0d0a5}.pin-a .pin-bar{background:var(--amber)}
+.pin-n{background:var(--off);border:1px solid var(--rule)}.pin-n .pin-bar{background:var(--ink4)}
+.pin-tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:.45rem;margin-top:.35rem}
+.pin-title{font-size:.88rem;font-weight:500;line-height:1.4;color:var(--ink)}
+.pin-body{font-size:.75rem;font-weight:300;line-height:1.6;opacity:.7;margin-top:.4rem}
+.pin-date{font-family:var(--mono);font-size:.55rem;letter-spacing:.06em;opacity:.4;margin-top:.6rem}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;padding:2.5rem 0 2rem;border-bottom:1px solid var(--rule);margin-bottom:3rem}
+.h-eye{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);margin-bottom:.85rem}
+.h-name{font-family:var(--serif);font-size:clamp(2.5rem,4.5vw,4.2rem);font-weight:400;line-height:.95;letter-spacing:-.02em}
+.h-name em{font-style:italic;color:var(--red)}
+.h-sub{font-size:.88rem;color:var(--ink3);font-weight:300;margin-top:1.1rem;max-width:400px;line-height:1.75}
+.h-date{font-family:var(--serif);font-size:3.2rem;font-weight:400;color:var(--rule2);line-height:1;text-align:right;letter-spacing:-.02em}
+.h-day{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink4);text-align:right;margin-top:.2rem}
+
+/* SEC HEAD */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--rule)}
+.sec-head h2{font-family:var(--serif);font-size:2rem;font-weight:400}
+.sec-head-r{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4)}
+
+/* HOME GRID */
+.hgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:.5rem}
+.hcard{background:var(--white);padding:1.4rem 1.2rem;cursor:pointer;transition:background var(--ease)}
+.hcard:hover{background:var(--off)}
+.hcard-bar{height:2px;margin-bottom:.9rem;border-radius:1px}
+.hcard-ico{font-size:1.4rem;margin-bottom:.55rem;display:block}
+.hcard-name{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem}
+.hcard-desc{font-size:.78rem;color:var(--ink3);font-weight:300;line-height:1.55}
+.hcard-meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;color:var(--ink4);margin-top:.65rem}
+@media(max-width:760px){.hgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* CURSOS */
+.cgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem;margin-bottom:1.75rem}
+.curso{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.6rem;position:relative;overflow:hidden;transition:box-shadow var(--ease)}
+.curso:hover{box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.c-accent{position:absolute;top:0;left:0;bottom:0;width:3px}
+.c-tag{font-family:var(--mono);font-size:.57rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:.55rem}
+.c-name{font-family:var(--serif);font-size:1.3rem;font-weight:400;letter-spacing:-.01em;margin-bottom:.45rem;line-height:1.2}
+.c-desc{font-size:.8rem;color:var(--ink3);font-weight:300;line-height:1.6;margin-bottom:1.1rem}
+.c-prog{background:var(--off);border-radius:2px;height:2px;margin-bottom:.4rem}
+.c-fill{height:2px;border-radius:2px;transition:width .7s cubic-bezier(.4,0,.2,1)}
+.c-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.07em;color:var(--ink4);margin-bottom:.9rem}
+.btn-c{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:3px;font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all var(--ease)}
+.btn-c-ink{background:var(--ink);color:#fff}.btn-c-ink:hover{background:var(--ink2)}
+.btn-c-done{background:var(--green-pale);color:var(--green);border:1px solid #c5e5d5}
+@media(max-width:680px){.cgrid{grid-template-columns:1fr}}
+
+/* VACANTES */
+.vrow{border-bottom:1px solid var(--rule);padding:1.6rem 0;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
+.vrow:last-child{border-bottom:none}
+.v-dept{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:.45rem}
+.v-title{font-family:var(--serif);font-size:1.15rem;font-weight:400;margin-bottom:.45rem}
+.v-chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.55rem}
+.chip{font-family:var(--mono);font-size:.56rem;letter-spacing:.07em;padding:2px 8px;border-radius:2px;border:1px solid var(--rule2);color:var(--ink3)}
+.v-desc{font-size:.8rem;color:var(--ink3);font-weight:300;line-height:1.7}
+.btn-int{display:inline-flex;align-items:center;gap:5px;padding:9px 16px;background:var(--ink);color:#fff;border:none;border-radius:3px;font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:all var(--ease);white-space:nowrap;flex-shrink:0;align-self:flex-start;margin-top:.9rem}
+.btn-int:hover{background:var(--ink2)}
+
+/* PROTOCOLOS */
+.prow{display:grid;grid-template-columns:3fr 1fr auto;gap:1.5rem;align-items:center;padding:1.1rem 0;border-bottom:1px solid var(--rule)}
+.prow:last-child{border-bottom:none}
+.p-name{font-size:.88rem;font-weight:500}
+.p-desc{font-size:.76rem;color:var(--ink3);font-weight:300;line-height:1.55;margin-top:.2rem}
+.p-date{font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;color:var(--ink4);text-align:right}
+.btn-l{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);text-decoration:none;border-bottom:1px solid var(--rule2);padding-bottom:1px;transition:all var(--ease);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none}
+.btn-l:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* CALENDARIO */
+.cal-y{font-family:var(--serif);font-size:5rem;font-weight:400;color:var(--rule2);line-height:1;margin-bottom:1.75rem;letter-spacing:-.03em}
+.frow{display:grid;grid-template-columns:90px 1fr auto;gap:1rem;align-items:center;padding:.9rem 0;border-bottom:1px solid var(--rule)}
+.frow:last-child{border-bottom:none}
+.f-date{font-family:var(--serif);font-size:1rem;font-weight:400;line-height:1}
+.f-day{font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-top:.1rem}
+.f-name{font-size:.86rem;font-weight:400}
+.fbadge{font-family:var(--mono);font-size:.54rem;letter-spacing:.07em;padding:2px 7px;border-radius:2px;text-transform:uppercase;font-weight:500}
+.fb-n{background:var(--off);color:var(--ink4);border:1px solid var(--rule2)}
+.fb-r{background:var(--red-pale);color:var(--red);border:1px solid #f0c8c8}
+.cdiv{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);padding:1.25rem 0 .65rem;border-bottom:1px solid var(--rule)}
+
+/* BENEFICIOS */
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--rule)}
+.bcard{background:var(--white);padding:1.6rem 1.4rem}
+.b-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--ink4);margin-bottom:.85rem}
+.b-ico{font-size:1.25rem;margin-bottom:.55rem;display:block}
+.b-title{font-size:.88rem;font-weight:500;margin-bottom:.35rem}
+.b-desc{font-size:.76rem;color:var(--ink3);font-weight:300;line-height:1.65}
+@media(max-width:760px){.bgrid{grid-template-columns:repeat(2,1fr)}}
+
+/* PRL */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:2rem}
+.pcard{padding:1.4rem;border:1px solid var(--rule);border-radius:var(--r);background:var(--white)}
+.p-num{font-family:var(--serif);font-size:2.2rem;font-weight:400;color:var(--rule2);line-height:1;margin-bottom:.4rem}
+.p-t{font-size:.86rem;font-weight:500;margin-bottom:.3rem}
+.p-d{font-size:.76rem;color:var(--ink3);font-weight:300;line-height:1.65}
+.egrid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem}
+.ecard{padding:1.1rem;border:1px solid var(--rule);border-radius:var(--r);background:var(--white)}
+.e-num{font-family:var(--serif);font-size:1.7rem;font-weight:400;line-height:1;margin-bottom:.15rem}
+.e-lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4)}
+@media(max-width:680px){.pgrid,.egrid{grid-template-columns:1fr}}
+
+/* NEWS */
+.nlayout{display:grid;grid-template-columns:1fr 300px;gap:2.5rem}
+.nitem{border-bottom:1px solid var(--rule);padding:1.4rem 0}
+.nitem:last-child{border-bottom:none}
+.n-date{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:.3rem}
+.n-tag{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-bottom:.45rem;display:inline-block}
+.n-title{font-family:var(--serif);font-size:1.05rem;font-weight:400;margin-bottom:.45rem;line-height:1.35}
+.n-body{font-size:.8rem;color:var(--ink3);font-weight:300;line-height:1.75}
+.sw{border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:.85rem}
+.sw-h{background:var(--ink);color:#fff;padding:.75rem 1.1rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.sw-link{display:flex;align-items:center;gap:.6rem;padding:.8rem 1.1rem;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--ink);font-size:.8rem;transition:background var(--ease)}
+.sw-link:last-child{border-bottom:none}
+.sw-link:hover{background:var(--off)}
+@media(max-width:760px){.nlayout{grid-template-columns:1fr}}
+
+/* FAQs */
+.fg{margin-bottom:1.75rem}
+.fg-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);margin-bottom:.65rem;padding-bottom:.45rem;border-bottom:1px solid var(--rule)}
+.fitem{border-bottom:1px solid var(--rule)}
+.fq{width:100%;text-align:left;padding:.9rem 0;font-size:.86rem;font-weight:400;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;background:none;border:none;font-family:var(--sans);color:var(--ink);transition:color var(--ease)}
+.fq:hover{color:var(--ink2)}
+.farr{font-family:var(--mono);font-size:.7rem;color:var(--ink4);transition:transform .2s;flex-shrink:0}
+.fa{max-height:0;overflow:hidden;transition:all .28s cubic-bezier(.4,0,.2,1);font-size:.8rem;color:var(--ink3);font-weight:300;line-height:1.8}
+.fitem.open .fa{max-height:300px;padding-bottom:.9rem}
+.fitem.open .farr{transform:rotate(45deg)}
+
+/* CONTACTO */
+.clayout{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.cblock h3{font-family:var(--serif);font-size:1.35rem;font-weight:400;margin-bottom:1.4rem}
+.fr{margin-bottom:1.1rem}
+.fr label{display:block;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:.35rem}
+.fr input,.fr textarea,.fr select{width:100%;padding:.7rem .85rem;border:1px solid var(--rule2);border-radius:3px;font-family:var(--sans);font-size:.86rem;color:var(--ink);background:var(--white);transition:border var(--ease);resize:vertical}
+.fr input:focus,.fr textarea:focus,.fr select:focus{outline:none;border-color:var(--ink)}
+.btn-send{padding:9px 22px;background:var(--ink);color:#fff;border:none;border-radius:3px;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background var(--ease)}
+.btn-send:hover{background:var(--ink2)}
+.ditem{display:flex;gap:.9rem;padding:1rem 0;border-bottom:1px solid var(--rule)}
+.ditem:last-child{border-bottom:none}
+.d-ico{font-size:.95rem;flex-shrink:0;margin-top:3px;opacity:.55}
+.d-lbl{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:.15rem}
+.d-val{font-size:.86rem;font-weight:500}
+.d-sub{font-size:.76rem;color:var(--ink3);font-weight:300}
+@media(max-width:680px){.clayout{grid-template-columns:1fr}}
+
+/* ADMIN */
+.kstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--rule);margin-bottom:1.75rem}
+.kpi{background:var(--white);padding:1.4rem;border-right:1px solid var(--rule)}
+.kpi:last-child{border-right:none}
+.kpi-n{font-family:var(--serif);font-size:2.5rem;font-weight:400;line-height:1;margin-bottom:.15rem}
+.kpi-l{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4)}
+.acontrols{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-bottom:1.4rem}
+.fbtn{padding:5px 13px;border:1px solid var(--rule2);border-radius:3px;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;background:var(--white);color:var(--ink3);transition:all var(--ease)}
+.fbtn:hover{border-color:var(--ink);color:var(--ink)}
+.fbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.asearch{margin-left:auto;padding:6px 11px;border:1px solid var(--rule2);border-radius:3px;font-size:.8rem;font-family:var(--sans);width:210px;background:var(--white)}
+.asearch:focus{outline:none;border-color:var(--ink)}
+.twrap{border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--white)}
+.atable{width:100%;border-collapse:collapse;font-size:.76rem}
+.atable th{padding:.75rem .9rem;text-align:left;font-family:var(--mono);font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink4);background:var(--off);border-bottom:1px solid var(--rule);font-weight:500}
+.atable td{padding:.8rem .9rem;border-bottom:1px solid var(--rule);vertical-align:middle}
+.atable tr:last-child td{border-bottom:none}
+.atable tr:hover td{background:#faf9f7}
+.pill{display:inline-flex;align-items:center;gap:2px;padding:2px 7px;border-radius:2px;font-size:.58rem;font-weight:500;font-family:var(--mono);white-space:nowrap}
+.pg{background:var(--green-pale);color:var(--green)}
+.pa{background:var(--amber-pale);color:var(--amber)}
+.pn{background:var(--off);color:var(--ink4)}
+.bexp{padding:6px 13px;background:var(--white);border:1px solid var(--rule2);border-radius:3px;font-family:var(--mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;color:var(--ink3);transition:all var(--ease)}
+.bexp:hover{border-color:var(--ink);color:var(--ink)}
+
+/* ALERTS */
+.alert{padding:.8rem 1rem;border-radius:3px;font-size:.8rem;line-height:1.65;margin-bottom:1.4rem;border-left:2px solid}
+.al-r{background:var(--red-pale);border-color:var(--red);color:var(--red)}
+.al-g{background:var(--green-pale);border-color:var(--green);color:var(--green)}
+.al-b{background:var(--blue-pale);border-color:var(--blue);color:var(--blue)}
+.al-a{background:var(--amber-pale);border-color:var(--amber);color:var(--amber)}
+.alert a{color:inherit;font-weight:600}
+
+/* MODAL */
+.mbg{position:fixed;inset:0;background:rgba(15,15,15,.65);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.mbg.off{display:none}
+.modal{background:var(--white);border-radius:8px;padding:2.5rem 2.1rem;width:100%;max-width:390px;box-shadow:0 24px 80px rgba(0,0,0,.25)}
+.m-logo{margin-bottom:1.85rem;display:flex;justify-content:center}
+.m-logo img{height:30px;filter:grayscale(100%);opacity:.85}
+.modal h2{font-family:var(--serif);font-size:1.8rem;font-weight:400;text-align:center;margin-bottom:.2rem}
+.m-sub{font-size:.68rem;color:var(--ink4);text-align:center;margin-bottom:1.85rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.iw{margin-bottom:.9rem}
+.iw label{display:block;font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:.35rem}
+.iw input{width:100%;padding:.72rem .88rem;border:1px solid var(--rule2);border-radius:3px;font-family:var(--sans);font-size:.88rem;transition:border var(--ease);background:var(--bg)}
+.iw input:focus{outline:none;border-color:var(--ink);background:var(--white)}
+.btn-lo{width:100%;padding:11px;background:var(--ink);color:#fff;border:none;border-radius:3px;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;margin-top:.65rem;transition:background var(--ease)}
+.btn-lo:hover{background:var(--ink2)}
+.err{color:var(--red);font-size:.74rem;margin-top:.5rem;padding:.45rem .7rem;background:var(--red-pale);border-radius:3px;display:none;line-height:1.5}
+.err.on{display:block}
+.rgpd{margin-top:1.1rem;font-size:.68rem;color:var(--ink4);line-height:1.6;text-align:center}
+.btn-adm{display:block;text-align:center;margin-top:.8rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);cursor:pointer;background:none;border:none;width:100%;transition:color var(--ease)}
+.btn-adm:hover{color:var(--ink)}
+.amodal{background:var(--white);border-radius:8px;padding:1.85rem;width:100%;max-width:320px;box-shadow:0 24px 80px rgba(0,0,0,.25)}
+.amodal h3{font-family:var(--serif);font-size:1.25rem;font-weight:400;margin-bottom:1.1rem}
+.macts{display:flex;gap:.65rem;margin-top:.9rem}
+.bsi{padding:8px 16px;background:var(--ink);color:#fff;border:none;border-radius:3px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background var(--ease)}
+.bsi:hover{background:var(--ink2)}
+.bso{padding:8px 16px;background:none;border:1px solid var(--rule2);color:var(--ink3);border-radius:3px;font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all var(--ease)}
+.bso:hover{border-color:var(--ink);color:var(--ink)}
+.off{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img class="tb-logo" src="https://cdn.brandfetch.io/idec0SWCXf/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1770577642847" alt="Live Nation">
+  <div class="tb-sep" style="width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0"></div>
+  <div class="tb-title">People · España</div>
+  <div class="tb-user" id="tb-user">Bienvenida, <strong id="tb-name"></strong></div>
+  <button class="tb-out" id="btn-logout" onclick="doLogout()">Salir</button>
+</div>
+
+<nav class="nav" id="main-nav">
+  <button class="nav-btn active" onclick="go('inicio')" data-sec="inicio">Inicio</button>
+  <button class="nav-btn" onclick="go('formacion')" data-sec="formacion">Formación <span class="nav-dot" id="nd-form"></span></button>
+  <button class="nav-btn" onclick="go('vacantes')" data-sec="vacantes">Vacantes</button>
+  <button class="nav-btn" onclick="go('protocolos')" data-sec="protocolos">Protocolos</button>
+  <button class="nav-btn" onclick="go('calendario')" data-sec="calendario">Calendario</button>
+  <button class="nav-btn" onclick="go('beneficios')" data-sec="beneficios">Beneficios</button>
+  <button class="nav-btn" onclick="go('prl')" data-sec="prl">PRL</button>
+  <button class="nav-btn" onclick="go('news')" data-sec="news">Novedades</button>
+  <button class="nav-btn" onclick="go('faqs')" data-sec="faqs">FAQs</button>
+  <button class="nav-btn" onclick="go('contacto')" data-sec="contacto">Contacto</button>
+  <button class="nav-btn off" onclick="go('admin')" data-sec="admin" id="nav-admin">Admin</button>
+</nav>
+
+<main class="main" id="main-content" style="display:none">
+
+<!-- INICIO -->
+<div class="section active" id="sec-inicio">
+  <div class="hero">
+    <div>
+      <div class="h-eye">Live Nation España · Portal de Personas</div>
+      <div class="h-name">Hola,<br><em id="hfirst">bienvenida.</em></div>
+      <div class="h-sub">Tu espacio de trabajo, formación y bienestar. Todo en un mismo lugar.</div>
+    </div>
+    <div style="text-align:right">
+      <div class="h-date" id="hdate"></div>
+      <div class="h-day" id="hday"></div>
+    </div>
+  </div>
+
+  <div class="tablon">
+    <div class="t-head"><h2>Tablón</h2><span>Novedades · Avisos</span></div>
+    <div class="t-scroll">
+      <div class="pin pin-u" onclick="go('formacion')">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">📚 Formación · Urgente</div>
+        <div class="pin-title">Formación obligatoria 2026 — Plazo 30 septiembre</div>
+        <div class="pin-body">4 cursos deben completarse antes del 30 de septiembre. Acoso Laboral, Acoso Sexual, Igualdad LGTBI+ y Desconexión Digital.</div>
+        <div class="pin-date">13 Mayo 2026</div>
+      </div>
+      <div class="pin pin-g">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">⚖️ Igualdad</div>
+        <div class="pin-title">Plan de Igualdad 2026–2030 inscrito en REGCON</div>
+        <div class="pin-body">Expediente 90/11/0499/2026. Vigente hasta 27/02/2030. Negociado con CCOO.</div>
+        <div class="pin-date">27 Febrero 2026</div>
+      </div>
+      <div class="pin pin-b">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">🌈 LGTBI+</div>
+        <div class="pin-title">Plan LGTBI+ aprobado — RD 1026/2024</div>
+        <div class="pin-body">Nombre elegido en sistemas internos, protocolo de actuación y persona de referencia designada.</div>
+        <div class="pin-date">15 Enero 2026</div>
+      </div>
+      <div class="pin pin-a" onclick="go('vacantes')">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">💼 Vacantes internas</div>
+        <div class="pin-title">3 vacantes internas activas — Mayo 2026</div>
+        <div class="pin-body">Producción Festivales, Marketing Digital y Técnico/a Ticketing. Proceso interno abierto.</div>
+        <div class="pin-date">Mayo 2026</div>
+      </div>
+      <div class="pin pin-n" onclick="go('protocolos')">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">📵 Protocolo</div>
+        <div class="pin-title">Protocolo de Desconexión Digital actualizado</div>
+        <div class="pin-body">Nueva versión sep. 2025. Sistema de etiquetado [No urgente] para mensajes fuera de horario.</div>
+        <div class="pin-date">Septiembre 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:baseline;gap:1.25rem;margin-bottom:.85rem">
+    <div style="font-family:var(--serif);font-size:1.4rem;font-weight:400">Acceso rápido</div>
+    <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4)">Tu portal de RRHH</div>
+  </div>
+  <div class="hgrid">
+    <div class="hcard" onclick="go('formacion')"><div class="hcard-bar" style="background:var(--red)"></div><span class="hcard-ico">📚</span><div class="hcard-name">Formación</div><div class="hcard-desc">4 cursos obligatorios. Plazo 30 sep.</div><div class="hcard-meta" id="hform-meta">Cargando...</div></div>
+    <div class="hcard" onclick="go('vacantes')"><div class="hcard-bar" style="background:var(--blue)"></div><span class="hcard-ico">💼</span><div class="hcard-name">Vacantes</div><div class="hcard-desc">Movilidad interna. La primera opción eres tú.</div><div class="hcard-meta">3 activas</div></div>
+    <div class="hcard" onclick="go('protocolos')"><div class="hcard-bar" style="background:var(--green)"></div><span class="hcard-ico">📋</span><div class="hcard-name">Protocolos</div><div class="hcard-desc">PI, LGTBI+, Acoso y normativa vigente.</div><div class="hcard-meta">Actualizado 2026</div></div>
+    <div class="hcard" onclick="go('beneficios')"><div class="hcard-bar" style="background:var(--amber)"></div><span class="hcard-ico">🎁</span><div class="hcard-name">Beneficios</div><div class="hcard-desc">Entradas, seguro, teletrabajo y más.</div><div class="hcard-meta">Vigentes 2026</div></div>
+    <div class="hcard" onclick="go('calendario')"><div class="hcard-bar" style="background:#999"></div><span class="hcard-ico">📅</span><div class="hcard-name">Calendario</div><div class="hcard-desc">Festivos 2026 — Cataluña y nacionales.</div><div class="hcard-meta">14 festivos</div></div>
+    <div class="hcard" onclick="go('prl')"><div class="hcard-bar" style="background:#e55c00"></div><span class="hcard-ico">🦺</span><div class="hcard-name">PRL</div><div class="hcard-desc">Seguridad, salud y prevención de riesgos.</div><div class="hcard-meta">2026</div></div>
+    <div class="hcard" onclick="go('faqs')"><div class="hcard-bar" style="background:#6a5acd"></div><span class="hcard-ico">❓</span><div class="hcard-name">FAQs</div><div class="hcard-desc">Preguntas frecuentes de RRHH.</div><div class="hcard-meta">12 respuestas</div></div>
+    <div class="hcard" onclick="go('contacto')"><div class="hcard-bar" style="background:#2a7a6a"></div><span class="hcard-ico">✉️</span><div class="hcard-name">Contacto</div><div class="hcard-desc">Buzón de consultas y directorio RRHH.</div><div class="hcard-meta">Respuesta 48h</div></div>
+  </div>
+</div>
+
+<!-- FORMACIÓN -->
+<div class="section" id="sec-formacion">
+  <div class="sec-head"><h2>Formación Obligatoria</h2><span class="sec-head-r">2026 · Plazo 30 sep</span></div>
+  <div class="alert al-a">Todos los cursos son obligatorios para la plantilla de LN España. Tu progreso se guarda automáticamente. Plazo: <strong>30 de septiembre de 2026</strong>.</div>
+  <div class="cgrid" id="curso-cards"></div>
+  <p style="font-size:.72rem;color:var(--ink4);font-family:var(--mono)">Dudas: rrhh@livenation.es · 93 459 23 62</p>
+</div>
+
+<!-- VACANTES -->
+<div class="section" id="sec-vacantes">
+  <div class="sec-head"><h2>Vacantes Internas</h2><span class="sec-head-r">3 posiciones · Mayo 2026</span></div>
+  <div class="alert al-b">Las vacantes se publican internamente antes de abrir selección externa.</div>
+  <div class="vrow"><div><div class="v-dept">Producción · Festivales</div><div class="v-title">Coordinador/a de Producción — Festivales de Verano</div><div class="v-chips"><span class="chip">BCN / MAD</span><span class="chip">Mar–Sep 2026</span><span class="chip">3+ años exp.</span><span class="chip">Inglés avanzado</span></div><div class="v-desc">Coordinación técnica, proveedores y equipos durante la temporada de festivales. Disponibilidad para desplazamientos.</div></div><a href="mailto:rrhh@livenation.es?subject=Interés vacante: Coordinador/a Producción Festivales" class="btn-int">Mostrar interés →</a></div>
+  <div class="vrow"><div><div class="v-dept">Marketing · Digital</div><div class="v-title">Especialista en Marketing Digital y Redes Sociales</div><div class="v-chips"><span class="chip">Barcelona</span><span class="chip">Indefinido</span><span class="chip">2+ años</span><span class="chip">Meta / Google Ads</span></div><div class="v-desc">Gestión de canales digitales, campañas paid y análisis de datos para festivales y eventos. Perfil creativo con capacidad analítica.</div></div><a href="mailto:rrhh@livenation.es?subject=Interés vacante: Especialista Marketing Digital" class="btn-int">Mostrar interés →</a></div>
+  <div class="vrow"><div><div class="v-dept">Operaciones · Ticketing</div><div class="v-title">Técnico/a de Ticketing y Sistemas</div><div class="v-chips"><span class="chip">Madrid</span><span class="chip">Indefinido</span><span class="chip">CRM / Ticketing</span></div><div class="v-desc">Gestión de plataformas de venta, atención a promotores y resolución de incidencias técnicas.</div></div><a href="mailto:rrhh@livenation.es?subject=Interés vacante: Técnico/a Ticketing" class="btn-int">Mostrar interés →</a></div>
+  <div class="alert al-b" style="margin-top:1.25rem">¿No ves tu perfil? Escríbenos a <strong>rrhh@livenation.es</strong>. Guardamos perfiles para futuras vacantes.</div>
+</div>
+
+<!-- PROTOCOLOS -->
+<div class="section" id="sec-protocolos">
+  <div class="sec-head"><h2>Protocolos y Normativa</h2><span class="sec-head-r">Documentos vigentes</span></div>
+  <div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⚖️</span><div class="p-name">Plan de Igualdad 2026–2030</div></div><div class="p-desc">Inscrito en REGCON. Exp. 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030.</div></div><div class="p-date">FEB 2026</div><a href="mailto:rrhh@livenation.es?subject=Solicitud Plan de Igualdad" class="btn-l">Solicitar →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🌈</span><div class="p-name">Plan LGTBI+ 2026</div></div><div class="p-desc">No discriminación por orientación sexual e identidad de género. Ley 4/2023 · RD 1026/2024.</div></div><div class="p-date">ENE 2026</div><a href="mailto:rrhh@livenation.es?subject=Solicitud Plan LGTBI+" class="btn-l">Solicitar →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🛡️</span><div class="p-name">Protocolo de Acoso Sexual y Laboral</div></div><div class="p-desc">Prevención y actuación. Referencia: Sol Ferrés Arrosa (sol@livenation.es · 93 459 23 62).</div></div><div class="p-date">JUL 2025</div><a href="mailto:rrhh@livenation.es?subject=Solicitud Protocolo Acoso" class="btn-l">Solicitar →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera del horario laboral. Sistema [No urgente]. Art. 88 LO 3/2018.</div></div><div class="p-date">SEP 2025</div><a href="mailto:rrhh@livenation.es?subject=Solicitud Protocolo Desconexión" class="btn-l">Solicitar →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📊</span><div class="p-name">Registro Retributivo 2024</div></div><div class="p-desc">Datos desagregados por sexo y grupo profesional. 47 puestos valorados. RD 902/2020.</div></div><div class="p-date">2024</div><a href="mailto:rrhh@livenation.es?subject=Solicitud Registro Retributivo" class="btn-l">Solicitar →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🔒</span><div class="p-name">Canal Ético Anónimo</div></div><div class="p-desc">Denuncias protegidas por Ley 2/2023. Disponible 24/7 completamente anónimo.</div></div><div class="p-date">24/7</div><a href="https://canal.uneon.es/livenation/" target="_blank" class="btn-l">Acceder →</a></div>
+  </div>
+</div>
+
+<!-- CALENDARIO -->
+<div class="section" id="sec-calendario">
+  <div class="sec-head"><h2>Calendario Laboral</h2><span class="sec-head-r">Cataluña · 2026</span></div>
+  <div class="cal-y">2026</div>
+  <div class="alert al-b">Festivos de la sede de Barcelona. Para otras sedes consulta con RRHH.</div>
+  <div class="cdiv">Nacionales</div>
+  <div class="frow"><div><div class="f-date">1 ENE</div><div class="f-day">Jueves</div></div><div class="f-name">Año Nuevo</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">6 ENE</div><div class="f-day">Martes</div></div><div class="f-name">Epifanía del Señor</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">3 ABR</div><div class="f-day">Viernes</div></div><div class="f-name">Viernes Santo</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">1 MAY</div><div class="f-day">Viernes</div></div><div class="f-name">Día del Trabajo</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">15 AGO</div><div class="f-day">Sábado</div></div><div class="f-name">Asunción de la Virgen</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">12 OCT</div><div class="f-day">Lunes</div></div><div class="f-name">Fiesta Nacional de España</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">1 NOV</div><div class="f-day">Domingo</div></div><div class="f-name">Todos los Santos</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">6 DIC</div><div class="f-day">Domingo</div></div><div class="f-name">Día de la Constitución</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">8 DIC</div><div class="f-day">Martes</div></div><div class="f-name">Inmaculada Concepción</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="frow"><div><div class="f-date">25 DIC</div><div class="f-day">Viernes</div></div><div class="f-name">Natividad del Señor</div><span class="fbadge fb-n">Nacional</span></div>
+  <div class="cdiv">Cataluña</div>
+  <div class="frow"><div><div class="f-date">6 ABR</div><div class="f-day">Lunes</div></div><div class="f-name">Lunes de Pascua</div><span class="fbadge fb-r">Cataluña</span></div>
+  <div class="frow"><div><div class="f-date">24 JUN</div><div class="f-day">Miércoles</div></div><div class="f-name">Sant Joan</div><span class="fbadge fb-r">Cataluña</span></div>
+  <div class="frow"><div><div class="f-date">11 SEP</div><div class="f-day">Viernes</div></div><div class="f-name">Diada Nacional de Catalunya</div><span class="fbadge fb-r">Cataluña</span></div>
+  <div class="frow"><div><div class="f-date">26 DIC</div><div class="f-day">Sábado</div></div><div class="f-name">Sant Esteve</div><span class="fbadge fb-r">Cataluña</span></div>
+</div>
+
+<!-- BENEFICIOS -->
+<div class="section" id="sec-beneficios">
+  <div class="sec-head"><h2>Beneficios y Perks</h2><span class="sec-head-r">Plantilla LN España · 2026</span></div>
+  <div class="bgrid">
+    <div class="bcard"><div class="b-num">01</div><span class="b-ico">🎫</span><div class="b-title">Entradas para conciertos y festivales</div><div class="b-desc">Acceso a entradas de empleado para eventos de Live Nation España, sujeto a disponibilidad.</div></div>
+    <div class="bcard"><div class="b-num">02</div><span class="b-ico">🏥</span><div class="b-title">Seguro médico privado</div><div class="b-desc">Para empleados con más de 1 año de antigüedad. Cobertura médica, dental y hospitalización.</div></div>
+    <div class="bcard"><div class="b-num">03</div><span class="b-ico">📖</span><div class="b-title">Formación continua</div><div class="b-desc">Acceso al Backstage Learning Hub, Pride Education Series y cursos de desarrollo profesional.</div></div>
+    <div class="bcard"><div class="b-num">04</div><span class="b-ico">🏠</span><div class="b-title">Teletrabajo flexible</div><div class="b-desc">Modelo híbrido según rol. Hasta 2 días semanales en remoto para puestos compatibles.</div></div>
+    <div class="bcard"><div class="b-num">05</div><span class="b-ico">🍽️</span><div class="b-title">Ticket restaurante</div><div class="b-desc">Para empleados con jornada completa. Gestión digital. Exento de cotización hasta límite legal.</div></div>
+    <div class="bcard"><div class="b-num">06</div><span class="b-ico">🚲</span><div class="b-title">Movilidad sostenible</div><div class="b-desc">Ticket transporte cofinanciado. Programa de bicicleta corporativa con descuento en nómina.</div></div>
+    <div class="bcard"><div class="b-num">07</div><span class="b-ico">👶</span><div class="b-title">Conciliación y familia</div><div class="b-desc">Flexibilidad horaria ±1h, lactancia, reducción de jornada y excedencia por cuidado familiar.</div></div>
+    <div class="bcard"><div class="b-num">08</div><span class="b-ico">📞</span><div class="b-title">Asistencia psicológica</div><div class="b-desc">Línea confidencial para toda la plantilla. Sesiones gratuitas con profesionales.</div></div>
+    <div class="bcard"><div class="b-num">09</div><span class="b-ico">🌍</span><div class="b-title">Red global Pride Nation</div><div class="b-desc">Comunidad LGTBI+ de Live Nation a nivel global. Eventos, recursos y red de apoyo.</div></div>
+  </div>
+  <div class="alert al-b" style="margin-top:1.25rem">Para activar beneficios o resolver dudas: <strong>rrhh@livenation.es</strong></div>
+</div>
+
+<!-- PRL -->
+<div class="section" id="sec-prl">
+  <div class="sec-head"><h2>Seguridad y Salud</h2><span class="sec-head-r">PRL · 2026</span></div>
+  <div class="alert al-a">En caso de accidente o situación de riesgo, contacta inmediatamente con tu responsable y RRHH (93 459 23 62).</div>
+  <div class="pgrid">
+    <div class="pcard"><div class="p-num">01</div><div class="p-t">Evaluación de Riesgos</div><div class="p-d">Evaluación periódica por puesto con especial atención a entornos de producción de eventos y trabajo nocturno.</div></div>
+    <div class="pcard"><div class="p-num">02</div><div class="p-t">Protección en Eventos</div><div class="p-d">Protocolos de seguridad en montaje, operación y desmontaje. EPIs obligatorios y procedimientos de emergencia.</div></div>
+    <div class="pcard"><div class="p-num">03</div><div class="p-t">Riesgos Psicosociales</div><div class="p-d">Prevención del burnout, estrés y acoso. Los protocolos de acoso forman parte integral de la gestión psicosocial.</div></div>
+    <div class="pcard"><div class="p-num">04</div><div class="p-t">Vigilancia de la Salud</div><div class="p-d">Reconocimientos médicos periódicos coordinados con el Servicio de Prevención Ajeno.</div></div>
+    <div class="pcard"><div class="p-num">05</div><div class="p-t">Formación en PRL</div><div class="p-d">Obligatoria en incorporación y cuando cambien las condiciones del puesto de trabajo.</div></div>
+    <div class="pcard"><div class="p-num">06</div><div class="p-t">Emergencias y Primeros Auxilios</div><div class="p-d">Plan de emergencias por sede. Socorristas laborales formados. Simulacros periódicos.</div></div>
+  </div>
+  <div style="font-family:var(--serif);font-size:1.2rem;font-weight:400;margin:1.75rem 0 .85rem">Contactos de emergencia</div>
+  <div class="egrid">
+    <div class="ecard"><div class="e-num">112</div><div class="e-lbl">Emergencias generales</div></div>
+    <div class="ecard"><div class="e-num" style="font-size:1.1rem">93 459 23 62</div><div class="e-lbl">RRHH · rrhh@livenation.es</div></div>
+    <div class="ecard"><div class="e-num" style="font-size:.85rem;margin-top:.2rem">canal.uneon.es/livenation/</div><div class="e-lbl">Canal ético · 24/7</div></div>
+  </div>
+</div>
+
+<!-- NEWS -->
+<div class="section" id="sec-news">
+  <div class="sec-head"><h2>Novedades RRHH</h2><span class="sec-head-r">Comunicaciones internas</span></div>
+  <div class="nlayout">
+    <div>
+      <div class="nitem"><div class="n-date">13 Mayo 2026</div><div class="n-tag" style="background:var(--red-pale);color:var(--red)">Formación</div><div class="n-title">Lanzamiento del Portal de Formación Obligatoria 2026</div><div class="n-body">Ya disponible el portal de formación. 4 cursos antes del 30 septiembre. El progreso se guarda automáticamente y se emiten certificados al superar cada curso.</div></div>
+      <div class="nitem"><div class="n-date">27 Febrero 2026</div><div class="n-tag" style="background:var(--green-pale);color:var(--green)">Igualdad</div><div class="n-title">Plan de Igualdad 2026–2030 inscrito en REGCON</div><div class="n-body">Expediente 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030. La Comisión de Seguimiento se reunirá semestralmente.</div></div>
+      <div class="nitem"><div class="n-date">15 Enero 2026</div><div class="n-tag" style="background:var(--blue-pale);color:var(--blue)">LGTBI+</div><div class="n-title">Plan LGTBI+ aprobado conforme al RD 1026/2024</div><div class="n-body">Incluye uso del nombre elegido en todos los sistemas internos desde que la persona lo comunica a RRHH. Persona de referencia: Sol Ferrés Arrosa (sol@livenation.es).</div></div>
+    </div>
+    <div>
+      <div class="sw"><div class="sw-h">Accesos directos</div><div><a class="sw-link" id="draft-formacion-link" href="#" onclick="go('formacion');return false">📚 Portal de formación</a><a class="sw-link" href="https://canal.uneon.es/livenation/" target="_blank">🔒 Canal ético anónimo</a><a class="sw-link" href="mailto:rrhh@livenation.es">✉️ rrhh@livenation.es</a><a class="sw-link" href="tel:+34934592362">📞 93 459 23 62</a></div></div>
+      <div class="sw"><div class="sw-h">¿Tienes una noticia?</div><div style="padding:.9rem 1.1rem"><p style="font-size:.78rem;color:var(--ink3);font-weight:300;line-height:1.6;margin-bottom:.75rem">Comparte algo con la plantilla.</p><a href="mailto:rrhh@livenation.es?subject=Propuesta noticia portal RRHH" class="bsi" style="font-size:.58rem;letter-spacing:.1em">Enviar noticia</a></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQs -->
+<div class="section" id="sec-faqs">
+  <div class="sec-head"><h2>Preguntas Frecuentes</h2><span class="sec-head-r">FAQs · RRHH</span></div>
+  <div class="fg"><div class="fg-title">Formación</div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Qué pasa si no completo la formación antes del 30 de septiembre? <span class="farr">+</span></button><div class="fa">La formación está vinculada a los protocolos de cumplimiento de LN España. Si tienes dificultades, contacta con RRHH antes de esa fecha. No completarla puede tener consecuencias disciplinarias.</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Puedo hacer los cursos desde el móvil? <span class="farr">+</span></button><div class="fa">Sí, el portal está adaptado para móvil y tablet. Recomendamos Chrome o Firefox actualizados. El progreso se guarda automáticamente y puedes retomar en cualquier dispositivo.</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Cuántos intentos tengo para el quiz de cada curso? <span class="farr">+</span></button><div class="fa">3 intentos por curso, con mínimo del 70% de respuestas correctas. Si los agotaras, contacta con RRHH para revisión del caso.</div></div>
+  </div>
+  <div class="fg"><div class="fg-title">Vacaciones y permisos</div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Con cuánto tiempo debo pedir las vacaciones? <span class="farr">+</span></button><div class="fa">Al menos 15 días para períodos de 5 días o más, y 48 horas para días sueltos. Durante temporada de festivales pueden aplicarse restricciones. Consulta con tu manager y RRHH.</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Puedo solicitar reducción de jornada? <span class="farr">+</span></button><div class="fa">Sí, conforme al ET y el Plan de Igualdad de LN España. Solicitarlo no puede afectar negativamente a tu evaluación ni a tu carrera profesional.</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Cuántos días de permiso parental tengo? <span class="farr">+</span></button><div class="fa">16 semanas para ambos progenitores (6 semanas obligatorias inmediatamente después del parto). Son intransferibles e individuales.</div></div>
+  </div>
+  <div class="fg"><div class="fg-title">Protocolos y denuncias</div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Cómo puedo denunciar una situación de acoso de forma anónima? <span class="farr">+</span></button><div class="fa">A través del canal ético: canal.uneon.es/livenation/ — disponible 24/7, protegido por Ley 2/2023. La empresa está obligada a investigar y no puede identificarte. También puedes acudir a Sol Ferrés (sol@livenation.es).</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Qué es la Vía A del Protocolo de Acoso? <span class="farr">+</span></button><div class="fa">La vía informal y confidencial. Te permite ser escuchada/o por la persona de referencia, recibir información y apoyo, sin necesidad de presentar denuncia formal.</div></div>
+    <div class="fitem"><button class="fq" onclick="tf(this)">¿Puedo solicitar información sobre mi retribución desagregada por sexo? <span class="farr">+</span></button><div class="fa">Sí. El art. 28.2 ET y el RD 902/2020 reconocen tu derecho a solicitar información sobre el nivel retributivo de tu grupo profesional desagregado por sexo. Dirígete a rrhh@livenation.es.</div></div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div class="section" id="sec-contacto">
+  <div class="sec-head"><h2>Contacto y Buzón</h2><span class="sec-head-r">RRHH · LN España</span></div>
+  <div class="clayout">
+    <div class="cblock">
+      <h3>Buzón de consultas</h3>
+      <p style="font-size:.8rem;color:var(--ink3);font-weight:300;margin-bottom:1.4rem;line-height:1.7">Respondemos en un máximo de 48 horas laborables.</p>
+      <div class="fr"><label>Tipo de consulta</label><select id="ct"><option value="">Selecciona...</option><option>Formación obligatoria</option><option>Vacaciones y permisos</option><option>Nómina y retribución</option><option>Protocolos y normativa</option><option>Beneficios y perks</option><option>Prevención de riesgos</option><option>Otro</option></select></div>
+      <div class="fr"><label>Tu consulta</label><textarea id="cm" rows="5" placeholder="Describe tu consulta..."></textarea></div>
+      <div class="fr"><label>Preferencia de respuesta</label><select id="ca"><option value="no">Respóndeme a mi email corporativo</option><option value="si">Prefiero anonimato</option></select></div>
+      <button class="btn-send" onclick="sendC()">Enviar consulta</button>
+      <div id="cok" class="alert al-g" style="display:none;margin-top:.85rem">✓ Consulta enviada. Respondemos en máximo 48h laborables.</div>
+    </div>
+    <div class="cblock">
+      <h3>Equipo RRHH</h3>
+      <div class="ditem"><div class="d-ico">👩‍💼</div><div><div class="d-lbl">HR Manager</div><div class="d-val">Belén Montesino Puértolas</div><div class="d-sub">belen@livenation.es · rrhh@livenation.es · 93 459 23 62</div></div></div>
+      <div class="ditem"><div class="d-ico">🛡️</div><div><div class="d-lbl">Persona de referencia · Protocolo Acoso</div><div class="d-val">Sol Ferrés Arrosa</div><div class="d-sub">sol@livenation.es · 93 459 23 62</div></div></div>
+      <div class="ditem"><div class="d-ico">🔄</div><div><div class="d-lbl">Suplente protocolo acoso</div><div class="d-val">Valentí Tugues Alemany</div><div class="d-sub">valenti@livenation.es</div></div></div>
+      <div class="ditem"><div class="d-ico">🔒</div><div><div class="d-lbl">Canal ético anónimo</div><div class="d-val"><a href="https://canal.uneon.es/livenation/" target="_blank" style="color:var(--ink)">canal.uneon.es/livenation/</a></div><div class="d-sub">24/7 · Protegido Ley 2/2023</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="section" id="sec-admin">
+  <div class="sec-head"><h2>Panel Admin</h2><span class="sec-head-r">Solo RRHH</span></div>
+  <div class="kstrip">
+    <div class="kpi"><div class="kpi-n" id="k-total">—</div><div class="kpi-l">Total plantilla</div></div>
+    <div class="kpi"><div class="kpi-n" id="k-done" style="color:var(--green)">—</div><div class="kpi-l">Completados</div></div>
+    <div class="kpi"><div class="kpi-n" id="k-prog" style="color:var(--amber)">—</div><div class="kpi-l">En progreso</div></div>
+    <div class="kpi"><div class="kpi-n" id="k-pend" style="color:var(--red)">—</div><div class="kpi-l">Pendientes</div></div>
+  </div>
+  <div class="acontrols">
+    <button class="fbtn active" onclick="sf('all',this)">Todos</button>
+    <button class="fbtn" onclick="sf('done',this)">Completados</button>
+    <button class="fbtn" onclick="sf('prog',this)">En progreso</button>
+    <button class="fbtn" onclick="sf('pend',this)">Pendientes</button>
+    <button class="bexp" onclick="exportCSV()">↓ CSV</button>
+    <input class="asearch" id="asearch" placeholder="Buscar nombre, email, DNI..." oninput="rt()">
+  </div>
+  <div class="twrap">
+    <table class="atable">
+      <thead><tr><th>Nombre</th><th>Email</th><th>DNI</th><th>Curso A</th><th>Curso B</th><th>Curso C</th><th>Curso D</th><th>Estado</th><th>Últ. actividad</th></tr></thead>
+      <tbody id="atbody"><tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--ink4);font-family:var(--mono);font-size:.75rem">Cargando...</td></tr></tbody>
+    </table>
+  </div>
+  <p id="adate" style="font-size:.58rem;color:var(--ink4);font-family:var(--mono);letter-spacing:.04em;margin-top:.65rem"></p>
+</div>
+
+</main>
+
+<!-- LOGIN -->
+<div class="mbg" id="modal-login">
+  <div class="modal">
+    <div class="m-logo"><img src="https://cdn.brandfetch.io/idec0SWCXf/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1770577642847" alt="LN"></div>
+    <h2>People</h2>
+    <div class="m-sub">Live Nation España</div>
+    <div class="iw"><label>Nombre completo</label><input type="text" id="in-name" placeholder="Tu nombre completo" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="iw"><label>DNI / NIE</label><input type="text" id="in-dni" placeholder="12345678A" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="iw"><label>Email corporativo</label><input type="email" id="in-email" placeholder="nombre@livenation.es" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <button class="btn-lo" onclick="doLogin()">Acceder</button>
+    <div class="err" id="err-login"></div>
+    <div class="rgpd">Datos tratados conforme al RGPD (UE) 2016/679 · Responsable: Live Nation España, S.A.U</div>
+    <button class="btn-adm" onclick="showAM()">Administrador →</button>
+  </div>
+</div>
+
+<!-- ADMIN AUTH -->
+<div class="mbg off" id="modal-admin">
+  <div class="amodal">
+    <h3>Acceso administración</h3>
+    <div class="iw"><label>Contraseña</label><input type="password" id="in-pw" onkeydown="if(event.key==='Enter')doAdmin()"></div>
+    <div class="macts"><button class="bsi" onclick="doAdmin()">Entrar</button><button class="bso" onclick="hideAM()">Cancelar</button></div>
+    <div class="err" id="err-admin"></div>
+  </div>
+</div>
+
+<script>
+const GS='https://script.google.com/macros/s/AKfycbyQOAlqFSpO1YyJD6tMxldow9D5LRsSyvyelJPZjt4Xb81S-rJmOIZT0Rf7dJjXmnVK/exec';
+const APW='LiveNation2025';
+const DRAFT_OWNER_EMAILS=['belen@livenation.es'];
+const DRAFT_PUBLIC_SECTIONS=['news','vacantes'];
+let draftOwner=false;
+const CURSOS={a:{name:'Acoso Laboral',file:'LN_Curso_A_Final.html',color:'#c41e1e'},b:{name:'Acoso Sexual y por Raz\u00f3n de Sexo',file:'LN_Curso_B_Acoso_Sexual.html',color:'#1a3a5c'},c:{name:'Igualdad, Diversidad e Inclusi\u00f3n LGTBI+',file:'LN_Curso_C_Igualdad.html',color:'#5a2d8a'},d:{name:'Desconexi\u00f3n Digital',file:'LN_Curso_D_Desconexion.html',color:'#1f5c3a'}};
+const PW=[{name:"Ana G\u00f3mez De Castro",email:"ana.gomez@livenation.es"},{name:"Adrian Martinez",email:"adrian@livenation.es"},{name:"Irene Garcia Alonso",email:"irene@livenation.es"},{name:"Will Anderson",email:"will@mercurywheels.com"},{name:"Sandra Paniagua Labernia",email:"sandra.paniagua@livenation.es"},{name:"Ivan Fernandez Diaz",email:"ivan@livenation.es"},{name:"Brisia Farromeque Paz",email:"brisia@livenation.es"},{name:"Bibiana Verd\u00fa Monn\u00e9",email:"bibiana@livenation.es"},{name:"Esther Fernandez",email:"efernandezd@planetevents.es"},{name:"Diego Perez",email:"dpereze@planetevents.es"},{name:"Sabela Santamaria Soler",email:"ssantamaria@planetevents.es"},{name:"Eduard Taltavull",email:"eduard@livenation.es"},{name:"Tamara I\u00f1iguez Gil",email:"tamara.iniguez.gil@planetevents.es"},{name:"Eva Garcia Villalba",email:"eva@livenation.es"},{name:"Alejandra Martinez Casa",email:"alejandra@livenation.es"},{name:"Ashley Garrido Bello",email:"ashley.garrido@livenation.es"},{name:"Irene Granada",email:"irene.granada@livenation.es"},{name:"Johanna Llorente",email:"johanna@livenation.es"},{name:"Jaime Benitez Mariscal",email:"jaime.benitez@livenation.es"},{name:"Fabiola Andrade",email:"f.andrade@livenation.es"},{name:"Candela Buscetti",email:"candela.buscetti@livenation.es"},{name:"Ana Jadormeo",email:"ana.jadormeo@livenation.es"},{name:"Vicky Blum",email:"vicky@livenation.es"},{name:"Sol Ferr\u00e9s Arrosa",email:"sol@livenation.es"},{name:"Barnaby Harrod",email:"barnaby@mercurywheels.com"},{name:"Carla Verges Comellas",email:"carla@livenation.es"},{name:"Nicol\u00e1s Mansilla",email:"nicolas@livenation.es"},{name:"Roger Soriano Soler",email:"roger@livenation.es"},{name:"Miriam Boulos",email:"miriam.boulos@livenation.es"},{name:"Elie Mu\u00f1iz",email:"elie@mercurywheels.com"},{name:"Ricard Rois Gimeno",email:"ricard@mercurywheels.com"},{name:"Manex Goenaga Arsuaga",email:"manex@livenation.es"},{name:"Maria Abejaro",email:"maria.abejaro@livenation.es"},{name:"Alexandra Karpova",email:"alexandra@mercurywheels.com"},{name:"Clara Aznar Alonso-Mu\u00f1oyerro",email:"clara.aznar@livenation.es"},{name:"Celia Gran\u00e9",email:"celia@livenation.es"},{name:"Marc Altamirano Mach",email:"marc.altamirano@livenation.es"},{name:"Andrea L\u00f3pez Ruiz",email:"andrea.lopez@livenation.es"},{name:"Laura Castell\u00f3",email:"laura.castello@livenation.es"},{name:"Gabriela Ponte",email:"gabriela@livenation.es"},{name:"Nat\u00e0lia Villar Santacreu",email:"natalia@livenation.es"},{name:"Lucia Colom",email:"lucia.colom@planetevents.es"},{name:"Salma Hussain",email:"salma.hussain@livenation.es"},{name:"Ivana Gonzalez Monsu",email:"ivana.gonzalez@livenation.es"},{name:"Javier Tomas Morante",email:"javier.tomas@livenation.es"},{name:"\u00c1lvaro Castro Higueras",email:"alvaro@livenation.es"},{name:"Julia Soria Rodriguez",email:"julia.soria@livenation.es"},{name:"Noelia Lorenzo",email:"noelia.lorenzo@livenation.es"},{name:"Blanca De Cambra Castelltort",email:"blanca@livenation.es"},{name:"Marta Vazquez Gasull",email:"marta.vazquez@livenation.es"},{name:"Marina Fern\u00e1ndez",email:"marina.fernandez@livenation.es"},{name:"Paula Agrassot Felipe",email:"paula.agrassot@livenation.es"},{name:"Raquel Perez Nocelo",email:"raquel.nocelo@livenation.es"},{name:"Edwing Arias Arias",email:"edwing@livenation.es"},{name:"Jonatan Rivero",email:"jonatan.rivero@livenation.es"},{name:"Alba Moreno Cobos",email:"alba@livenation.es"},{name:"Tassilo Sajonia-Coburgo Nadal",email:"tassilo@livenation.es"},{name:"Patricia de Matias Lopez",email:"patricia.dematias@livenation.es"},{name:"Souad Tahiri Dada",email:"souad@livenation.es"},{name:"Miguel Fernandez Iniesta",email:"miguel@livenation.es"},{name:"Carlos Mu\u00f1oz Romero",email:"carlos@livenation.es"},{name:"Marta Claramunt Longo",email:"marta.claramunt@livenation.es"},{name:"Belen Montesino Puertolas",email:"belen@livenation.es"},{name:"Javier Arnaiz",email:"javier.arnaiz@livenation.es"},{name:"Brian Fortuny Cruz",email:"briancross@livenation.es"},{name:"Jannie Boddum Lassen",email:"jannie.boddum@livenation.es"},{name:"Rachael Connor",email:"rachael.connor@livenation.es"},{name:"Guillermo Aliaga Rodriguez",email:"guillermo.aliaga@livenation.es"},{name:"Carla Rodriguez Perez",email:"carla.rodriguez@livenation.es"},{name:"Duna Moliner Salinas",email:"duna.moliner@livenation.es"},{name:"Andrea de Agustin Garc\u00eda",email:"andrea.deagustin@livenation.es"},{name:"Cesar Andion",email:"cesar@livenation.es"},{name:"Enric Arqu\u00e9s",email:"enric@livenation.es"},{name:"Elena Carrero",email:"elena@livenation.es"},{name:"Oscar Caselles",email:"oscar@livenation.es"},{name:"Marta Espi",email:"marta@livenation.es"},{name:"Kata Sensei",email:"kata@livenation.es"},{name:"Monica Herrero",email:"monica@livenation.es"},{name:"Javier Masferrer",email:"javier@livenation.es"},{name:"Eliana Moreno",email:"eliana@livenation.es"},{name:"Ozlem Ozseker",email:"ozlem@livenation.es"},{name:"Chiara Sagliocco",email:"chiara@livenation.es"},{name:"Valenti Tugues",email:"valenti@livenation.es"},{name:"Virginia Z\u00e1rate Mamani",email:"virginiazaratem84@gmail.com"},{name:"Susana Lopez",email:"susana@livenation.es"},{name:"Joe Perez Orive",email:"joe.perez@livenation.es"},{name:"Iain Hill",email:"iain@livenation.es"},{name:"Marisa Marquez",email:"marisa@livenation.es"},{name:"Sandra Huesca",email:"sandra@livenation.es"},{name:"Julio Ebrat",email:"julio@livenation.es"},{name:"Sergio Rubio",email:"sergio@livenation.es"},{name:"Erik Magermans",email:"erik@livenation.es"},{name:"Nacho C\u00f3rdoba",email:"nacho@livenation.es"},{name:"Pedro Cano Albiol",email:"pedro@livenation.es"},{name:"Carol Galvis",email:"carol@livenation.es"},{name:"Maria Colomer",email:"maria@livenation.es"},{name:"Raquel Osuna",email:"raquel@livenation.es"},{name:"Katherine Ja\u00e9n Rodriguez",email:"kjaen@livenation.es"},{name:"Olga Feliu",email:"olga@livenation.es"}];
+
+function gs(){try{return JSON.parse(localStorage.getItem('ln_session')||'null');}catch(e){return null;}}
+function ss(s){try{localStorage.setItem('ln_session',JSON.stringify(s));}catch(e){}}
+function cs(){try{localStorage.removeItem('ln_session');}catch(e){}}
+function ne(v){return String(v||'').trim().toLowerCase();}
+function io(rec){return DRAFT_OWNER_EMAILS.includes(ne(rec&&rec.email));}
+function canView(id){return draftOwner||DRAFT_PUBLIC_SECTIONS.includes(id);}
+function applyDraftMode(rec){
+  draftOwner=io(rec);
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    const id=btn.dataset.sec;
+    if(id==='admin')return;
+    btn.classList.toggle('off',!canView(id));
+  });
+  const trainingLink=document.getElementById('draft-formacion-link');
+  if(trainingLink)trainingLink.classList.toggle('off',!draftOwner);
+}
+function lr(email){try{const v=localStorage.getItem('ln_p_'+email.toLowerCase().replace(/[^a-z0-9@._-]/g,'_'));return v?JSON.parse(v):null;}catch(e){return null;}}
+function sr(rec){
+  try{localStorage.setItem('ln_p_'+rec.email.toLowerCase().replace(/[^a-z0-9@._-]/g,'_'),JSON.stringify(rec));localStorage.setItem('ln_progress_'+rec.email.toLowerCase().replace(/[^a-z0-9@._-]/g,'_'),JSON.stringify(rec));}catch(e){}
+  stg(rec);
+}
+function stg(rec){
+  if(!GS)return;
+  try{const b=JSON.stringify(rec);if(navigator.sendBeacon){navigator.sendBeacon(GS,new Blob([b],{type:'text/plain'}));}else{fetch(GS,{method:'POST',headers:{'Content-Type':'text/plain'},body:b,mode:'no-cors'}).catch(()=>{});}}catch(e){}
+}
+async function lag(){try{const r=await fetch(GS+'?secret=LNAdmin2026');const j=await r.json();return j.ok?(j.data||[]):[];}catch(e){return[];}}
+
+function vdni(val){
+  const v=val.trim().toUpperCase();
+  if(!/^[0-9]{8}[A-Z]$/.test(v)&&!/^[XYZ][0-9]{7}[A-Z]$/.test(v))return false;
+  const L='TRWAGMYFPDXBNJZSQVHLCKE';let n=v;
+  if(/^[XYZ]/.test(v))n=v.replace('X','0').replace('Y','1').replace('Z','2');
+  return v.slice(-1)===L[parseInt(n.slice(0,-1))%23];
+}
+
+async function doLogin(){
+  const name=document.getElementById('in-name').value.trim();
+  const dni=document.getElementById('in-dni').value.trim().toUpperCase();
+  const email=document.getElementById('in-email').value.trim().toLowerCase();
+  const e=document.getElementById('err-login');
+  if(!name||!dni||!email){e.textContent='Completa todos los campos.';e.classList.add('on');return;}
+  if(!vdni(dni)){e.textContent='Formato DNI/NIE no v\u00e1lido.';e.classList.add('on');return;}
+  if(!email.includes('@')){e.textContent='Introduce un email v\u00e1lido.';e.classList.add('on');return;}
+  if(!PW.some(w=>w.email&&w.email.toLowerCase()===email)){e.textContent='Email no registrado en RRHH de LN Espa\u00f1a. Contacta con rrhh@livenation.es';e.classList.add('on');return;}
+  e.classList.remove('on');
+  const session={name,dni,email,loginAt:new Date().toISOString()};ss(session);
+  let rec=lr(email)||{name,dni,email,courses:{},firstLogin:new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}),lastActivity:''};
+  rec.name=name;rec.dni=dni;sr(rec);
+  document.getElementById('modal-login').classList.add('off');
+  initP(rec);
+}
+function doLogout(){
+  cs();
+  draftOwner=false;
+  document.getElementById('main-nav').style.display='none';
+  document.getElementById('main-content').style.display='none';
+  document.getElementById('tb-user').style.display='none';
+  document.getElementById('btn-logout').style.display='none';
+  document.getElementById('modal-login').classList.remove('off');
+  ['in-name','in-dni','in-email'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+function showAM(){document.getElementById('modal-admin').classList.remove('off');}
+function hideAM(){document.getElementById('modal-admin').classList.add('off');}
+function doAdmin(){
+  if(document.getElementById('in-pw').value===APW){
+    hideAM();document.getElementById('nav-admin').classList.remove('off');
+    if(!gs()){ss({name:'Admin',dni:'00000000T',email:'admin@livenation.es',loginAt:new Date().toISOString()});document.getElementById('modal-login').classList.add('off');initP({name:'Admin',email:'admin@livenation.es',courses:{}});}
+    go('admin');lav();
+  }else{const e=document.getElementById('err-admin');e.textContent='Contrase\u00f1a incorrecta.';e.classList.add('on');}
+}
+
+function initP(rec){
+  const now=new Date();
+  const days=['Domingo','Lunes','Martes','Mi\u00e9rcoles','Jueves','Viernes','S\u00e1bado'];
+  const months=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  const hd=document.getElementById('hdate');if(hd)hd.textContent=now.getDate()+' '+months[now.getMonth()];
+  const hy=document.getElementById('hday');if(hy)hy.textContent=days[now.getDay()]+' \u00b7 '+now.getFullYear();
+  const first=rec.name.split(' ')[0];
+  document.getElementById('tb-name').textContent=first;
+  document.getElementById('tb-user').style.display='';
+  document.getElementById('btn-logout').style.display='';
+  document.getElementById('main-nav').style.display='flex';
+  document.getElementById('main-content').style.display='block';
+  applyDraftMode(rec);
+  const hf=document.getElementById('hfirst');if(hf)hf.textContent=first+'.';
+  const courses=rec.courses||{};
+  const done=['a','b','c','d'].filter(k=>courses[k]?.certified).length;
+  const hm=document.getElementById('hform-meta');
+  if(hm)hm.textContent=done===4?'\u2713 Formaci\u00f3n completa':(done>0?done+'/4 cursos completados':'4 cursos pendientes');
+  if(done<4){const nd=document.getElementById('nd-form');if(nd)nd.style.display='';}
+  rc(courses);
+  go(draftOwner?'inicio':'news');
+  fetch(GS+'?secret=LNAdmin2026').then(r=>r.json()).then(j=>{
+    if(!j.ok||!j.data)return;
+    const sess=gs();if(!sess)return;
+    const gRow=j.data.find(r=>r['Email']&&r['Email'].toLowerCase()===sess.email.toLowerCase());
+    if(!gRow)return;
+    function pc(l,lbl){const st=gRow['Curso '+l+' \u2014 '+lbl]||'';if(!st||st==='Pendiente')return null;const cert=st.indexOf('\u2713')===0;return{certified:cert,pct:cert?100:(parseInt(st.replace('\u23f3 ',''))||0)};}
+    const gRec={email:sess.email,name:gRow['Nombre']||sess.name,dni:gRow['DNI']||sess.dni,courses:{a:pc('A','Acoso Laboral'),b:pc('B','Acoso Sexual'),c:pc('C','Igualdad LGTBI+'),d:pc('D','Desconexi\u00f3n')}};
+    sr(gRec);rc(gRec.courses);
+  }).catch(()=>{});
+}
+
+function rc(courses){
+  const icons={a:'\u2696\ufe0f',b:'\ud83d\udee1\ufe0f',c:'\ud83c\udf08',d:'\ud83d\udcf5'};
+  document.getElementById('curso-cards').innerHTML=Object.keys(CURSOS).map(k=>{
+    const curso=CURSOS[k];const prog=courses[k];
+    const pct=prog?.pct||0;const cert=prog?.certified||false;
+    const btn=cert?'btn-c btn-c-done':'btn-c btn-c-ink';
+    const btxt=cert?'Ver certificado':'Comenzar \u2192';
+    const lbl=cert?'Completado':(pct>0?(pct+'% completado'):'Pendiente');
+    return '<div class="curso"><div class="c-accent" style="background:'+curso.color+'"></div><div class="c-tag">'+icons[k]+' Formaci\u00f3n obligatoria 2026</div><div class="c-name">'+curso.name+'</div><div class="c-desc">Curso obligatorio para toda la plantilla de Live Nation Espa\u00f1a.</div><div class="c-prog"><div class="c-fill" style="width:'+pct+'%;background:'+curso.color+'"></div></div><div class="c-label" style="color:'+(cert?'#1f5c3a':pct>0?curso.color:'var(--ink4)')+'">'+lbl+'</div><a href="'+curso.file+'" class="'+btn+'">'+btxt+'</a></div>';
+  }).join('');
+}
+
+function go(id){
+  const adminNav=document.getElementById('nav-admin');
+  if(id==='admin'&&adminNav&&adminNav.classList.contains('off'))id=draftOwner?'inicio':'news';
+  if(!canView(id)&&id!=='admin')id='news';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const sec=document.getElementById('sec-'+id);if(sec)sec.classList.add('active');
+  const btn=document.querySelector('[data-sec="'+id+'"]');if(btn)btn.classList.add('active');
+  if(id==='admin')lav();
+  window.scrollTo(0,0);
+}
+
+let aur=[],cf='all';
+async function lav(){
+  document.getElementById('atbody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--ink4);font-family:var(--mono);font-size:.72rem">Cargando desde Google Sheets...</td></tr>';
+  const gd=await lag();
+  const em={};
+  gd.forEach(row=>{
+    const email=(row['Email']||'').toLowerCase();if(!email)return;
+    function pc(l,lbl){const st=row['Curso '+l+' \u2014 '+lbl]||'';if(!st||st==='Pendiente')return null;return{certified:st.indexOf('\u2713')===0,pct:st.indexOf('\u2713')===0?100:(parseInt(st.replace('\u23f3 ',''))||0),nota:row['Nota '+l]||''};}
+    em[email]={email,name:row['Nombre']||'',dni:row['DNI']||'\u2014',courses:{a:pc('A','Acoso Laboral'),b:pc('B','Acoso Sexual'),c:pc('C','Igualdad LGTBI+'),d:pc('D','Desconexi\u00f3n')},lastActivity:row['\u00daltima actividad']||'',hasStarted:!!(row['\u00daltima actividad'])};
+  });
+  aur=PW.filter(w=>w.email).map(w=>{const e=w.email.toLowerCase();return em[e]||{email:e,name:w.name,dni:'\u2014',courses:{},lastActivity:'',hasStarted:false};});
+  rk();rt();
+  const d=document.getElementById('adate');if(d)d.textContent='Actualizado '+new Date().toLocaleString('es-ES')+(gd.length>0?' \u00b7 \u2713 Google Sheets':' \u00b7 Datos locales');
+}
+function rk(){
+  const t=aur.length,done=aur.filter(r=>['a','b','c','d'].every(k=>r.courses[k]?.certified)).length,prog=aur.filter(r=>r.hasStarted&&!['a','b','c','d'].every(k=>r.courses[k]?.certified)).length;
+  [['k-total',t],['k-done',done],['k-prog',prog],['k-pend',t-done-prog]].forEach(([id,v])=>{const el=document.getElementById(id);if(el)el.textContent=v;});
+}
+function sf(f,btn){cf=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');rt();}
+function rt(){
+  const q=(document.getElementById('asearch')?.value||'').toLowerCase();
+  let rows=aur;
+  if(cf==='done')rows=rows.filter(r=>['a','b','c','d'].every(k=>r.courses[k]?.certified));
+  else if(cf==='prog')rows=rows.filter(r=>r.hasStarted&&!['a','b','c','d'].every(k=>r.courses[k]?.certified));
+  else if(cf==='pend')rows=rows.filter(r=>!r.hasStarted);
+  if(q)rows=rows.filter(r=>(r.name+r.email+r.dni).toLowerCase().includes(q));
+  const tb=document.getElementById('atbody');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--ink4)">Sin resultados</td></tr>';return;}
+  function p(c){if(!c)return'<span class="pill pn">\u2014</span>';if(c.certified)return'<span class="pill pg">\u2713</span>';return'<span class="pill pa">'+c.pct+'%</span>';}
+  tb.innerHTML=rows.map(r=>{
+    const ad=['a','b','c','d'].every(k=>r.courses[k]?.certified);
+    const st=ad?'<span class="pill pg">Completo</span>':(r.hasStarted?'<span class="pill pa">Progreso</span>':'<span class="pill pn">Pendiente</span>');
+    return'<tr style="'+(ad?'background:#f8fcf9':'')+'">'+'<td><strong>'+( r.name||'\u2014')+'</strong></td><td style="font-size:.7rem;color:var(--ink3)">'+r.email+'</td><td style="font-family:var(--mono);font-size:.7rem">'+r.dni+'</td>'+[r.courses.a,r.courses.b,r.courses.c,r.courses.d].map(p).map(x=>'<td>'+x+'</td>').join('')+'<td>'+st+'</td><td style="font-size:.7rem;color:var(--ink4)">'+(r.lastActivity||'\u2014')+'</td></tr>';
+  }).join('');
+}
+function exportCSV(){
+  const h=['Nombre','Email','DNI','Curso A','Curso B','Curso C','Curso D','Estado','\u00daltima actividad'];
+  function cv(c){return c?(c.certified?'Completado':'En progreso '+c.pct+'%'):'Pendiente';}
+  const rows=aur.map(r=>[r.name,r.email,r.dni,cv(r.courses.a),cv(r.courses.b),cv(r.courses.c),cv(r.courses.d),['a','b','c','d'].every(k=>r.courses[k]?.certified)?'Completo':(r.hasStarted?'En progreso':'Pendiente'),r.lastActivity||'\u2014'].map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(','));
+  const csv=[h.join(','),...rows].join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));a.download='formacion_LNE_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+function tf(btn){btn.closest('.fitem').classList.toggle('open');}
+function sendC(){
+  const tipo=document.getElementById('ct').value;const msg=document.getElementById('cm').value.trim();const anon=document.getElementById('ca').value;
+  if(!tipo||!msg){alert('Selecciona el tipo y escribe tu consulta.');return;}
+  const sess=gs();const s=encodeURIComponent('Consulta People Portal: '+tipo);const b=encodeURIComponent((anon==='no'&&sess?'De: '+sess.name+' ('+sess.email+')\n\n':'Consulta an\u00f3nima\n\n')+msg);
+  window.open('mailto:rrhh@livenation.es?subject='+s+'&body='+b);
+  document.getElementById('cok').style.display='block';document.getElementById('cm').value='';
+}
+(function(){
+  const session=gs();
+  if(session){
+    let rec=lr(session.email)||{email:session.email,name:session.name,dni:session.dni,courses:{},firstLogin:'',lastActivity:''};
+    sr(rec);document.getElementById('modal-login').classList.add('off');initP(rec);
+  }
+})();
+</script>
+</body>
+</html>
