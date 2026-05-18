@@ -158,6 +158,25 @@ tr:nth-child(even) td{background:#faf9f6}
 .step-body .st{font-weight:600;font-size:.9rem;margin-bottom:2px;color:var(--ink)}
 .step-body .sd{font-size:.84rem;color:var(--ink3);line-height:1.6;font-weight:300}
 
+/* PROTOCOL FLOW */
+.flow-diagram{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.15rem;margin:1.25rem 0;box-shadow:var(--sh)}
+.flow-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;align-items:stretch}
+.flow-node{border:1px solid var(--rule);border-radius:9px;padding:.85rem;background:#faf9f6;position:relative}
+.flow-node::after{content:'→';position:absolute;right:-.58rem;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.82rem;color:var(--ink3);z-index:2}
+.flow-node:last-child::after{content:''}
+.flow-node.blue{background:var(--blue-bg);border-color:#c8d9e8}
+.flow-node.red{background:#fdf5f5;border-color:#eccaca}
+.flow-node.green{background:var(--green-bg);border-color:#c6e0d2}
+.flow-node.amber{background:var(--amber-bg);border-color:#ead9a8}
+.flow-kicker{font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.25rem}
+.flow-title{font-weight:600;font-size:.84rem;color:var(--ink);line-height:1.35;margin-bottom:.25rem}
+.flow-text{font-size:.76rem;color:var(--ink3);font-weight:300;line-height:1.55}
+.flow-split{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-top:.75rem}
+.flow-path{border:1px dashed var(--rule2);border-radius:9px;padding:.85rem;background:#fff}
+.flow-path strong{display:block;font-size:.82rem;margin-bottom:.25rem;color:var(--ink)}
+.flow-path span{display:block;font-size:.75rem;color:var(--ink3);line-height:1.55;font-weight:300}
+@media(max-width:760px){.flow-row,.flow-split{grid-template-columns:1fr}.flow-node::after{content:'↓';right:50%;top:auto;bottom:-.72rem;transform:translateX(50%)}.flow-node:last-child::after{content:''}}
+
 /* SCENARIO */
 .scenario{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin:1.25rem 0}
 .sc-head{background:var(--ink);color:#fff;padding:9px 16px;display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase}
@@ -913,7 +932,8 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <div class="box-lbl">📧 Contacto · People &amp; Culture</div>
     <div class="box-txt">
       <strong>Email:</strong> <a href="mailto:rrhh@livenation.es" style="color:var(--ink)">rrhh@livenation.es</a><br><br>
-      <strong>Canal Ético anónimo (Ley 2/2023):</strong> disponible en <strong>www.livenation.es</strong><br><br>
+      <strong>Canal Ético anónimo (Ley 2/2023):</strong> <a href="https://canal.uneon.es/livenation/" target="_blank" rel="noopener" style="color:var(--ink)">https://canal.uneon.es/livenation/</a><br><br>
+      <strong>Protocolo completo:</strong> <a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/PROTOCOLO%20DE%20ACOSO%20SEXUAL%20Y%20POR%20RAZ%C3%93N%20DE%20SEXO%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20JULIO%20DE%202025%20DEF.pdf?csf=1&web=1&e=K7zQeK" target="_blank" rel="noopener" style="color:var(--ink)">abrir en SharePoint</a><br><br>
       <em style="font-size:.82rem;color:var(--ink3)">No tienes que haber decidido denunciar. Puedes escribir solo para preguntar. Es confidencial y sin compromiso.</em>
     </div>
   </div>
@@ -953,6 +973,32 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
   </div>
 
   <h3 class="sh">Vía A — Comunicación y asesoramiento (informal)</h3>
+  <div class="box box-blue">
+    <div class="box-lbl">Documento de referencia</div>
+    <div class="box-txt">El procedimiento completo está recogido en el <strong>Protocolo de Acoso Sexual y por Razón de Sexo de Live Nation España</strong>. Puedes consultarlo en SharePoint desde el portal de RRHH o desde este curso: <a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/PROTOCOLO%20DE%20ACOSO%20SEXUAL%20Y%20POR%20RAZ%C3%93N%20DE%20SEXO%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20JULIO%20DE%202025%20DEF.pdf?csf=1&web=1&e=K7zQeK" target="_blank" rel="noopener" style="color:var(--blue);font-weight:600">abrir protocolo completo</a>.</div>
+  </div>
+
+  <h3 class="sh">Diagrama del protocolo</h3>
+  <div class="flow-diagram" aria-label="Diagrama del procedimiento interno de acoso sexual y por razón de sexo">
+    <div class="flow-row">
+      <div class="flow-node blue"><div class="flow-kicker">Inicio</div><div class="flow-title">Comunicación inicial</div><div class="flow-text">Puede comunicar la persona afectada, un testigo o alguien autorizado.</div></div>
+      <div class="flow-node blue"><div class="flow-kicker">Vía A</div><div class="flow-title">Asesoramiento confidencial</div><div class="flow-text">La persona de referencia orienta y ayuda a decidir cómo avanzar.</div></div>
+      <div class="flow-node amber"><div class="flow-kicker">Máx. 10 días</div><div class="flow-title">Valoración inicial</div><div class="flow-text">Se ordenan hechos, riesgos y posibles medidas preventivas.</div></div>
+      <div class="flow-node green"><div class="flow-kicker">Salida</div><div class="flow-title">Tres opciones</div><div class="flow-text">Denuncia formal, medidas preventivas o cierre si no hay indicios.</div></div>
+    </div>
+    <div class="flow-split">
+      <div class="flow-path"><strong>1. Denuncia formal</strong><span>Activa la Vía B. Se inicia expediente, se valoran medidas cautelares y se constituye la Comisión Instructora.</span></div>
+      <div class="flow-path"><strong>2. Medidas preventivas</strong><span>Si no hay denuncia pero existen indicios o riesgo, RRHH puede actuar para proteger a la persona afectada.</span></div>
+      <div class="flow-path"><strong>3. Cierre</strong><span>Si no hay indicios suficientes, se cierra la actuación dejando constancia y preservando la confidencialidad.</span></div>
+    </div>
+    <div class="flow-row" style="margin-top:.75rem">
+      <div class="flow-node red"><div class="flow-kicker">Vía B</div><div class="flow-title">Denuncia formal</div><div class="flow-text">Formulario interno o Canal Ético anónimo. Activación en 3 días hábiles.</div></div>
+      <div class="flow-node red"><div class="flow-kicker">Protección</div><div class="flow-title">Medidas cautelares</div><div class="flow-text">Separación, cambios organizativos o medidas urgentes. La víctima no es quien se mueve.</div></div>
+      <div class="flow-node red"><div class="flow-kicker">Máx. 30 días</div><div class="flow-title">Investigación</div><div class="flow-text">Audiencias separadas, testigos, pruebas e informe de la Comisión Instructora.</div></div>
+      <div class="flow-node green"><div class="flow-kicker">Cierre</div><div class="flow-title">Resolución y seguimiento</div><div class="flow-text">Dirección resuelve en 15 días y se revisa que no haya represalias durante 30 días.</div></div>
+    </div>
+  </div>
+
   <p class="p">El primer paso disponible. <strong>No implica iniciar ningún expediente</strong>. Es un espacio para hablar, entender si lo que estás viviendo puede ser acoso, y decidir qué quieres hacer. Tiene una duración máxima de <strong>10 días laborables</strong>.</p>
   <div class="steps">
     <div class="step"><div class="step-n">1</div><div class="step-body"><div class="st">Contacto con la persona de referencia</div><div class="sd">Por email (rrhh@livenation.es), en persona o por escrito. Puede hacerlo la persona afectada, un testigo, o alguien autorizado por la víctima. No hay que tenerlo todo claro: la persona de referencia te ayuda a ordenar la situación.</div></div></div>
@@ -962,7 +1008,7 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
 
   <h3 class="sh">Vía B — Denuncia formal e investigación</h3>
   <div class="steps">
-    <div class="step"><div class="step-n">1</div><div class="step-body"><div class="st">Presentar denuncia</div><div class="sd">Mediante el <strong>Formulario de Denuncia Interna</strong> (Anexo II del Protocolo, disponible en RRHH) o a través del <strong>Canal Ético anónimo</strong> (www.livenation.es, Ley 2/2023). En 3 días hábiles se activa el procedimiento.</div></div></div>
+    <div class="step"><div class="step-n">1</div><div class="step-body"><div class="st">Presentar denuncia</div><div class="sd">Mediante el <strong>Formulario de Denuncia Interna</strong> (Anexo II del Protocolo, disponible en RRHH) o a través del <strong>Canal Ético anónimo</strong> (https://canal.uneon.es/livenation/, Ley 2/2023). En 3 días hábiles se activa el procedimiento.</div></div></div>
     <div class="step"><div class="step-n">2</div><div class="step-body"><div class="st">Medidas cautelares inmediatas</div><div class="sd">Separación física del presunto acosador. Cambio de turno, puesto o espacio si es necesario. <strong>La víctima no es quien se mueve.</strong> Estas medidas no implican presunción de culpabilidad.</div></div></div>
     <div class="step"><div class="step-n">3</div><div class="step-body"><div class="st">Investigación — Comisión Instructora (máx. 30 días)</div><div class="sd">Audiencia separada de denunciante, denunciado/a y testigos. Valoración de pruebas. <strong>Basta con aportar indicios:</strong> no se exige prueba plena. <span class="norm">Art. 96 LRJS — inversión de la carga de la prueba</span></div></div></div>
     <div class="step"><div class="step-n">4</div><div class="step-body"><div class="st">Resolución de la Dirección (máx. 15 días)</div><div class="sd">Si se confirma: expediente sancionador (puede llegar al despido) + medidas correctoras + protección de la víctima + refuerzo formativo. Si no se confirma: se archiva. En ambos casos se informa a la denunciante.</div></div></div>
@@ -1874,14 +1920,14 @@ function goPortal() {
     return;
   }
   // Option 3: try to navigate to portal file
-  const portalFiles = ['LN_Portal_v4.html', 'LN_Portal_Compliance.html', 'LN_Portal_v3.html'];
+  const portalFiles = ['LN_RRHH_Portal.html', 'LN_Portal_Compliance.html', 'LN_Portal_v3.html'];
   // Show modal with options
   const modal = document.getElementById('portal-nav-modal');
   if (modal) {
     modal.classList.remove('off');
   } else {
     // Fallback: simple redirect
-    window.location.href = 'LN_Portal_v4.html';
+  window.location.href = 'LN_RRHH_Portal.html';
   }
 }
 
@@ -1984,7 +2030,7 @@ function skipClima() { climaSaved = true; navigate(1); }
     <div class="modal-title" style="font-size:1.4rem;margin-bottom:.5rem">¿Cómo volver al portal?</div>
     <div class="modal-sub" style="margin-bottom:1.25rem">Selecciona la opción que mejor describe tu situación:</div>
     <div style="display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem">
-      <button class="btn btn-red" style="justify-content:center" onclick="window.location.href='LN_Portal_v4.html'">
+            <button class="btn btn-red" style="justify-content:center" onclick="window.location.href='LN_RRHH_Portal.html'">
         📂 Abrir portal (misma carpeta)
       </button>
       <button class="btn btn-out" style="justify-content:center" onclick="window.history.back()">

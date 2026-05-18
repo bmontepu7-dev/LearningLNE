@@ -1128,7 +1128,7 @@ function startPageTimer(pageIndex) {
 // ── LOGO ──
 (function(){
   const logo=document.getElementById('logo-img');
-  fetch('LN_Portal_v4.html').then(r=>r.text()).then(t=>{
+  fetch('LN_RRHH_Portal.html').then(r=>r.text()).then(t=>{
     const m=t.match(/data:image\/jpeg;base64,[^"]+/);
     if(m)logo.src=m[0];
   }).catch(()=>{});
@@ -1525,7 +1525,7 @@ function loadState(){
   }catch(e){}
 }
 
-function goPortal(){window.location.href='LN_Portal_v4.html';}
+function goPortal(){window.location.href='LN_RRHH_Portal.html';}
 
 // ── START ──
 init();

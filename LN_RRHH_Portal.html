@@ -24,14 +24,19 @@
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 
 /* TOPBAR */
-.topbar{background:var(--ink);height:52px;display:flex;align-items:center;padding:0 2.5rem;gap:1.25rem;position:sticky;top:0;z-index:200}
-.tb-logo{height:22px;filter:brightness(0) invert(1);opacity:.9}
+.topbar{background:var(--ink);height:62px;display:flex;align-items:center;padding:0 2.5rem;gap:1.35rem;position:sticky;top:0;z-index:200}
+.ln-logo{font-family:Arial Black,Impact,sans-serif;font-weight:900;text-transform:uppercase;line-height:.74;letter-spacing:-.08em;display:inline-flex;flex-direction:column;justify-content:center;flex-shrink:0}
+.ln-logo span{display:block;white-space:nowrap}
+.ln-logo sup{font-family:Arial,sans-serif;font-size:.32em;line-height:1;margin-left:.12em;letter-spacing:0;vertical-align:super}
+.ln-logo-top{color:#fff;font-size:23px;width:122px;height:42px;transform:scaleX(1.06);transform-origin:left center}
+.ln-logo-login{color:var(--ink);font-size:26px;width:136px;height:48px;transform:scaleX(1.06);transform-origin:center}
 .tb-sep{width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0}
 .tb-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.35);flex:1}
 .tb-user{font-size:.8rem;color:rgba(255,255,255,.4);font-weight:300;display:none}
 .tb-user strong{color:rgba(255,255,255,.82);font-weight:500}
 .tb-out{font-size:.65rem;color:rgba(255,255,255,.3);background:none;border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:5px 11px;cursor:pointer;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;transition:all var(--ease);display:none}
 .tb-out:hover{color:#fff;border-color:rgba(255,255,255,.35)}
+@media(max-width:680px){.topbar{height:58px;padding:0 1rem;gap:.85rem}.ln-logo-top{font-size:18px;width:96px;height:34px}.tb-title{font-size:.55rem;letter-spacing:.14em}.tb-user{display:none!important}.tb-out{padding:4px 8px}}
 
 /* NAV */
 .nav{background:var(--white);border-bottom:1px solid var(--rule);padding:0 2.5rem;display:none;overflow-x:auto}
@@ -271,7 +276,6 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .mbg.off{display:none}
 .modal{background:var(--white);border-radius:8px;padding:2.5rem 2.1rem;width:100%;max-width:390px;box-shadow:0 24px 80px rgba(0,0,0,.25)}
 .m-logo{margin-bottom:1.85rem;display:flex;justify-content:center}
-.m-logo img{height:30px;filter:grayscale(100%);opacity:.85}
 .modal h2{font-family:var(--serif);font-size:1.8rem;font-weight:400;text-align:center;margin-bottom:.2rem}
 .m-sub{font-size:.68rem;color:var(--ink4);text-align:center;margin-bottom:1.85rem;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase}
 .iw{margin-bottom:.9rem}
@@ -298,7 +302,10 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 <body>
 
 <div class="topbar">
-  <img class="tb-logo" src="https://cdn.brandfetch.io/idec0SWCXf/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1770577642847" alt="Live Nation">
+  <div class="ln-logo ln-logo-top" aria-label="Live Nation">
+    <span>LIVE</span>
+    <span>NATION<sup>®</sup></span>
+  </div>
   <div class="tb-sep" style="width:1px;height:18px;background:rgba(255,255,255,.1);flex-shrink:0"></div>
   <div class="tb-title">People · España</div>
   <div class="tb-user" id="tb-user">Bienvenida, <strong id="tb-name"></strong></div>
@@ -338,7 +345,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <div class="tablon">
     <div class="t-head"><h2>Tablón</h2><span>Novedades · Avisos</span></div>
     <div class="t-scroll">
-      <div class="pin pin-g">
+      <div class="pin pin-g" onclick="go('protocolos')">
         <div class="pin-bar"></div>
         <div class="pin-tag">⚖️ Igualdad</div>
         <div class="pin-title">Plan de Igualdad 2026–2030 inscrito en REGCON</div>
@@ -448,8 +455,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⚖️</span><div class="p-name">Plan de Igualdad 2026–2030</div></div><div class="p-desc">Inscrito en REGCON. Exp. 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030.</div></div><div class="p-date">FEB 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Plan%20de%20Igualdad/6.-%20PLAN%20DE%20IGUALDAD%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20PARA%20PUBLICACION.pdf?csf=1&web=1&e=DIAXwZ" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🤖</span><div class="p-name">Protocolo de Uso de la IA</div></div><div class="p-desc">Política interna para el uso responsable de herramientas de inteligencia artificial en el entorno de trabajo. Versión española · UE.</div></div><div class="p-date">MAY 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/AI%20Use%20Policy%20(Spanish%20Espa%C3%B1ol%20%E2%80%93%20EU).pdf?csf=1&web=1&e=jlBoOj" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🌈</span><div class="p-name">Plan LGTBI+ 2026</div></div><div class="p-desc">No discriminación por orientación sexual e identidad de género. Ley 4/2023 · RD 1026/2024.</div></div><div class="p-date">ENE 2026</div><span class="btn-l btn-pending">Pendiente</span></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🛡️</span><div class="p-name">Protocolo de Acoso Sexual y Laboral</div></div><div class="p-desc">Prevención y actuación. Referencia: Sol Ferrés Arrosa (sol@livenation.es · 93 459 23 62).</div></div><div class="p-date">JUL 2025</div><span class="btn-l btn-pending">Pendiente</span></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera del horario laboral. Sistema [No urgente]. Art. 88 LO 3/2018.</div></div><div class="p-date">SEP 2025</div><span class="btn-l btn-pending">Pendiente</span></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🛡️</span><div class="p-name">Protocolo de Acoso Sexual y por Razón de Sexo</div></div><div class="p-desc">Prevención, actuación, medidas de protección y procedimiento interno ante situaciones de acoso sexual o por razón de sexo.</div></div><div class="p-date">JUL 2025</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/PROTOCOLO%20DE%20ACOSO%20SEXUAL%20Y%20POR%20RAZ%C3%93N%20DE%20SEXO%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20JULIO%20DE%202025%20DEF.pdf?csf=1&web=1&e=K7zQeK" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera de la jornada registrada. Art. 88 LO 3/2018 y Protocolo LN España 2026.</div></div><div class="p-date">MAY 2026</div><span class="btn-l btn-pending">Pendiente</span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📊</span><div class="p-name">Registro Retributivo 2024</div></div><div class="p-desc">Datos desagregados por sexo y grupo profesional. 47 puestos valorados. RD 902/2020.</div></div><div class="p-date">2024</div><span class="btn-l btn-pending">Pendiente</span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🔒</span><div class="p-name">Canal Ético Anónimo</div></div><div class="p-desc">Denuncias protegidas por Ley 2/2023. Disponible 24/7 completamente anónimo.</div></div><div class="p-date">24/7</div><a href="https://canal.uneon.es/livenation/" target="_blank" class="btn-l">Acceder →</a></div>
   </div>
@@ -544,6 +551,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
     <div>
       <div class="nitem"><div class="n-date">27 Febrero 2026</div><div class="n-tag" style="background:var(--green-pale);color:var(--green)">Igualdad</div><div class="n-title">Plan de Igualdad 2026–2030 inscrito en REGCON</div><div class="n-body">Expediente 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030. La Comisión de Seguimiento se reunirá semestralmente.</div></div>
       <div class="nitem"><div class="n-date">Mayo 2026</div><div class="n-tag" style="background:var(--blue-pale);color:var(--blue)">IA</div><div class="n-title">Nuevo protocolo de uso de la IA</div><div class="n-body">Ya está disponible en Protocolos y Normativa la política interna de uso responsable de herramientas de inteligencia artificial. El documento se abre directamente desde SharePoint.</div></div>
+      <div class="nitem"><div class="n-date">Julio 2025</div><div class="n-tag" style="background:var(--red-pale);color:var(--red)">Protocolo</div><div class="n-title">Protocolo de acoso sexual y por razón de sexo</div><div class="n-body">Disponible en Protocolos y Normativa. Incluye canales de comunicación, procedimiento interno, medidas cautelares y garantías de no represalia.</div></div>
       <div class="nitem"><div class="n-date">Mayo 2026</div><div class="n-tag" style="background:var(--amber-pale);color:var(--amber)">Vacantes</div><div class="n-title">Nueva vacante interna: Venues Assistant</div><div class="n-body">Operations busca una persona para dar soporte administrativo y operativo en la gestión de venues, calendarios, documentación, facturación y coordinación interna de giras y eventos. Ubicación: Barcelona, presencial.</div></div>
     </div>
     <div>
@@ -627,7 +635,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 <!-- LOGIN -->
 <div class="mbg" id="modal-login">
   <div class="modal">
-    <div class="m-logo"><img src="https://cdn.brandfetch.io/idec0SWCXf/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1770577642847" alt="LN"></div>
+    <div class="m-logo">
+      <div class="ln-logo ln-logo-login" aria-label="Live Nation">
+        <span>LIVE</span>
+        <span>NATION<sup>®</sup></span>
+      </div>
+    </div>
     <h2>People</h2>
     <div class="m-sub">Live Nation España</div>
     <div class="iw"><label>Nombre completo</label><input type="text" id="in-name" placeholder="Tu nombre completo" onkeydown="if(event.key==='Enter')doLogin()"></div>

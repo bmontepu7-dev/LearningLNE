@@ -2076,14 +2076,14 @@ function goPortal() {
     return;
   }
   // Option 3: try to navigate to portal file
-  const portalFiles = ['LN_Portal_v4.html', 'LN_Portal_Compliance.html', 'LN_Portal_v3.html'];
+  const portalFiles = ['LN_RRHH_Portal.html', 'LN_Portal_Compliance.html', 'LN_Portal_v3.html'];
   // Show modal with options
   const modal = document.getElementById('portal-nav-modal');
   if (modal) {
     modal.classList.remove('off');
   } else {
     // Fallback: simple redirect
-    window.location.href = 'LN_Portal_v4.html';
+  window.location.href = 'LN_RRHH_Portal.html';
   }
 }
 
@@ -2188,7 +2188,7 @@ function skipClima() { climaSaved = true; navigate(1); }
     <div class="modal-title" style="font-size:1.4rem;margin-bottom:.5rem">¿Cómo volver al portal?</div>
     <div class="modal-sub" style="margin-bottom:1.25rem">Selecciona la opción que mejor describe tu situación:</div>
     <div style="display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem">
-      <button class="btn btn-red" style="justify-content:center" onclick="window.location.href='LN_Portal_v4.html'">
+            <button class="btn btn-red" style="justify-content:center" onclick="window.location.href='LN_RRHH_Portal.html'">
         📂 Abrir portal (misma carpeta)
       </button>
       <button class="btn btn-out" style="justify-content:center" onclick="window.history.back()">

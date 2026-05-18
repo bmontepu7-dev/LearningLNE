@@ -382,10 +382,78 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
   #main{height:auto}
 }
 @media print{
-  #topbar,#rail,#bottombar,#toast,.cert-print-actions{display:none!important}
-  body,#app,#main,#content{overflow:visible;height:auto}
-  .page{display:block!important}
-  .cert-outer{box-shadow:none!important;border:2px solid #111!important}
+  @page{size:A4 landscape;margin:8mm}
+  body.printing-cert{
+    background:#fff!important;
+    overflow:hidden!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body.printing-cert #topbar,
+  body.printing-cert #rail,
+  body.printing-cert #bottombar,
+  body.printing-cert #toast,
+  body.printing-cert #cert-print-actions{
+    display:none!important;
+  }
+  body.printing-cert #app,
+  body.printing-cert #main,
+  body.printing-cert #content{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    background:#fff!important;
+  }
+  body.printing-cert .page{display:none!important}
+  body.printing-cert #pg-9{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+  }
+  body.printing-cert #pg-9 > *:not(#cert-content){display:none!important}
+  body.printing-cert #cert-content{
+    display:block!important;
+    width:100%!important;
+    height:194mm!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+    break-after:avoid!important;
+    page-break-after:avoid!important;
+  }
+  body.printing-cert #cert-content > div{
+    max-width:none!important;
+    width:100%!important;
+    height:194mm!important;
+    margin:0!important;
+    padding:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+  body.printing-cert .cert-outer{
+    width:276mm!important;
+    height:188mm!important;
+    margin:0 auto!important;
+    box-shadow:none!important;
+    border:2px solid #111!important;
+    border-radius:10px!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  body.printing-cert .cert-top{padding:10mm 15mm!important}
+  body.printing-cert .cert-body{padding:12mm 18mm 9mm!important}
+  body.printing-cert .cert-name{font-size:30pt!important}
+  body.printing-cert .cert-course{font-size:17pt!important}
+  body.printing-cert .cert-grid{max-width:170mm!important}
+  body.printing-cert .cert-foot{padding:8mm 15mm!important}
+  body.printing-cert .cert-watermark{font-size:72pt!important}
 }
 /* LIKERT ENCUESTA CLIMA */
 .likert-btn{flex:1;min-width:80px;padding:8px 6px;border:1.5px solid var(--rule2);border-radius:7px;cursor:pointer;text-align:center;font-size:.75rem;color:var(--ink3);transition:all .18s;font-weight:400;line-height:1.4;background:var(--bg)}
@@ -843,7 +911,7 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <div id="pnm-iframe" style="display:none">
       <div class="modal-sub">Para usar el portal completo, descarga los archivos y ábrelos en tu navegador.</div>
       <div style="background:var(--bg);border-radius:8px;padding:1rem;margin:.75rem 0;font-size:.82rem;color:var(--ink2);line-height:1.7">
-        <strong>1.</strong> Descarga <code style="background:var(--rule);padding:1px 5px;border-radius:3px">LN_Portal_v4.html</code> y los cursos<br>
+      <strong>1.</strong> Descarga <code style="background:var(--rule);padding:1px 5px;border-radius:3px">LN_RRHH_Portal.html</code> y los cursos<br>
         <strong>2.</strong> Colócalos todos en la misma carpeta<br>
         <strong>3.</strong> Abre el portal haciendo doble clic
       </div>
@@ -852,7 +920,7 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <div id="pnm-normal" style="display:none">
       <div class="modal-sub" style="margin-bottom:1.25rem">Elige cómo quieres volver:</div>
       <div style="display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem">
-        <button class="btn btn-red" style="justify-content:center;background:var(--green)" onclick="window.location.href='LN_Portal_v4.html'">📂 Abrir portal</button>
+      <button class="btn btn-red" style="justify-content:center;background:var(--green)" onclick="window.location.href='LN_RRHH_Portal.html'">📂 Abrir portal</button>
         <button class="btn btn-out" style="justify-content:center" onclick="window.history.back()">← Volver atrás</button>
         <button class="btn btn-out" style="justify-content:center" onclick="window.close()">✕ Cerrar pestaña</button>
       </div>
@@ -1334,16 +1402,26 @@ async function submitQuiz() {
   renderResult(correct, total, pct, passed);
 }
 
+function printCertificate() {
+  document.body.classList.add('printing-cert');
+  setTimeout(() => window.print(), 80);
+}
+
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-cert');
+});
+
 function renderResult(correct, total, pct, pass) {
   const circum = 345;
   const session = getSession();
   const name = session?.name || 'Empleado/a';
   const dept = session?.dept || '';
   const email = session?.email || '';
+  const company = 'Live Nation España, S.A.U';
   const now = new Date();
   const dateStr = now.toLocaleDateString('es-ES', { day:'2-digit', month:'long', year:'numeric' });
   const timeStr = now.toLocaleTimeString('es-ES', { hour:'2-digit', minute:'2-digit' });
-  const certCode = 'LN-A-' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
+  const certCode = 'LN-D-' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + Math.random().toString(36).substr(2,6).toUpperCase();
   const remaining = MAX_ATTEMPTS - attempts;
   const totalTimeSecs = Object.values(pageTimes).reduce((a,b)=>a+b,0);
   const totalTimeMin = Math.max(1, Math.round(totalTimeSecs / 60));
@@ -1398,15 +1476,15 @@ function renderResult(correct, total, pct, pass) {
           </div>
           <div class="cert-body">
             <div class="cert-watermark">LNE</div>
-            <div class="cert-badge">✓ Certificado de aprovechamiento</div>
+            <div class="cert-badge">✓ Certificado de superación del curso</div>
             <div class="cert-presents">Este documento acredita que</div>
             <div class="cert-name">${name.toUpperCase()}</div>
-            <div class="cert-verb">ha superado satisfactoriamente la formación obligatoria</div>
-            <div class="cert-course">${COURSE_TITLE}</div>
+            <div class="cert-verb">ha superado satisfactoriamente el curso obligatorio de</div>
+            <div class="cert-course">Curso D · ${COURSE_TITLE}</div>
             <div class="cert-grid">
               <div class="cert-cell">
-                <div class="cert-cell-label">Departamento</div>
-                <div class="cert-cell-value">${dept}</div>
+                <div class="cert-cell-label">Empresa</div>
+                <div class="cert-cell-value">${company}</div>
               </div>
               <div class="cert-cell">
                 <div class="cert-cell-label">Fecha y hora</div>
@@ -1423,7 +1501,7 @@ function renderResult(correct, total, pct, pass) {
                 </div>
               </div>
               <div class="cert-cell">
-                <div class="cert-cell-label">Tiempo de formacion</div>
+                <div class="cert-cell-label">Tiempo de formación</div>
                 <div class="cert-cell-value">${totalTimeDisplay}</div>
               </div>
               <div class="cert-cell" style="border-right:none">
@@ -1446,7 +1524,7 @@ function renderResult(correct, total, pct, pass) {
           </div>
         </div>
         <div style="text-align:center;margin-top:1.25rem;display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap" id="cert-print-actions">
-          <button class="btn btn-red" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+          <button class="btn btn-red" onclick="printCertificate()">🖨️ Imprimir / Guardar PDF</button>
           <button class="btn btn-out" onclick="goPortal()">← Volver al portal</button>
         </div>
       </div>`;
