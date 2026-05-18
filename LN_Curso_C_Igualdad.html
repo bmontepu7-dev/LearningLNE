@@ -1083,6 +1083,8 @@ const MIN_TIME_PER_PAGE = {
   1:90, 2:120, 3:120, 4:120, 5:120, 6:120, 7:120, 8:120, 9:120, 10:120, 11:120, 12:120, 13:0
 };
 const PASS_PCT = 70;
+const COURSE_ID = 'c';
+const COURSE_TITLE = 'Igualdad, Diversidad e Inclusión LGTBI+';
 
 const pageStartTime = {};
 const pageTimes = {};
@@ -1203,6 +1205,36 @@ function storageKey(){
   }catch(e){return 'ln_c_prog_anon';}
 }
 
+function saveCourseProgress(pct, certified, score, total, certDate, extra){
+  const session = courseSession();
+  if(!session || !session.email) return;
+  const totalSecs = Object.values(pageTimes || {}).reduce((a,b)=>a+b,0);
+  const now = new Date();
+  const courseData = {
+    pct,
+    certified,
+    score,
+    total,
+    certDate,
+    attempts: quizAttempts || 0,
+    timeMinutes: Math.max(1, Math.round(totalSecs / 60)),
+    lastAttemptISO: now.toISOString()
+  };
+  if(extra && extra.failedQuestions) courseData.failedQuestions = extra.failedQuestions;
+  const record = {
+    name: session.name || '',
+    email: session.email || '',
+    dni: session.dni || '',
+    dept: session.dept || '',
+    courses: {},
+    lastActivity: now.toLocaleDateString('es-ES', {day:'2-digit',month:'long',year:'numeric'}),
+    lastActivityTime: now.toLocaleTimeString('es-ES', {hour:'2-digit',minute:'2-digit'}),
+    lastActivityISO: now.toISOString()
+  };
+  record.courses[COURSE_ID] = courseData;
+  syncToGoogle(record);
+}
+
 // ── INIT ──
 function init(){
   if(!courseOwner(courseSession())){window.location.replace('LN_RRHH_Portal.html');return;}
@@ -1278,6 +1310,8 @@ function goTo(i) {
   updateRail();
   document.getElementById('content').scrollTop=0;
   saveState();
+  const progressPct = Math.round((visited.size / TOTAL_PAGES) * 100);
+  saveCourseProgress(progressPct, false, null, null, null);
   startPageTimer(i);
 }
 
@@ -1417,14 +1451,9 @@ function submitQuiz(){
     if(pass)existing.completedC=true;
     localStorage.setItem(key,JSON.stringify(existing));
     window.storage?.set(storageKey()+'_C',JSON.stringify({score,pct,pass,date:new Date().toISOString()}),true).catch(()=>{});
-    // Sync a Google Sheets
-    if(pass){
-      const user=JSON.parse(localStorage.getItem('ln_session')||'{}');
-      syncToGoogle({
-        email: user.email||'', name: user.name||'', dni: user.dni||'',
-        courses:{ c:{ certified:true, pct, score, total:QUIZ.length, certDate:new Date().toLocaleDateString('es-ES') } }
-      });
-    }
+    const wrongQuestions = QUIZ.map((q,i)=>({ q:i+1, ok:quizAnswers[i]===q.ok }))
+      .filter(a=>!a.ok).map(a=>'P'+a.q);
+    saveCourseProgress(100, pass, score, QUIZ.length, pass ? new Date().toLocaleDateString('es-ES') : null, {failedQuestions: wrongQuestions});
   }catch(e){}
   navigate(13);
   renderResult(score,pct,pass);
