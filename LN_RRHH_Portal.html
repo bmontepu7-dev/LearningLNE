@@ -174,6 +174,16 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .cdiv{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink4);padding:1.25rem 0 .65rem;border-bottom:1px solid var(--rule)}
 @media(max-width:900px){.cal-grid{grid-template-columns:1fr;gap:1.25rem}}
 
+/* GESTION DEL TIEMPO */
+.time-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:1.5rem}
+.tdoc{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.35rem;display:flex;flex-direction:column;min-height:210px}
+.tdoc-k{font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:.75rem}
+.tdoc-title{font-family:var(--serif);font-size:1.25rem;font-weight:400;line-height:1.15;margin-bottom:.55rem}
+.tdoc-desc{font-size:.78rem;color:var(--ink3);font-weight:300;line-height:1.7;margin-bottom:1rem}
+.tdoc-meta{font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-top:auto;margin-bottom:.75rem}
+.tag-provisional{display:inline-flex;width:max-content;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-pale);border:1px solid #e0d0a5;border-radius:2px;padding:2px 7px;margin-bottom:.7rem}
+@media(max-width:900px){.time-grid{grid-template-columns:1fr}}
+
 /* BENEFICIOS */
 .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;background:var(--rule)}
 .bcard{background:var(--white);padding:1.6rem 1.4rem}
@@ -316,6 +326,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <button class="nav-btn active" onclick="go('inicio')" data-sec="inicio">Inicio</button>
   <button class="nav-btn" onclick="go('formacion')" data-sec="formacion">Formación <span class="nav-dot" id="nd-form"></span></button>
   <button class="nav-btn" onclick="go('vacantes')" data-sec="vacantes">Vacantes</button>
+  <button class="nav-btn" onclick="go('tiempo')" data-sec="tiempo">Tiempo</button>
   <button class="nav-btn" onclick="go('protocolos')" data-sec="protocolos">Protocolos</button>
   <button class="nav-btn" onclick="go('calendario')" data-sec="calendario">Calendario</button>
   <button class="nav-btn" onclick="go('beneficios')" data-sec="beneficios">Beneficios</button>
@@ -359,6 +370,13 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
         <div class="pin-body">Disponible en Protocolos y Normativa. Guía para el uso responsable de herramientas de inteligencia artificial.</div>
         <div class="pin-date">Mayo 2026</div>
       </div>
+      <div class="pin pin-n" onclick="go('tiempo')">
+        <div class="pin-bar"></div>
+        <div class="pin-tag">⏱️ Gestión del tiempo</div>
+        <div class="pin-title">Guías provisionales de fichaje, jornada y vacaciones</div>
+        <div class="pin-body">Acceso directo a la guía de fichaje, el protocolo de registro de jornada y la política de vacaciones.</div>
+        <div class="pin-date">Mayo 2026</div>
+      </div>
       <div class="pin pin-a" onclick="go('vacantes')">
         <div class="pin-bar"></div>
         <div class="pin-tag">💼 Vacantes internas</div>
@@ -383,6 +401,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <div class="hgrid">
     <div class="hcard" onclick="go('formacion')"><div class="hcard-bar" style="background:var(--red)"></div><span class="hcard-ico">📚</span><div class="hcard-name">Formación</div><div class="hcard-desc">4 cursos obligatorios. Plazo 30 sep.</div><div class="hcard-meta" id="hform-meta">Cargando...</div></div>
     <div class="hcard" onclick="go('vacantes')"><div class="hcard-bar" style="background:var(--blue)"></div><span class="hcard-ico">💼</span><div class="hcard-name">Vacantes</div><div class="hcard-desc">Movilidad interna. La primera opción eres tú.</div><div class="hcard-meta">2 activas</div></div>
+    <div class="hcard" onclick="go('tiempo')"><div class="hcard-bar" style="background:#6f6a5d"></div><span class="hcard-ico">⏱️</span><div class="hcard-name">Tiempo</div><div class="hcard-desc">Fichaje, jornada, vacaciones y calendario.</div><div class="hcard-meta">3 guías provisionales</div></div>
     <div class="hcard" onclick="go('protocolos')"><div class="hcard-bar" style="background:var(--green)"></div><span class="hcard-ico">📋</span><div class="hcard-name">Protocolos</div><div class="hcard-desc">PI, LGTBI+, Acoso y normativa vigente.</div><div class="hcard-meta">Actualizado 2026</div></div>
     <div class="hcard" onclick="go('beneficios')"><div class="hcard-bar" style="background:var(--amber)"></div><span class="hcard-ico">🎁</span><div class="hcard-name">Beneficios</div><div class="hcard-desc">Entradas, seguro, teletrabajo y más.</div><div class="hcard-meta">Vigentes 2026</div></div>
     <div class="hcard" onclick="go('calendario')"><div class="hcard-bar" style="background:#999"></div><span class="hcard-ico">📅</span><div class="hcard-name">Calendario</div><div class="hcard-desc">Festivos 2026 — Barcelona y Madrid.</div><div class="hcard-meta">2 sedes</div></div>
@@ -510,12 +529,48 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <div class="alert al-b" style="margin-top:1.25rem">¿No ves tu perfil? Escríbenos a <strong>rrhh@livenation.es</strong>. Guardamos perfiles para futuras vacantes.</div>
 </div>
 
+<!-- GESTIÓN DEL TIEMPO -->
+<div class="section" id="sec-tiempo">
+  <div class="sec-head"><h2>Gestión del Tiempo</h2><span class="sec-head-r">Fichaje · Jornada · Vacaciones</span></div>
+  <div class="alert al-a">Documentación provisional para consulta de la plantilla. Los documentos se abren desde SharePoint y conservan sus permisos internos.</div>
+  <div class="time-grid">
+    <div class="tdoc">
+      <div class="tdoc-k">Jornada</div>
+      <span class="tag-provisional">Provisional</span>
+      <div class="tdoc-title">Protocolo de fichaje</div>
+      <div class="tdoc-desc">Documento marco sobre registro de jornada y gestión del tiempo: obligaciones de fichaje, criterios generales, revisión de incidencias y pautas de actuación.</div>
+      <div class="tdoc-meta">Word · SharePoint</div>
+      <a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" target="_blank" rel="noopener" class="btn-l">Abrir protocolo →</a>
+    </div>
+    <div class="tdoc">
+      <div class="tdoc-k">Guía rápida</div>
+      <span class="tag-provisional">Provisional</span>
+      <div class="tdoc-title">Guía de fichaje (guía de bolsillo)</div>
+      <div class="tdoc-desc">Guía de bolsillo para el uso diario: cómo fichar, revisar registros, consultar el estado de la jornada y resolver dudas frecuentes de funcionamiento.</div>
+      <div class="tdoc-meta">PDF · SharePoint</div>
+      <a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Guia_Fichaje_LNE.pdf?csf=1&web=1&e=rLkZ3s" target="_blank" rel="noopener" class="btn-l">Abrir guía →</a>
+    </div>
+    <div class="tdoc">
+      <div class="tdoc-k">Vacaciones</div>
+      <span class="tag-provisional">Provisional</span>
+      <div class="tdoc-title">Protocolo de vacaciones</div>
+      <div class="tdoc-desc">Criterios para la planificación y solicitud de vacaciones: procedimiento, responsabilidades, plazos orientativos y gestión en Workday.</div>
+      <div class="tdoc-meta">Word · SharePoint</div>
+      <a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" target="_blank" rel="noopener" class="btn-l">Abrir protocolo →</a>
+    </div>
+  </div>
+  <div class="alert al-b">También puedes consultar los festivos por sede en el apartado <a href="#" onclick="go('calendario');return false">Calendario Laboral</a>.</div>
+</div>
+
 <!-- PROTOCOLOS -->
 <div class="section" id="sec-protocolos">
   <div class="sec-head"><h2>Protocolos y Normativa</h2><span class="sec-head-r">Documentos vigentes</span></div>
   <div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⚖️</span><div class="p-name">Plan de Igualdad 2026–2030</div></div><div class="p-desc">Inscrito en REGCON. Exp. 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030.</div></div><div class="p-date">FEB 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Plan%20de%20Igualdad/6.-%20PLAN%20DE%20IGUALDAD%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20PARA%20PUBLICACION.pdf?csf=1&web=1&e=DIAXwZ" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🤖</span><div class="p-name">Protocolo de Uso de la IA</div></div><div class="p-desc">Política interna para el uso responsable de herramientas de inteligencia artificial en el entorno de trabajo. Versión española · UE.</div></div><div class="p-date">MAY 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/AI%20Use%20Policy%20(Spanish%20Espa%C3%B1ol%20%E2%80%93%20EU).pdf?csf=1&web=1&e=jlBoOj" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⏱️</span><div class="p-name">Protocolo de fichaje</div></div><div class="p-desc">Registro de jornada y gestión del tiempo: obligaciones de fichaje, incidencias y pautas generales de actuación.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🧾</span><div class="p-name">Guía de fichaje (guía de bolsillo)</div></div><div class="p-desc">Guía rápida para fichar, revisar registros, consultar el estado de la jornada y resolver dudas frecuentes.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Guia_Fichaje_LNE.pdf?csf=1&web=1&e=rLkZ3s" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🏖️</span><div class="p-name">Protocolo de vacaciones</div></div><div class="p-desc">Criterios para planificación y solicitud de vacaciones, plazos orientativos, responsabilidades y gestión en Workday.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🌈</span><div class="p-name">Plan LGTBI+ 2026</div></div><div class="p-desc">No discriminación por orientación sexual e identidad de género. Ley 4/2023 · RD 1026/2024.</div></div><div class="p-date">ENE 2026</div><span class="btn-l btn-pending">Pendiente</span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🛡️</span><div class="p-name">Protocolo de Acoso Sexual y por Razón de Sexo</div></div><div class="p-desc">Prevención, actuación, medidas de protección y procedimiento interno ante situaciones de acoso sexual o por razón de sexo.</div></div><div class="p-date">JUL 2025</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/PROTOCOLO%20DE%20ACOSO%20SEXUAL%20Y%20POR%20RAZ%C3%93N%20DE%20SEXO%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20JULIO%20DE%202025%20DEF.pdf?csf=1&web=1&e=K7zQeK" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera de la jornada registrada. Art. 88 LO 3/2018 y Protocolo LN España 2026.</div></div><div class="p-date">MAY 2026</div><span class="btn-l btn-pending">Pendiente</span></div>
@@ -730,7 +785,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 const GS='https://script.google.com/macros/s/AKfycbyQOAlqFSpO1YyJD6tMxldow9D5LRsSyvyelJPZjt4Xb81S-rJmOIZT0Rf7dJjXmnVK/exec';
 const APW='LiveNation2025';
 const DRAFT_OWNER_EMAILS=['belen@livenation.es','admin@livenation.es'];
-const DRAFT_PUBLIC_SECTIONS=['inicio','formacion','news','vacantes','protocolos','calendario'];
+const DRAFT_PUBLIC_SECTIONS=['inicio','formacion','news','vacantes','tiempo','protocolos','calendario'];
 let draftOwner=false;
 const CURSOS={a:{name:'Acoso Laboral',file:'LN_Curso_A_Final.html',color:'#c41e1e'},b:{name:'Acoso Sexual y por Raz\u00f3n de Sexo',file:'LN_Curso_B_Acoso_Sexual.html',color:'#1a3a5c'},c:{name:'Igualdad, Diversidad e Inclusi\u00f3n LGTBI+',file:'LN_Curso_C_Igualdad.html',color:'#5a2d8a'},d:{name:'Desconexi\u00f3n Digital',file:'LN_Curso_D_Desconexion.html',color:'#1f5c3a'}};
 const PW=[{name:"Ana G\u00f3mez De Castro",email:"ana.gomez@livenation.es"},{name:"Adrian Martinez",email:"adrian@livenation.es"},{name:"Irene Garcia Alonso",email:"irene@livenation.es"},{name:"Will Anderson",email:"will@mercurywheels.com"},{name:"Sandra Paniagua Labernia",email:"sandra.paniagua@livenation.es"},{name:"Ivan Fernandez Diaz",email:"ivan@livenation.es"},{name:"Brisia Farromeque Paz",email:"brisia@livenation.es"},{name:"Bibiana Verd\u00fa Monn\u00e9",email:"bibiana@livenation.es"},{name:"Esther Fernandez",email:"efernandezd@planetevents.es"},{name:"Diego Perez",email:"dpereze@planetevents.es"},{name:"Sabela Santamaria Soler",email:"ssantamaria@planetevents.es"},{name:"Eduard Taltavull",email:"eduard@livenation.es"},{name:"Tamara I\u00f1iguez Gil",email:"tamara.iniguez.gil@planetevents.es"},{name:"Eva Garcia Villalba",email:"eva@livenation.es"},{name:"Alejandra Martinez Casa",email:"alejandra@livenation.es"},{name:"Ashley Garrido Bello",email:"ashley.garrido@livenation.es"},{name:"Irene Granada",email:"irene.granada@livenation.es"},{name:"Johanna Llorente",email:"johanna@livenation.es"},{name:"Jaime Benitez Mariscal",email:"jaime.benitez@livenation.es"},{name:"Fabiola Andrade",email:"f.andrade@livenation.es"},{name:"Candela Buscetti",email:"candela.buscetti@livenation.es"},{name:"Ana Jadormeo",email:"ana.jadormeo@livenation.es"},{name:"Vicky Blum",email:"vicky@livenation.es"},{name:"Sol Ferr\u00e9s Arrosa",email:"sol@livenation.es"},{name:"Barnaby Harrod",email:"barnaby@mercurywheels.com"},{name:"Carla Verges Comellas",email:"carla@livenation.es"},{name:"Nicol\u00e1s Mansilla",email:"nicolas@livenation.es"},{name:"Roger Soriano Soler",email:"roger@livenation.es"},{name:"Miriam Boulos",email:"miriam.boulos@livenation.es"},{name:"Elie Mu\u00f1iz",email:"elie@mercurywheels.com"},{name:"Ricard Rois Gimeno",email:"ricard@mercurywheels.com"},{name:"Manex Goenaga Arsuaga",email:"manex@livenation.es"},{name:"Maria Abejaro",email:"maria.abejaro@livenation.es"},{name:"Alexandra Karpova",email:"alexandra@mercurywheels.com"},{name:"Clara Aznar Alonso-Mu\u00f1oyerro",email:"clara.aznar@livenation.es"},{name:"Celia Gran\u00e9",email:"celia@livenation.es"},{name:"Marc Altamirano Mach",email:"marc.altamirano@livenation.es"},{name:"Andrea L\u00f3pez Ruiz",email:"andrea.lopez@livenation.es"},{name:"Laura Castell\u00f3",email:"laura.castello@livenation.es"},{name:"Gabriela Ponte",email:"gabriela@livenation.es"},{name:"Nat\u00e0lia Villar Santacreu",email:"natalia@livenation.es"},{name:"Lucia Colom",email:"lucia.colom@planetevents.es"},{name:"Salma Hussain",email:"salma.hussain@livenation.es"},{name:"Ivana Gonzalez Monsu",email:"ivana.gonzalez@livenation.es"},{name:"Javier Tomas Morante",email:"javier.tomas@livenation.es"},{name:"\u00c1lvaro Castro Higueras",email:"alvaro@livenation.es"},{name:"Julia Soria Rodriguez",email:"julia.soria@livenation.es"},{name:"Noelia Lorenzo",email:"noelia.lorenzo@livenation.es"},{name:"Blanca De Cambra Castelltort",email:"blanca@livenation.es"},{name:"Marta Vazquez Gasull",email:"marta.vazquez@livenation.es"},{name:"Marina Fern\u00e1ndez",email:"marina.fernandez@livenation.es"},{name:"Paula Agrassot Felipe",email:"paula.agrassot@livenation.es"},{name:"Raquel Perez Nocelo",email:"raquel.nocelo@livenation.es"},{name:"Edwing Arias Arias",email:"edwing@livenation.es"},{name:"Jonatan Rivero",email:"jonatan.rivero@livenation.es"},{name:"Alba Moreno Cobos",email:"alba@livenation.es"},{name:"Tassilo Sajonia-Coburgo Nadal",email:"tassilo@livenation.es"},{name:"Patricia de Matias Lopez",email:"patricia.dematias@livenation.es"},{name:"Souad Tahiri Dada",email:"souad@livenation.es"},{name:"Miguel Fernandez Iniesta",email:"miguel@livenation.es"},{name:"Carlos Mu\u00f1oz Romero",email:"carlos@livenation.es"},{name:"Marta Claramunt Longo",email:"marta.claramunt@livenation.es"},{name:"Belen Montesino Puertolas",email:"belen@livenation.es"},{name:"Javier Arnaiz",email:"javier.arnaiz@livenation.es"},{name:"Brian Fortuny Cruz",email:"briancross@livenation.es"},{name:"Jannie Boddum Lassen",email:"jannie.boddum@livenation.es"},{name:"Rachael Connor",email:"rachael.connor@livenation.es"},{name:"Guillermo Aliaga Rodriguez",email:"guillermo.aliaga@livenation.es"},{name:"Carla Rodriguez Perez",email:"carla.rodriguez@livenation.es"},{name:"Duna Moliner Salinas",email:"duna.moliner@livenation.es"},{name:"Andrea de Agustin Garc\u00eda",email:"andrea.deagustin@livenation.es"},{name:"Cesar Andion",email:"cesar@livenation.es"},{name:"Enric Arqu\u00e9s",email:"enric@livenation.es"},{name:"Elena Carrero",email:"elena@livenation.es"},{name:"Oscar Caselles",email:"oscar@livenation.es"},{name:"Marta Espi",email:"marta@livenation.es"},{name:"Kata Sensei",email:"kata@livenation.es"},{name:"Monica Herrero",email:"monica@livenation.es"},{name:"Javier Masferrer",email:"javier@livenation.es"},{name:"Eliana Moreno",email:"eliana@livenation.es"},{name:"Ozlem Ozseker",email:"ozlem@livenation.es"},{name:"Chiara Sagliocco",email:"chiara@livenation.es"},{name:"Valenti Tugues",email:"valenti@livenation.es"},{name:"Virginia Z\u00e1rate Mamani",email:"virginiazaratem84@gmail.com"},{name:"Susana Lopez",email:"susana@livenation.es"},{name:"Joe Perez Orive",email:"joe.perez@livenation.es"},{name:"Iain Hill",email:"iain@livenation.es"},{name:"Marisa Marquez",email:"marisa@livenation.es"},{name:"Sandra Huesca",email:"sandra@livenation.es"},{name:"Julio Ebrat",email:"julio@livenation.es"},{name:"Sergio Rubio",email:"sergio@livenation.es"},{name:"Erik Magermans",email:"erik@livenation.es"},{name:"Nacho C\u00f3rdoba",email:"nacho@livenation.es"},{name:"Pedro Cano Albiol",email:"pedro@livenation.es"},{name:"Carol Galvis",email:"carol@livenation.es"},{name:"Maria Colomer",email:"maria@livenation.es"},{name:"Raquel Osuna",email:"raquel@livenation.es"},{name:"Katherine Ja\u00e9n Rodriguez",email:"kjaen@livenation.es"},{name:"Olga Feliu",email:"olga@livenation.es"}];
