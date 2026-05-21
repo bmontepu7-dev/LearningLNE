@@ -1035,7 +1035,7 @@ function sessionDoc(){try{const s=JSON.parse(localStorage.getItem('ln_session')|
 function courseSession(){try{return JSON.parse(localStorage.getItem('ln_session')||'null');}catch(e){return null;}}
 function courseOwner(session){const email=String(session&&session.email||'').trim().toLowerCase();return email==='belen@livenation.es'||email==='admin@livenation.es';}
 
-function syncToGoogle(record) {
+function legacySyncToGoogle(record) {
   const _sessionDni = sessionDoc();
   const _recordDni = pickDoc(record && record.dni, _sessionDni);
   if (_recordDni) record.dni = _recordDni;
@@ -1068,6 +1068,53 @@ function syncToGoogle(record) {
       mode: 'no-cors'
     }).catch(function(){});
   } catch(_fe) {}
+}
+
+function progressKey(email,prefix){return prefix+String(email||'').toLowerCase().replace(/[^a-z0-9@._-]/g,'_');}
+function readProgressKey(key){try{const val=localStorage.getItem(key);return val?JSON.parse(val):null;}catch(e){return null;}}
+function sessionData(){return (typeof courseSession==='function'?courseSession():null)||(typeof getSession==='function'?getSession():null)||{};}
+function mergeProgressRecord(base,incoming){
+  const merged=Object.assign({},base||{},incoming||{});
+  const courses=Object.assign({},(base&&base.courses)||{});
+  Object.keys((incoming&&incoming.courses)||{}).forEach(function(k){if(incoming.courses[k])courses[k]=incoming.courses[k];});
+  merged.courses=courses;
+  return merged;
+}
+function localProgressRecord(email){
+  const a=readProgressKey(progressKey(email,'ln_p_'));
+  const b=readProgressKey(progressKey(email,'ln_progress_'));
+  if(!a&&!b)return null;
+  return mergeProgressRecord(a,b);
+}
+function writeProgressRecord(record){
+  if(!record||!record.email)return;
+  localStorage.setItem(progressKey(record.email,'ln_p_'),JSON.stringify(record));
+  localStorage.setItem(progressKey(record.email,'ln_progress_'),JSON.stringify(record));
+}
+function syncToGoogle(record) {
+  if(!record||!record.email)return null;
+  const session=sessionData();
+  const now=new Date();
+  const merged=mergeProgressRecord(localProgressRecord(record.email),record);
+  merged.email=merged.email||record.email||session.email||'';
+  merged.name=record.name||merged.name||session.name||'';
+  merged.dept=record.dept||merged.dept||session.dept||'';
+  const doc=pickDoc(record.dni,merged.dni,session.dni,sessionDoc());
+  if(doc)merged.dni=doc;
+  if(!merged.firstLogin)merged.firstLogin=record.firstLogin||now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  merged.lastActivity=record.lastActivity||now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  merged.lastActivityTime=record.lastActivityTime||now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  merged.lastActivityISO=record.lastActivityISO||now.toISOString();
+  try{writeProgressRecord(merged);}catch(_le){}
+  try{
+    const _body=JSON.stringify(merged);
+    if(navigator.sendBeacon&&typeof Blob!=='undefined'){
+      navigator.sendBeacon(GOOGLE_SCRIPT_URL,new Blob([_body],{type:'text/plain'}));
+    }else{
+      fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:_body,mode:'no-cors'}).catch(function(){});
+    }
+  }catch(_fe){}
+  return merged;
 }
 
 async function loadFromGoogle() {
@@ -1354,6 +1401,31 @@ function selClima(el,id,val){
   document.getElementById(id).value=val;
   climaData[id]=val;
 }
+function climatePayload(curso,data){
+  const answers={};
+  const comments={};
+  Object.keys(data||{}).forEach(k=>{
+    if(k==='curso'||k==='timestamp')return;
+    if(k.indexOf('open')>-1)comments[k]=String(data[k]||'').trim();
+    else if(data[k]!==''&&data[k]!=null)answers[k]=Number(data[k])||data[k];
+  });
+  return{type:'climate_survey',source:'portal_rrhh_2026',anonymous:true,responseId:'clima_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8),course:curso,submittedDate:new Date().toISOString().slice(0,10),answers:answers,comments:comments};
+}
+function sendAnonymousClimate(curso,data){
+  const payload=climatePayload(curso,data);
+  try{
+    const key='ln_clima_anonymous_'+curso;
+    const existing=JSON.parse(localStorage.getItem(key)||'[]');
+    const list=Array.isArray(existing)?existing:[];
+    list.push(payload);
+    localStorage.setItem(key,JSON.stringify(list.slice(-10)));
+  }catch(e){}
+  try{
+    const body=JSON.stringify(payload);
+    if(navigator.sendBeacon&&typeof Blob!=='undefined')navigator.sendBeacon(GOOGLE_SCRIPT_URL,new Blob([body],{type:'text/plain'}));
+    else fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:body,mode:'no-cors'}).catch(()=>{});
+  }catch(e){}
+}
 
 function saveClima(curso){
   const reqMap={'C':['c1','c2','c3','c4']};
@@ -1370,6 +1442,7 @@ function saveClima(curso){
     localStorage.setItem(key,JSON.stringify(existing));
     window.storage?.set('ln_clima_'+curso+'_'+Date.now(),JSON.stringify(climaData),true).catch(()=>{});
   }catch(e){}
+  sendAnonymousClimate(curso,climaData);
   const saved=document.getElementById('clima-saved-'+curso);
   if(saved)saved.classList.add('show');
   setTimeout(()=>goTo(currentPage+1),1000);

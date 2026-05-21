@@ -926,6 +926,24 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <div class="card"><div class="card-icon">🤝</div><div class="card-title">Personal externo</div><div class="card-txt">ETTs, contratas, proveedores y visitas. Si el presunto acosador es externo, Live Nation actuará ante su empresa.</div></div>
   </div>
 
+  <h3 class="sh">Eventos, estadios y Respect Nation</h3>
+  <div class="box box-blue">
+    <div class="box-lbl">Protocolo antiacoso en conciertos y grandes recintos</div>
+    <div class="box-txt">En conciertos de estadio, festivales y grandes recintos puede habilitarse un punto antiacoso <strong>Respect Nation</strong>. Es un espacio visible y reconocible para orientar, detectar situaciones de riesgo y activar el protocolo cuando una persona asistente, artista, colaboradora o trabajadora necesite ayuda.</div>
+  </div>
+
+  <div class="g2">
+    <div class="card"><div class="card-icon">🟦</div><div class="card-title">Punto visible</div><div class="card-txt">Stand, caseta o carpa identificada con Respect Nation. Todo el personal del evento debe conocer su ubicación antes de apertura de puertas.</div></div>
+    <div class="card"><div class="card-icon">🔒</div><div class="card-title">Espacio privado</div><div class="card-txt">Zona no pública para atender con confidencialidad a personas afectadas o casos que requieran una atención especial.</div></div>
+    <div class="card"><div class="card-icon">👁️</div><div class="card-title">Personal itinerante</div><div class="card-txt">Equipo de detección y apoyo. Su papel es observar, acompañar y activar el circuito; no enfrentarse directamente al agresor.</div></div>
+    <div class="card"><div class="card-icon">🛡️</div><div class="card-title">Seguridad experta</div><div class="card-txt">En eventos grandes puede haber personal de seguridad identificado con acreditación Respect Nation. Si no está cerca, avisa a cualquier miembro de seguridad.</div></div>
+  </div>
+
+  <div class="box box-yellow">
+    <div class="box-lbl">Regla de actuación en evento</div>
+    <div class="box-txt"><strong>Detecta, acompaña y avisa.</strong> No investigues, no juzgues, no presiones a la persona afectada para denunciar y no la dejes sola. Si la situación es grave, prioriza su seguridad y activa Respect Nation, seguridad o coordinación del evento.</div>
+  </div>
+
   <h3 class="sh">Las personas de referencia</h3>
   <p class="p">Live Nation España ha designado personas de referencia específicas para este protocolo — la persona principal y una suplente — que tienen las aptitudes y responsabilidad para ser el primer punto de contacto. Son las encargadas de asesorar de forma confidencial, ayudarte a identificar si una conducta puede constituir acoso, informarte de tus opciones y acompañarte en el proceso si decides avanzar.</p>
   <div class="box box-ink">
@@ -1070,6 +1088,7 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
     <tr><td>Presencias un comentario sexista o insinuación</td><td>Interrumpir en el momento ("eso no está bien"), o hablar después con la persona afectada para ver cómo está</td><td>Reír para no crear tensión — eso valida la conducta del acosador</td></tr>
     <tr><td>Una compañera te cuenta que está sufriendo acoso</td><td>Escuchar sin juzgar, no presionar, informarle del Protocolo y los canales disponibles, ofrecerte a acompañarla si decide actuar</td><td>Decirle "seguro que lo ha malinterpretado" o "no hagas nada para no complicar las cosas"</td></tr>
     <tr><td>Ves un patrón de comportamiento hacia alguien del equipo</td><td>Reportarlo a RRHH o al canal ético aunque la persona afectada no haya denunciado — tu testimonio tiene valor independiente</td><td>Esperar a que la víctima actúe primero — puede que nunca lo haga por miedo</td></tr>
+    <tr><td>En un concierto, estadio o festival ves a una persona vulnerable o una conducta insistente</td><td>Acompañar a la persona afectada, avisar al punto Respect Nation o a seguridad y preservar la confidencialidad</td><td>Confrontar solo/a al agresor, dejar sola a la persona o presionarla para denunciar</td></tr>
     <tr><td>Alguien denuncia y sufre represalias</td><td>Documentar lo que observas y comunicarlo a RRHH — las represalias son una infracción adicional muy grave</td><td>Ignorarlo pensando que "ya lo gestionará RRHH"</td></tr>
   </table></div>
 
@@ -1128,6 +1147,11 @@ hr.div{border:none;border-top:1px solid var(--rule);margin:2rem 0}
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="box box-yellow">
+    <div class="box-lbl">Si ocurre en un concierto, estadio o festival</div>
+    <div class="box-txt">Si ves una conducta insistente, una persona especialmente vulnerable o una posible situación de acoso durante un evento, busca apoyo en el punto <strong>Respect Nation</strong> o en seguridad. Acompaña a la persona afectada con calma, preserva la confidencialidad y, si procede, ayuda a identificar testigos o información útil sin convertirte en investigador/a.</div>
   </div>
 
   <h3 class="sh">Si eres responsable de equipo</h3>
@@ -1305,7 +1329,7 @@ function pickDoc(){for(const v of arguments){const d=String(v||'').trim().toUppe
 function sessionDoc(){try{const s=JSON.parse(localStorage.getItem('ln_session')||'null');return s&&s.dni;}catch(e){return '';}}
 function courseOwner(session){const email=String(session&&session.email||'').trim().toLowerCase();return email==='belen@livenation.es'||email==='admin@livenation.es';}
 
-function syncToGoogle(record) {
+function legacySyncToGoogle(record) {
   const _sessionDni = sessionDoc();
   const _recordDni = pickDoc(record && record.dni, _sessionDni);
   if (_recordDni) record.dni = _recordDni;
@@ -1338,6 +1362,53 @@ function syncToGoogle(record) {
       mode: 'no-cors'
     }).catch(function(){});
   } catch(_fe) {}
+}
+
+function progressKey(email,prefix){return prefix+String(email||'').toLowerCase().replace(/[^a-z0-9@._-]/g,'_');}
+function readProgressKey(key){try{const val=localStorage.getItem(key);return val?JSON.parse(val):null;}catch(e){return null;}}
+function sessionData(){return (typeof courseSession==='function'?courseSession():null)||(typeof getSession==='function'?getSession():null)||{};}
+function mergeProgressRecord(base,incoming){
+  const merged=Object.assign({},base||{},incoming||{});
+  const courses=Object.assign({},(base&&base.courses)||{});
+  Object.keys((incoming&&incoming.courses)||{}).forEach(function(k){if(incoming.courses[k])courses[k]=incoming.courses[k];});
+  merged.courses=courses;
+  return merged;
+}
+function localProgressRecord(email){
+  const a=readProgressKey(progressKey(email,'ln_p_'));
+  const b=readProgressKey(progressKey(email,'ln_progress_'));
+  if(!a&&!b)return null;
+  return mergeProgressRecord(a,b);
+}
+function writeProgressRecord(record){
+  if(!record||!record.email)return;
+  localStorage.setItem(progressKey(record.email,'ln_p_'),JSON.stringify(record));
+  localStorage.setItem(progressKey(record.email,'ln_progress_'),JSON.stringify(record));
+}
+function syncToGoogle(record) {
+  if(!record||!record.email)return null;
+  const session=sessionData();
+  const now=new Date();
+  const merged=mergeProgressRecord(localProgressRecord(record.email),record);
+  merged.email=merged.email||record.email||session.email||'';
+  merged.name=record.name||merged.name||session.name||'';
+  merged.dept=record.dept||merged.dept||session.dept||'';
+  const doc=pickDoc(record.dni,merged.dni,session.dni,sessionDoc());
+  if(doc)merged.dni=doc;
+  if(!merged.firstLogin)merged.firstLogin=record.firstLogin||now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  merged.lastActivity=record.lastActivity||now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+  merged.lastActivityTime=record.lastActivityTime||now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+  merged.lastActivityISO=record.lastActivityISO||now.toISOString();
+  try{writeProgressRecord(merged);}catch(_le){}
+  try{
+    const _body=JSON.stringify(merged);
+    if(navigator.sendBeacon&&typeof Blob!=='undefined'){
+      navigator.sendBeacon(GOOGLE_SCRIPT_URL,new Blob([_body],{type:'text/plain'}));
+    }else{
+      fetch(GOOGLE_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:_body,mode:'no-cors'}).catch(function(){});
+    }
+  }catch(_fe){}
+  return merged;
 }
 
 async function loadFromGoogle() {
@@ -1453,20 +1524,11 @@ function getSession() {
 }
 
 async function getSharedRecord(email) {
-  try {
-    const key = 'ln_progress_' + email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_');
-    const val = localStorage.getItem(key);
-    if (val) return JSON.parse(val);
-  } catch(e) {}
-  return null;
+  return localProgressRecord(email);
 }
 
 async function saveSharedRecord(record) {
-  try {
-    const key = 'ln_progress_' + record.email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_');
-    localStorage.setItem(key, JSON.stringify(record));
-  } catch(e) {}
-  syncToGoogle(record);
+  return syncToGoogle(record);
 }
 
 async function saveProgress(pct, certified, score, total, certDate) {
@@ -2007,6 +2069,43 @@ function selClima(el, id, val) {
   if (inp) inp.value = val;
   climaData[id] = val;
 }
+function climatePayload(curso, data) {
+  const answers = {};
+  const comments = {};
+  Object.keys(data || {}).forEach(function(k) {
+    if (k === 'curso' || k === 'timestamp') return;
+    if (k.indexOf('open') > -1) comments[k] = String(data[k] || '').trim();
+    else if (data[k] !== '' && data[k] != null) answers[k] = Number(data[k]) || data[k];
+  });
+  return {
+    type: 'climate_survey',
+    source: 'portal_rrhh_2026',
+    anonymous: true,
+    responseId: 'clima_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8),
+    course: curso,
+    submittedDate: new Date().toISOString().slice(0, 10),
+    answers: answers,
+    comments: comments
+  };
+}
+function sendAnonymousClimate(curso, data) {
+  const payload = climatePayload(curso, data);
+  try {
+    const key = 'ln_clima_anonymous_' + curso;
+    const existing = JSON.parse(localStorage.getItem(key) || '[]');
+    const list = Array.isArray(existing) ? existing : [];
+    list.push(payload);
+    localStorage.setItem(key, JSON.stringify(list.slice(-10)));
+  } catch(ex) {}
+  try {
+    const body = JSON.stringify(payload);
+    if (navigator.sendBeacon && typeof Blob !== 'undefined') {
+      navigator.sendBeacon(GOOGLE_SCRIPT_URL, new Blob([body], {type:'text/plain'}));
+    } else {
+      fetch(GOOGLE_SCRIPT_URL, {method:'POST', headers:{'Content-Type':'text/plain'}, body:body, mode:'no-cors'}).catch(function(){});
+    }
+  } catch(ex) {}
+}
 function saveClima(curso) {
   const ids = {'B':['b1','b2','b3','b4']}[curso] || [];
   const missing = ids.filter(function(id) { const e = document.getElementById(id); return !e || !e.value; });
@@ -2016,7 +2115,7 @@ function saveClima(curso) {
   climaData.timestamp = new Date().toISOString();
   climaSaved = true;
   try { localStorage.setItem('ln_clima_' + curso, JSON.stringify(climaData)); } catch(ex) {}
-  try { syncToGoogle({ email: (getSession()||{}).email||'', clima_B: climaData }); } catch(ex) {}
+  sendAnonymousClimate(curso, climaData);
   const saved = document.getElementById('clima-saved-' + curso);
   if (saved) { saved.style.display = 'block'; }
   setTimeout(function() { navigate(1); }, 1000);
