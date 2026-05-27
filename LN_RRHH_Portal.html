@@ -182,6 +182,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 .tdoc-desc{font-size:.78rem;color:var(--ink3);font-weight:300;line-height:1.7;margin-bottom:1rem}
 .tdoc-meta{font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-top:auto;margin-bottom:.75rem}
 .tag-provisional{display:inline-flex;width:max-content;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--amber-pale);border:1px solid #e0d0a5;border-radius:2px;padding:2px 7px;margin-bottom:.7rem}
+.tag-valid{display:inline-flex;width:max-content;font-family:var(--mono);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:var(--green-pale);border:1px solid #b7d7c0;border-radius:2px;padding:2px 7px;margin-bottom:.7rem}
 @media(max-width:900px){.time-grid{grid-template-columns:1fr}}
 
 /* BENEFICIOS */
@@ -372,8 +373,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
       <div class="pin pin-n" onclick="go('tiempo')">
         <div class="pin-bar"></div>
         <div class="pin-tag">⏱️ Gestión del tiempo</div>
-        <div class="pin-title">Guías provisionales de fichaje, jornada y vacaciones</div>
-        <div class="pin-body">Acceso directo a la guía de fichaje, el protocolo de registro de jornada y la política de vacaciones.</div>
+        <div class="pin-title">Guía de fichaje validada</div>
+        <div class="pin-body">La guía de bolsillo de fichaje ya está disponible. Registro de jornada y vacaciones permanecen pendientes de validación final.</div>
         <div class="pin-date">Mayo 2026</div>
       </div>
       <div class="pin pin-a" onclick="go('vacantes')">
@@ -400,7 +401,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <div class="hgrid">
     <div class="hcard" onclick="go('formacion')"><div class="hcard-bar" style="background:var(--red)"></div><span class="hcard-ico">📚</span><div class="hcard-name">Formación</div><div class="hcard-desc">4 cursos obligatorios. Plazo 30 sep.</div><div class="hcard-meta" id="hform-meta">Cargando...</div></div>
     <div class="hcard" onclick="go('vacantes')"><div class="hcard-bar" style="background:var(--blue)"></div><span class="hcard-ico">💼</span><div class="hcard-name">Vacantes</div><div class="hcard-desc">Movilidad interna. La primera opción eres tú.</div><div class="hcard-meta">2 activas</div></div>
-    <div class="hcard" onclick="go('tiempo')"><div class="hcard-bar" style="background:#6f6a5d"></div><span class="hcard-ico">⏱️</span><div class="hcard-name">Gestión del tiempo</div><div class="hcard-desc">Fichaje, jornada, vacaciones y calendario.</div><div class="hcard-meta">3 guías provisionales</div></div>
+    <div class="hcard" onclick="go('tiempo')"><div class="hcard-bar" style="background:#6f6a5d"></div><span class="hcard-ico">⏱️</span><div class="hcard-name">Gestión del tiempo</div><div class="hcard-desc">Fichaje, jornada, vacaciones y calendario.</div><div class="hcard-meta">1 guía validada · 2 pendientes</div></div>
     <div class="hcard" onclick="go('calendario')"><div class="hcard-bar" style="background:#999"></div><span class="hcard-ico">📅</span><div class="hcard-name">Calendario</div><div class="hcard-desc">Festivos 2026 — Barcelona y Madrid.</div><div class="hcard-meta">2 sedes</div></div>
     <div class="hcard" onclick="go('protocolos')"><div class="hcard-bar" style="background:var(--green)"></div><span class="hcard-ico">📋</span><div class="hcard-name">Protocolos</div><div class="hcard-desc">PI, LGTBI+, Acoso y normativa vigente.</div><div class="hcard-meta">Actualizado 2026</div></div>
     <div class="hcard" onclick="go('beneficios')"><div class="hcard-bar" style="background:var(--amber)"></div><span class="hcard-ico">🎁</span><div class="hcard-name">Beneficios</div><div class="hcard-desc">Entradas, seguro, teletrabajo y más.</div><div class="hcard-meta">Vigentes 2026</div></div>
@@ -530,19 +531,19 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
 <!-- GESTIÓN DEL TIEMPO -->
 <div class="section" id="sec-tiempo">
   <div class="sec-head"><h2>Gestión del Tiempo</h2><span class="sec-head-r">Fichaje · Jornada · Vacaciones</span></div>
-  <div class="alert al-a">Documentación provisional para consulta de la plantilla. Los documentos se abren desde SharePoint y conservan sus permisos internos.</div>
+  <div class="alert al-a">La guía de fichaje ya está validada para consulta de la plantilla. El resto de protocolos de gestión del tiempo permanecen pendientes de validación final y, de momento, solo RRHH puede consultarlos desde el portal.</div>
   <div class="time-grid">
     <div class="tdoc">
       <div class="tdoc-k">Jornada</div>
-      <span class="tag-provisional">Provisional</span>
+      <span class="tag-provisional">Pendiente</span>
       <div class="tdoc-title">Protocolo de registro de jornada</div>
       <div class="tdoc-desc">Documento marco sobre registro de jornada y gestión del tiempo: obligaciones de fichaje, criterios generales, revisión de incidencias y pautas de actuación.</div>
-      <div class="tdoc-meta">Word · SharePoint</div>
-      <a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" target="_blank" rel="noopener" class="btn-l">Abrir protocolo →</a>
+      <div class="tdoc-meta">Pendiente de validación</div>
+      <span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" data-admin-label="Abrir borrador →" data-public-label="Pendiente"></span>
     </div>
     <div class="tdoc">
       <div class="tdoc-k">Guía rápida</div>
-      <span class="tag-provisional">Provisional</span>
+      <span class="tag-valid">Validada</span>
       <div class="tdoc-title">Guía de fichaje (guía de bolsillo)</div>
       <div class="tdoc-desc">Guía de bolsillo para el uso diario: cómo fichar, revisar registros, consultar el estado de la jornada y resolver dudas frecuentes de funcionamiento.</div>
       <div class="tdoc-meta">PDF · SharePoint</div>
@@ -553,8 +554,8 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
       <span class="tag-provisional">Provisional</span>
       <div class="tdoc-title">Protocolo de vacaciones</div>
       <div class="tdoc-desc">Criterios para la planificación y solicitud de vacaciones: procedimiento, responsabilidades, plazos orientativos y gestión en Workday.</div>
-      <div class="tdoc-meta">Word · SharePoint</div>
-      <a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" target="_blank" rel="noopener" class="btn-l">Abrir protocolo →</a>
+      <div class="tdoc-meta">Pendiente de validación final</div>
+      <span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" data-admin-label="Abrir borrador →" data-public-label="Provisional"></span>
     </div>
   </div>
   <div class="alert al-b">También puedes consultar los festivos por sede en el apartado <a href="#" onclick="go('calendario');return false">Calendario Laboral</a>.</div>
@@ -566,12 +567,12 @@ body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:10
   <div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⚖️</span><div class="p-name">Plan de Igualdad 2026–2030</div></div><div class="p-desc">Inscrito en REGCON. Exp. 90/11/0499/2026. Negociado con CCOO. Vigente hasta 27/02/2030.</div></div><div class="p-date">FEB 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Plan%20de%20Igualdad/6.-%20PLAN%20DE%20IGUALDAD%20LIVE%20NATION%20ESPA%C3%91A%20SAU%20PARA%20PUBLICACION.pdf?csf=1&web=1&e=DIAXwZ" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🤖</span><div class="p-name">Protocolo de Uso de la IA</div></div><div class="p-desc">Política interna para el uso responsable de herramientas de inteligencia artificial en el entorno de trabajo. Versión española · UE.</div></div><div class="p-date">MAY 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/AI%20Use%20Policy%20(Spanish%20Espa%C3%B1ol%20%E2%80%93%20EU).pdf?csf=1&web=1&e=jlBoOj" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⏱️</span><div class="p-name">Protocolo de registro de jornada</div></div><div class="p-desc">Registro de jornada y gestión del tiempo: obligaciones de fichaje, incidencias y pautas generales de actuación.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🧾</span><div class="p-name">Guía de fichaje (guía de bolsillo)</div></div><div class="p-desc">Guía rápida para fichar, revisar registros, consultar el estado de la jornada y resolver dudas frecuentes.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Guia_Fichaje_LNE.pdf?csf=1&web=1&e=rLkZ3s" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🏖️</span><div class="p-name">Protocolo de vacaciones</div></div><div class="p-desc">Criterios para planificación y solicitud de vacaciones, plazos orientativos, responsabilidades y gestión en Workday.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🌈</span><div class="p-name">Plan LGTBI+ 2026</div></div><div class="p-desc">No discriminación por orientación sexual e identidad de género. Ley 4/2023 · RD 1026/2024. Documento provisional.</div></div><div class="p-date">MAY 2026 · PROV.</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Plan_LGTBI_LiveNation_Espa%C3%B1a_v4.docx?d=w3abd87a6174147b9aaa26ef01424ecf9&csf=1&web=1&e=1Bofb3" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>⏱️</span><div class="p-name">Protocolo de registro de jornada</div></div><div class="p-desc">Registro de jornada y gestión del tiempo: obligaciones de fichaje, incidencias y pautas generales de actuación.</div></div><div class="p-date">PENDIENTE</div><span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Registro_Jornada_LNE_2026.docx?d=wdcaf66a754324e18ba4c3a043b11c017&csf=1&web=1&e=EXm70C" data-admin-label="Abrir borrador →" data-public-label="Pendiente"></span></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🧾</span><div class="p-name">Guía de fichaje (guía de bolsillo)</div></div><div class="p-desc">Guía rápida para fichar, revisar registros, consultar el estado de la jornada y resolver dudas frecuentes.</div></div><div class="p-date">MAY 2026</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Guia_Fichaje_LNE.pdf?csf=1&web=1&e=rLkZ3s" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🏖️</span><div class="p-name">Protocolo de vacaciones</div></div><div class="p-desc">Criterios para planificación y solicitud de vacaciones, plazos orientativos, responsabilidades y gestión en Workday.</div></div><div class="p-date">PROVISIONAL</div><span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Politica%20vacaciones%20LNE%20-%20actualizada%20Mayo%202026.docx?d=w98abbd6ee8e94b93b3a5c7ac7c86ea62&csf=1&web=1&e=E24bZb" data-admin-label="Abrir borrador →" data-public-label="Provisional"></span></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🌈</span><div class="p-name">Plan LGTBI+ 2026</div></div><div class="p-desc">No discriminación por orientación sexual e identidad de género. Ley 4/2023 · RD 1026/2024. Documento provisional.</div></div><div class="p-date">PROVISIONAL</div><span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Plan_LGTBI_LiveNation_Espa%C3%B1a_v4.docx?d=w3abd87a6174147b9aaa26ef01424ecf9&csf=1&web=1&e=1Bofb3" data-admin-label="Abrir borrador →" data-public-label="Provisional"></span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🛡️</span><div class="p-name">Protocolo de Acoso Sexual y por Razón de Sexo</div></div><div class="p-desc">Prevención, actuación, medidas de protección y procedimiento interno ante situaciones de acoso sexual o por razón de sexo.</div></div><div class="p-date">JUL 2025</div><a href="https://lneallaccess.sharepoint.com/:b:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Acoso_Sexual_LNE_2025.pdf?csf=1&web=1&e=7lt6Jd" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
-    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera de la jornada registrada. Art. 88 LO 3/2018 y Protocolo LN España 2026.</div></div><div class="p-date">MAY 2026</div><a href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Desconexion_Digital_LNE_2026.docx?csf=1&web=1" target="_blank" rel="noopener" class="btn-l">Abrir documento →</a></div>
+    <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📵</span><div class="p-name">Protocolo de Desconexión Digital</div></div><div class="p-desc">Derecho a la desconexión fuera de la jornada registrada. Art. 88 LO 3/2018 y Protocolo LN España 2026.</div></div><div class="p-date">PENDIENTE</div><span class="doc-admin-only" data-admin-href="https://lneallaccess.sharepoint.com/:w:/r/sites/EMEA-ESLN-RRHH/Shared%20Documents/ESBAR-Politicas%20LN/RRHH/Protocolo_Desconexion_Digital_LNE_2026.docx?csf=1&web=1" data-admin-label="Abrir borrador →" data-public-label="Pendiente"></span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>📊</span><div class="p-name">Registro Retributivo 2024</div></div><div class="p-desc">Datos desagregados por sexo y grupo profesional. 47 puestos valorados. RD 902/2020.</div></div><div class="p-date">2024</div><span class="btn-l btn-pending">Pendiente</span></div>
     <div class="prow"><div><div style="display:flex;gap:.65rem;align-items:center;margin-bottom:.25rem"><span>🔒</span><div class="p-name">Canal Ético Anónimo</div></div><div class="p-desc">Denuncias protegidas por Ley 2/2023. Disponible 24/7 completamente anónimo.</div></div><div class="p-date">24/7</div><a href="https://canal.uneon.es/livenation/" target="_blank" class="btn-l">Acceder →</a></div>
   </div>
@@ -779,6 +780,25 @@ function validDoc(v){const d=String(v||'').trim().toUpperCase();return /^[0-9]{8
 function pickDoc(){for(const v of arguments){const d=String(v||'').trim().toUpperCase();if(validDoc(d))return d;}return '';}
 function io(rec){return DRAFT_OWNER_EMAILS.includes(ne(rec&&rec.email));}
 function canView(id){return draftOwner||DRAFT_PUBLIC_SECTIONS.includes(id);}
+function applyDocumentAccess(){
+  document.querySelectorAll('.doc-admin-only').forEach(slot=>{
+    slot.replaceChildren();
+    if(draftOwner&&slot.dataset.adminHref){
+      const a=document.createElement('a');
+      a.href=slot.dataset.adminHref;
+      a.target='_blank';
+      a.rel='noopener';
+      a.className='btn-l';
+      a.textContent=slot.dataset.adminLabel||'Abrir borrador →';
+      slot.appendChild(a);
+    }else{
+      const s=document.createElement('span');
+      s.className='btn-l btn-pending';
+      s.textContent=slot.dataset.publicLabel||'Pendiente';
+      slot.appendChild(s);
+    }
+  });
+}
 function applyDraftMode(rec){
   draftOwner=io(rec);
   document.querySelectorAll('.nav-btn').forEach(btn=>{
@@ -790,6 +810,7 @@ function applyDraftMode(rec){
   if(trainingLink)trainingLink.classList.toggle('off',!canView('formacion'));
   const trainingAlert=document.getElementById('training-alert');
   if(trainingAlert)trainingAlert.innerHTML=draftOwner?'Todos los cursos son obligatorios para la plantilla de LN Espa\u00f1a. Tu progreso se guarda autom\u00e1ticamente. Plazo: <strong>30 de septiembre de 2026</strong>.':'La formaci\u00f3n obligatoria aparecer\u00e1 aqu\u00ed. De momento los cursos est\u00e1n <strong>pendientes de apertura</strong> para la plantilla.';
+  applyDocumentAccess();
 }
 function pk(email,prefix){return prefix+String(email||'').toLowerCase().replace(/[^a-z0-9@._-]/g,'_');}
 function rj(key){try{const v=localStorage.getItem(key);return v?JSON.parse(v):null;}catch(e){return null;}}
@@ -847,6 +868,7 @@ async function doLogin(){
 function doLogout(){
   cs();
   draftOwner=false;
+  applyDocumentAccess();
   document.getElementById('main-nav').style.display='none';
   document.getElementById('main-content').style.display='none';
   document.getElementById('tb-user').style.display='none';
@@ -858,6 +880,7 @@ function showAM(){document.getElementById('modal-admin').classList.remove('off')
 function hideAM(){document.getElementById('modal-admin').classList.add('off');}
 function doAdmin(){
   if(document.getElementById('in-pw').value===APW){
+    draftOwner=true;applyDocumentAccess();
     hideAM();document.getElementById('nav-admin').classList.remove('off');
     if(!gs()){ss({name:'Admin',dni:'00000000T',email:'admin@livenation.es',loginAt:new Date().toISOString()});document.getElementById('modal-login').classList.add('off');initP({name:'Admin',email:'admin@livenation.es',courses:{}});}
     go('admin');lav();
