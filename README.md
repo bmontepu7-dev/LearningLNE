@@ -1,2 +1,0 @@
-# RRHH LNE
-Portal RRHH LNE
